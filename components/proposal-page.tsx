@@ -102,7 +102,7 @@ const dividerLineStyle = {
 // Dusty blue → navy pill with white text (matches the rest of the invitation)
 const primaryBtnStyle: CSSProperties = {
   background:
-    "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)",
+    "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)",
   borderColor: "rgb(255 255 255 / 70%)",
   color: "#FFFFFF",
   boxShadow:

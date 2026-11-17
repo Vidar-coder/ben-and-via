@@ -11,10 +11,9 @@ import { Section } from "@/components/section"
 import { sectionType } from "@/lib/section-typography"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { TintedDeco } from "@/components/tinted-deco"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
 import { DecoCorners } from "@/components/deco-corners"
 import { HEART_PATH } from "@/components/rising-hearts"
-import { SectionBackdrop } from "@/components/section-backdrop"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 
 const theSeasons = localFont({
@@ -43,9 +42,6 @@ const C = {
   paper: "var(--color-welcome-bg-soft)",
   light: "var(--color-motif-soft)",
 } as const
-
-// Same circle pattern as the video / love story / details sections (PlainBubbles paints the base)
-const sectionBg = "var(--color-bg-pattern-base)"
 
 // Soft white edge so text stays crisp over the circles
 const onBgGlow = "0 1px 0 rgb(255 255 255 / 85%), 0 0 12px rgb(255 255 255 / 70%)"
@@ -472,11 +468,10 @@ export function Gallery() {
     <div
       // overflow-x-clip: nothing in the section (corners, bleed carousel, hearts) can widen the page
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full max-w-full overflow-x-clip`}
-      style={{ background: sectionBg }}
+      style={ivorySectionStyle}
     >
-      <PlainBubbles />
-      {/* Pink paper wash + grain and rising hearts, same as the love story (section-backdrop.tsx) */}
-      <SectionBackdrop />
+      {/* Cream lace ground with lace edging, same as the welcome card / love story */}
+      <IvoryBackdrop />
       <Section
         id="gallery"
         className="relative z-10 overflow-hidden pt-14 pb-10 sm:pt-16 sm:pb-12 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20"
@@ -574,7 +569,7 @@ export function Gallery() {
                 href={gallery.buttonHref}
                 className={`${cinzel.className} inline-flex items-center justify-center rounded-full border px-8 py-3 text-[0.625rem] font-semibold uppercase tracking-[0.18em] transition-all duration-300 hover:scale-[1.03] hover:brightness-110 active:scale-[0.98] sm:text-[0.6875rem] sm:tracking-[0.22em]`}
                 style={{
-                  background: C.blue,
+                  background: "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)",
                   borderColor: "rgb(255 255 255 / 70%)",
                   color: "#FFFFFF",
                   boxShadow: "0 0 0 4px rgb(255 255 255 / 35%), 0 10px 22px -10px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)",

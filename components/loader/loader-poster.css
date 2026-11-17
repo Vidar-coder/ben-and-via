@@ -6,13 +6,19 @@
    loader root and the envelope screen, so both always share the same colors */
 .loading-screen--poster,
 .env-invite-screen--poster {
-  --lp-gold-1: #6f4c1f;
-  --lp-gold-2: #a67c3d;
-  --lp-gold-3: #d2b06e;
-  --lp-ink: #5a4020;      /* small caps text — deep enough to read over the photos */
-  --lp-ink-soft: #6b5230;
-  --lp-wash-top: #cee4f4;
-  --lp-wash-bottom: #f6dee6;
+  --lp-gold-1: #8c4a30;
+  --lp-gold-2: #c77754;
+  --lp-gold-3: #e7d3b8;
+  --lp-ink: #5e4535;      /* small caps text — deep enough to read over the photos */
+  --lp-ink-soft: #6f5a48;
+  --lp-wash-top: #f9f5ec;
+  --lp-wash-bottom: #dce3d3;
+  /* Motif accents for lines, frame and progress (ivory · champagne · blush · sage · terracotta) */
+  --lp-ivory: #f9f5ec;
+  --lp-champagne: #e7d3b8;
+  --lp-sage: #a7b49e;
+  --lp-terracotta: #c77754;
+  --lp-burgundy: #6a0d28;
 }
 
 .lp {
@@ -21,7 +27,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #eef2f6;
+  background: var(--lp-ivory);
   color: var(--lp-ink);
 }
 
@@ -35,34 +41,36 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #eef2f6;
+  background: var(--lp-ivory);
 }
-/* Pastel wash over the photos: sky blue at the top, soft in the middle, blush at the bottom */
+/* Warm wash over the photos: ivory at the top, soft champagne through the middle, and blush
+   softened with champagne at the foot (so the bottom reads rosy, not peach) */
 .lp-bd__wash {
   position: absolute;
   inset: 0;
   background:
+    radial-gradient(90% 40% at 50% 100%, color-mix(in srgb, var(--lp-sage) 14%, transparent) 0%, transparent 70%),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--lp-wash-top) 85%, transparent) 0%,
-      color-mix(in srgb, color-mix(in srgb, var(--lp-wash-top) 60%, white) 60%, transparent) 22%,
-      rgba(246, 246, 248, 0.48) 45%,
-      color-mix(in srgb, color-mix(in srgb, var(--lp-wash-bottom) 60%, white) 66%, transparent) 70%,
-      color-mix(in srgb, var(--lp-wash-bottom) 85%, transparent) 100%
+      color-mix(in srgb, var(--lp-wash-top) 88%, transparent) 0%,
+      color-mix(in srgb, var(--lp-wash-top) 62%, transparent) 22%,
+      color-mix(in srgb, color-mix(in srgb, var(--lp-champagne) 35%, var(--lp-ivory)) 50%, transparent) 45%,
+      color-mix(in srgb, color-mix(in srgb, var(--lp-wash-bottom) 45%, var(--lp-ivory)) 66%, transparent) 70%,
+      color-mix(in srgb, color-mix(in srgb, var(--lp-wash-bottom) 60%, var(--lp-champagne)) 82%, transparent) 100%
     );
 }
 /* Thin double gold frame */
 .lp-bd__frame {
   position: absolute;
   inset: calc(var(--lp-unit) * 2.2);
-  border: 1px solid rgba(170, 132, 72, 0.8);
+  border: 1px solid color-mix(in srgb, var(--lp-terracotta) 70%, transparent);
   border-radius: 2px;
 }
 .lp-bd__frame::after {
   content: '';
   position: absolute;
   inset: calc(var(--lp-unit) * 1.3);
-  border: 1px solid rgba(170, 132, 72, 0.45);
+  border: 1px solid color-mix(in srgb, var(--lp-sage) 75%, transparent);
   border-radius: 1px;
 }
 /* Floral corners, tucked right into the screen corners */
@@ -110,7 +118,7 @@
   transform: translateX(-50%);
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, rgba(0, 0, 0, 0.3) 78%, transparent 97%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 55%, rgba(0, 0, 0, 0.3) 78%, transparent 97%);
-  filter: drop-shadow(0 6px 18px rgba(80, 70, 90, 0.18));
+  filter: drop-shadow(0 6px 18px rgba(94, 69, 53, 0.18));
   pointer-events: none;
   user-select: none;
 }
@@ -226,7 +234,7 @@
   display: inline-block;
   width: 3.5cqw;
   height: 1px;
-  background: linear-gradient(to right, rgba(170, 135, 80, 0), rgba(170, 135, 80, 0.9), rgba(170, 135, 80, 0));
+  background: linear-gradient(to right, transparent, color-mix(in srgb, var(--lp-terracotta) 85%, transparent), transparent);
 }
 
 /* ── Middle: space for the couple, short lines either side ───────────── */
@@ -348,19 +356,23 @@
 .lp__track {
   position: relative;
   width: 62cqw;
-  height: 0.45cqh;
-  min-height: 3px;
+  height: 0.6cqh;
+  min-height: 4px;
   margin-top: 1.3cqh;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.65);
-  box-shadow: inset 0 0 0 1px rgba(190, 160, 120, 0.25);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--lp-champagne) 70%, var(--lp-ivory));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--lp-burgundy) 25%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.6);
 }
+/* Solid burgundy fill */
 .lp__bar {
   position: absolute;
   inset: 0 auto 0 0;
   width: 0%;
   border-radius: inherit;
-  background: linear-gradient(to right, #b9d3ec, #d8c3e6 45%, #efc6d3 75%, #e3c58e);
+  background: var(--lp-burgundy);
   animation-name: lp-progress;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
@@ -369,15 +381,7 @@
   to { width: 100%; }
 }
 .lp__knob {
-  position: absolute;
-  right: -0.9cqh;
-  top: 50%;
-  width: 1.8cqh;
-  height: 1.8cqh;
-  margin-top: -0.9cqh;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, #fff 35%, rgba(255, 245, 230, 0.6) 60%, rgba(255, 245, 230, 0) 72%);
-  box-shadow: 0 0 10px 3px rgba(255, 240, 220, 0.75);
+  display: none;
 }
 .lp__percent {
   margin-top: 1.1cqh;
@@ -449,45 +453,117 @@
   text-shadow: 0 0 2px rgba(255, 255, 255, 0.95), 0 0 8px rgba(255, 255, 255, 0.9), 0 0 16px rgba(255, 252, 248, 0.7);
 }
 
-/* ── Envelope entrance on the poster backdrop (Hero.tsx, .is-arriving) ───
-   The background never moves; only the envelope arrives:
-     0.00s  floats down like paper — a gentle sway and a slight tilt, its shadow growing below
-     1.15s  lands softly (tiny settle)
-     1.30s  a sheen of light runs across the envelope
-     1.35s  the wax seal pops in
-     1.75s  "Tap the seal to open" rises in                                                  */
+/* ── Romantic envelope entrance on the poster backdrop (Hero.tsx, .is-arriving) ───
+   The background never moves; only the envelope arrives, like a love letter carried on a breeze:
+     0.00s  a warm blush glow blooms where it will land; rose petals begin to drift down
+     0.15s  the envelope drifts down from a soft blur, swaying side to side like a falling leaf,
+            its shadow gathering beneath it
+     2.30s  lands softly — the flap lifts on the air underneath and settles back
+     2.40s  a sheen of light runs across the paper
+     2.55s  the wax seal is pressed on: it comes down from above, squashes into the paper, settles
+     3.20s  "Tap the seal to open" rises in
+     3.50s  the seal beats softly twice, like a heartbeat                                        */
 .env-invite-screen--poster.is-arriving .env-invite-stage {
   animation: none; /* replaces the plain-mode drop */
 }
 
 .env-invite-screen--poster.is-arriving .env-invite-envelope {
   transform-origin: 50% 0%;
-  animation: env-poster-float 1.6s linear both;
+  animation: env-poster-float 2.6s linear 0.15s both;
 }
 @keyframes env-poster-float {
-  0%   { opacity: 0; transform: perspective(900px) translateY(-34vh) rotateX(28deg) rotateZ(-7deg) scale(0.9);
-         animation-timing-function: cubic-bezier(0.25, 0.6, 0.4, 1); }
-  18%  { opacity: 1; }
-  38%  { transform: perspective(900px) translateY(-15vh) rotateX(14deg) rotateZ(4.5deg) scale(0.95);
+  0%   { opacity: 0; filter: blur(8px);
+         transform: perspective(1000px) translate(-7vw, -32vh) rotateX(22deg) rotateY(-10deg) rotateZ(-7deg) scale(0.86);
+         animation-timing-function: cubic-bezier(0.3, 0.5, 0.45, 1); }
+  18%  { opacity: 1; filter: blur(2.5px); }
+  34%  { transform: perspective(1000px) translate(5vw, -19vh) rotateX(13deg) rotateY(8deg) rotateZ(5deg) scale(0.92);
          animation-timing-function: ease-in-out; }
-  58%  { transform: perspective(900px) translateY(-4vh) rotateX(6deg) rotateZ(-2.2deg) scale(0.985);
-         animation-timing-function: cubic-bezier(0.45, 0, 0.7, 1); }
-  72%  { opacity: 1; transform: perspective(900px) translateY(0.7vh) rotateX(0deg) rotateZ(0.8deg) scale(1);
+  44%  { filter: blur(0); }
+  56%  { transform: perspective(1000px) translate(-3vw, -7vh) rotateX(7deg) rotateY(-4deg) rotateZ(-2.6deg) scale(0.965);
+         animation-timing-function: ease-in-out; }
+  74%  { transform: perspective(1000px) translate(1vw, -1vh) rotateX(2deg) rotateY(1.5deg) rotateZ(1deg) scale(0.99);
+         animation-timing-function: cubic-bezier(0.45, 0, 0.6, 1); }
+  84%  { transform: perspective(1000px) translate(0, 0.45vh) rotateZ(-0.35deg) scale(1.004);
          animation-timing-function: ease-out; }
-  86%  { transform: perspective(900px) translateY(-0.25vh) rotateX(0deg) rotateZ(-0.25deg) scale(1);
+  93%  { transform: perspective(1000px) translate(0, -0.12vh) rotateZ(0.1deg) scale(1);
          animation-timing-function: ease-in-out; }
-  100% { opacity: 1; transform: none; }
+  100% { opacity: 1; filter: none; transform: none; }
 }
 
-/* Its shadow on the "ground" gathers as it comes down */
+/* Its shadow on the "ground" gathers as it comes down, sliding with the sway */
 .env-invite-screen--poster.is-arriving .env-invite-ground-shadow,
 .env-invite-screen--poster.is-arriving .env-invite-ground-contact {
-  animation: env-poster-shadow 1.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: env-poster-shadow 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
 }
 @keyframes env-poster-shadow {
-  0%   { opacity: 0; transform: translateX(-50%) scale(0.35, 0.6); }
-  72%  { opacity: 1; transform: translateX(-50%) scale(1.05, 1); }
+  0%   { opacity: 0; transform: translateX(calc(-50% - 4vw)) scale(0.3, 0.55); }
+  34%  { opacity: 0.4; transform: translateX(calc(-50% + 3vw)) scale(0.55, 0.7); }
+  56%  { opacity: 0.7; transform: translateX(calc(-50% - 1.5vw)) scale(0.8, 0.85); }
+  84%  { opacity: 1; transform: translateX(-50%) scale(1.04, 1); }
   100% { opacity: 1; transform: translateX(-50%) scale(1, 1); }
+}
+
+/* Landing: the flap lifts on the air underneath it and settles back.
+   No fill mode, so once it ends the flap is back under the open animation's control. */
+.env-invite-screen--poster.is-arriving[data-phase="idle"] .env-invite-flap {
+  animation: env-poster-flap-flutter 1s cubic-bezier(0.3, 0, 0.3, 1) 2.3s;
+}
+@keyframes env-poster-flap-flutter {
+  0%   { transform: perspective(900px) rotateX(0deg); }
+  30%  { transform: perspective(900px) rotateX(-16deg); }
+  58%  { transform: perspective(900px) rotateX(3deg); }
+  80%  { transform: perspective(900px) rotateX(-1.5deg); }
+  100% { transform: perspective(900px) rotateX(0deg); }
+}
+
+/* Warm glow blooming behind the envelope, then settling to a faint warmth */
+.env-invite-romance-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 1; /* over the backdrop, under the envelope */
+  pointer-events: none;
+  background:
+    radial-gradient(42% 30% at 50% 50%, rgba(249, 245, 236, 0.8) 0%, rgba(229, 168, 138, 0.22) 45%, rgba(229, 168, 138, 0) 75%),
+    radial-gradient(70% 50% at 50% 52%, rgba(231, 211, 184, 0.22) 0%, rgba(231, 211, 184, 0) 70%);
+  mix-blend-mode: screen;
+  animation: env-romance-glow 3.4s cubic-bezier(0.25, 0.6, 0.3, 1) both;
+}
+@keyframes env-romance-glow {
+  0%   { opacity: 0; transform: scale(0.6); }
+  45%  { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 0.45; transform: scale(1); }
+}
+
+/* Rose petals drifting down past the envelope (they fall once, then are gone) */
+.env-invite-romance-petals {
+  position: fixed;
+  inset: 0;
+  z-index: 3; /* in front of the envelope, never catching taps */
+  overflow: hidden;
+  pointer-events: none;
+}
+.env-invite-romance-petal {
+  position: absolute;
+  top: -6vh;
+  left: var(--x);
+  width: var(--s);
+  height: calc(var(--s) * 1.25);
+  border-radius: 80% 0 80% 0; /* soft petal */
+  box-shadow: inset -1px -2px 3px rgba(170, 110, 90, 0.18), 0 1px 2px rgba(120, 80, 60, 0.12);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: env-romance-petal var(--dur) cubic-bezier(0.35, 0.15, 0.6, 1) var(--delay) both;
+}
+.env-invite-romance-petal--0 { background: radial-gradient(circle at 30% 30%, #fffaf3, #f3e3cf 70%); }
+.env-invite-romance-petal--1 { background: radial-gradient(circle at 30% 30%, #fbeee4, #e5a88a 75%); }
+.env-invite-romance-petal--2 { background: radial-gradient(circle at 30% 30%, #fdf3e2, #e7cf9f 75%); }
+@keyframes env-romance-petal {
+  0%   { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg) rotateX(0deg); }
+  10%  { opacity: 0.95; }
+  30%  { transform: translate3d(var(--drift), 30vh, 0) rotate(calc(var(--spin) * 0.3)) rotateX(60deg); }
+  55%  { transform: translate3d(calc(var(--drift) * -0.6), 58vh, 0) rotate(calc(var(--spin) * 0.6)) rotateX(140deg); }
+  80%  { opacity: 0.85; transform: translate3d(calc(var(--drift) * 0.8), 86vh, 0) rotate(calc(var(--spin) * 0.85)) rotateX(220deg); }
+  100% { opacity: 0; transform: translate3d(calc(var(--drift) * 0.2), 110vh, 0) rotate(var(--spin)) rotateX(300deg); }
 }
 
 /* One sheen of light across the envelope (clipped by its rounded edges) */
@@ -509,31 +585,42 @@
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 252, 245, 0.85) 50%,
+    rgba(255, 250, 238, 0.9) 50%,
     rgba(255, 255, 255, 0) 100%
   );
 }
 .env-invite-screen--poster.is-arriving .env-invite-arrive-shine > span {
-  animation: env-poster-shine 1.1s cubic-bezier(0.45, 0, 0.25, 1) 1.3s both;
+  animation: env-poster-shine 1.3s cubic-bezier(0.45, 0, 0.25, 1) 2.4s both;
 }
 @keyframes env-poster-shine {
   from { transform: translateX(-130%) skewX(-18deg); }
   to   { transform: translateX(330%) skewX(-18deg); }
 }
 
-/* Wax seal pops in after the landing */
+/* Wax seal is pressed on after the landing (comes down from above, squashes into the paper,
+   settles), then beats softly twice */
 .env-invite-screen--poster.is-arriving .env-invite-seal-img {
-  animation: env-poster-seal-pop 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 1.35s both;
+  animation:
+    env-poster-seal-press 0.9s cubic-bezier(0.25, 0.6, 0.3, 1) 2.55s both,
+    env-poster-seal-beat 1.1s ease-in-out 3.5s 2;
 }
-@keyframes env-poster-seal-pop {
-  0%   { opacity: 0; transform: scale(0.45) rotate(-14deg); }
-  60%  { opacity: 1; }
-  100% { opacity: 1; transform: none; }
+@keyframes env-poster-seal-press {
+  0%   { opacity: 0; transform: translateY(-18%) scale(1.35) rotate(-8deg); filter: blur(4px) drop-shadow(0 18px 14px rgba(94, 69, 53, 0.25)); }
+  45%  { opacity: 1; transform: translateY(0) scale(0.94, 0.9) rotate(0deg); filter: blur(0) drop-shadow(0 2px 2px rgba(94, 69, 53, 0.25)); }
+  70%  { transform: scale(1.03, 1.04); }
+  100% { opacity: 1; transform: none; filter: none; }
+}
+@keyframes env-poster-seal-beat {
+  0%, 100% { transform: scale(1); }
+  14%      { transform: scale(1.07); }
+  28%      { transform: scale(1); }
+  42%      { transform: scale(1.045); }
+  60%      { transform: scale(1); }
 }
 
 /* Hint rises in once the seal is there */
 .env-invite-screen--poster.is-arriving .env-invite-hint {
-  animation: env-poster-hint 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.75s both;
+  animation: env-poster-hint 1s cubic-bezier(0.22, 1, 0.36, 1) 3.2s both;
 }
 @keyframes env-poster-hint {
   from { opacity: 0; transform: translateY(10px); filter: blur(3px); }
@@ -546,8 +633,13 @@
   .env-invite-screen--poster.is-arriving .env-invite-ground-contact,
   .env-invite-screen--poster.is-arriving .env-invite-arrive-shine > span,
   .env-invite-screen--poster.is-arriving .env-invite-seal-img,
+  .env-invite-screen--poster.is-arriving .env-invite-flap,
   .env-invite-screen--poster.is-arriving .env-invite-hint {
     animation: none !important;
+  }
+  .env-invite-romance-glow,
+  .env-invite-romance-petals {
+    display: none;
   }
 }
 
@@ -573,21 +665,96 @@
     #e9b8a6;
 }
 
-/* ── Linen envelope paper (poster backdrop, no envelopeTexture image) ───
-   Soft blush linen: fine light and dark fibres running both ways plus a little speckle,
-   over a gentle pink gradient lit from the top left. Same five layers, in the same order, as
-   the plain paper surface, so the flap's layer sizing (envelope-invite.css) still lines the
-   light up across the folds. The inside liner pattern is a separate element and is untouched. */
+/* ── Ivory & gold lace envelope paper (poster backdrop, no envelopeTexture image) ───
+   Same look as the welcome card: warm cream card stock with fine light and gold-brown fibres, soft
+   light from the top left, champagne-gold trim on the flap, and a cream liner inside with a gold
+   lace lattice (rosettes and seed pearls). Same five paper layers, in the same order, as the plain
+   paper surface, so the flap's layer sizing (envelope-invite.css) still lines the light up across
+   the folds. Selectors carry --poster so they beat the plain rules. */
 .env-invite-screen.env-invite-screen--poster .env-invite-envelope {
-  --env-highlight: #f3cdbf;
-  --env-base: #e9b8a6;
-  --env-fold: #dda592;
+  --env-highlight: #fdf9f2;
+  --env-base: #f6eee2;
+  --env-fold: #eee2d0;
+  --env-shadow: #dcc8a8;
+  --env-envelope: #f6eee2;
+  --env-trim: #b8925a;          /* champagne gold, as on the welcome card */
+  --env-trim-light: #e9d3a6;
+  --env-fold-shade: #8a6d3e;    /* warm taupe used for every shadow and fold */
+  --env-border: color-mix(in srgb, var(--env-trim) 45%, transparent);
   --env-paper-surface:
     /* light fibres (horizontal, short) — one 640px tile, larger than the envelope, so no seams */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045 0.75' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 0.97  0 0 0 0 0.95  0 0 0 0.85 -0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
-    /* darker fibres (vertical, short) + fine speckle */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75 0.05' numOctaves='2' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.3  0 0 0 0 0.25  0 0 0 0.7 -0.34'/%3E%3C/filter%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='1' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E"),
-    radial-gradient(120% 90% at 18% 6%, rgb(255 248 242 / 26%) 0%, transparent 55%),
-    radial-gradient(110% 80% at 90% 100%, rgb(120 70 60 / 12%) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045 0.75' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 0.99  0 0 0 0 0.96  0 0 0 0.85 -0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    /* gold-brown fibres (vertical, short) + fine speckle */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75 0.05' numOctaves='2' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.3  0 0 0 0.45 -0.24'/%3E%3C/filter%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='1' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.48  0 0 0 0 0.3  0 0 0 0.4 -0.22'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E"),
+    radial-gradient(120% 90% at 18% 6%, rgb(255 253 248 / 60%) 0%, transparent 55%),
+    radial-gradient(110% 80% at 90% 100%, rgb(184 146 90 / 12%) 0%, transparent 60%),
     linear-gradient(170deg, var(--env-highlight) 0%, var(--env-base) 45%, var(--env-fold) 100%);
+  /* Liner: cream with a gold lace lattice — a rosette in each diamond, seed pearls along the threads */
+  --env-liner-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E %3Cpath d='M0 22 L22 0 L44 22 L22 44 Z' fill='none' stroke='%23B8925A' stroke-opacity='0.4' stroke-width='0.6'/%3E %3Cg fill='none' stroke='%23B8925A' stroke-opacity='0.45' stroke-width='0.5'%3E%3Ccircle cx='22' cy='22' r='6.6'/%3E%3C/g%3E %3Cg fill='%23B8925A' fill-opacity='0.38'%3E%3Ccircle cx='22' cy='22' r='1.6'/%3E%3Ccircle cx='26.20' cy='22.00' r='1.5'/%3E%3Ccircle cx='24.10' cy='25.64' r='1.5'/%3E%3Ccircle cx='19.90' cy='25.64' r='1.5'/%3E%3Ccircle cx='17.80' cy='22.00' r='1.5'/%3E%3Ccircle cx='19.90' cy='18.36' r='1.5'/%3E%3Ccircle cx='24.10' cy='18.36' r='1.5'/%3E%3C/g%3E %3Ccircle cx='22' cy='22' r='0.7' fill='%23FBF6EE'/%3E %3Cg fill='%23B8925A' fill-opacity='0.35'%3E%3Ccircle cx='11' cy='11' r='0.8'/%3E%3Ccircle cx='33' cy='11' r='0.8'/%3E%3Ccircle cx='11' cy='33' r='0.8'/%3E%3Ccircle cx='33' cy='33' r='0.8'/%3E%3Ccircle cx='0' cy='0' r='1.3'/%3E%3Ccircle cx='44' cy='0' r='1.3'/%3E%3Ccircle cx='0' cy='44' r='1.3'/%3E%3Ccircle cx='44' cy='44' r='1.3'/%3E%3C/g%3E %3C/svg%3E");
+  --env-liner-ground:
+    radial-gradient(90% 60% at 50% 0%, rgb(255 253 248 / 70%) 0%, transparent 70%),
+    linear-gradient(180deg, #fbf6ee 0%, #f6eee2 55%, #f0e5d5 100%);
+  filter:
+    drop-shadow(0 1px 1px rgb(120 90 50 / 18%))
+    drop-shadow(0 8px 14px rgb(120 90 50 / 14%))
+    drop-shadow(0 24px 38px rgb(90 70 40 / 14%));
+}
+
+/* Paper edges: a hairline of light on top, a fine gold cut edge all round */
+.env-invite-screen.env-invite-screen--poster .env-invite-front-closed,
+.env-invite-screen.env-invite-screen--poster .env-invite-back {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 75%),
+    inset 0 0 0 1px color-mix(in srgb, var(--env-trim) 45%, transparent);
+}
+
+/* Folds and creases in warm taupe */
+.env-invite-screen.env-invite-screen--poster .env-invite-paper-folds__shadow {
+  stroke: var(--env-fold-shade);
+  stroke-opacity: 0.2;
+}
+.env-invite-screen.env-invite-screen--poster .env-invite-paper-folds__shadow--contents {
+  stroke-opacity: 0.3;
+}
+.env-invite-screen.env-invite-screen--poster .env-invite-paper-folds__crease {
+  stroke: rgb(138 109 62 / 30%);
+}
+.env-invite-screen.env-invite-screen--poster .env-invite-paper-folds__edge {
+  stroke: rgb(255 253 247 / 75%);
+}
+.env-invite-screen.env-invite-screen--poster .env-invite-flap::after {
+  background:
+    linear-gradient(180deg, transparent 50%, rgb(138 109 62 / 8%) 100%),
+    radial-gradient(60% 40% at 50% 100%, rgb(138 109 62 / 8%) 0%, transparent 70%);
+}
+
+/* Gold-leaf trim along the flap's folded edges (a bright line with a soft glint beside it) */
+.env-invite-screen.env-invite-screen--poster .env-invite-flap-edge polyline {
+  stroke: var(--env-trim);
+  stroke-width: 2.25;
+  filter: drop-shadow(0 0.5px 0 var(--env-trim-light)) drop-shadow(0 1px 1.5px rgb(138 109 62 / 30%));
+}
+
+/* Liner inside the flap and on the open back: cream + gold lace, framed in cream and gold */
+.env-invite-screen.env-invite-screen--poster .env-invite-flap-liner {
+  background-size: 44px 44px, 100% 100%;
+  box-shadow:
+    inset 0 0 0 5px var(--env-base),
+    inset 0 0 0 6px color-mix(in srgb, var(--env-trim) 70%, transparent),
+    inset 0 10px 18px -10px rgb(138 109 62 / 22%);
+}
+.env-invite-screen.env-invite-screen--poster[data-phase="flap-open"] .env-invite-back,
+.env-invite-screen.env-invite-screen--poster[data-phase="rising"] .env-invite-back,
+.env-invite-screen.env-invite-screen--poster[data-phase="photos"] .env-invite-back,
+.env-invite-screen.env-invite-screen--poster[data-phase="revealed"] .env-invite-back,
+.env-invite-screen.env-invite-screen--poster[data-phase="cta"] .env-invite-back {
+  background:
+    linear-gradient(180deg, rgb(138 109 62 / 22%) 0%, rgb(138 109 62 / 6%) 22%, transparent 45%),
+    var(--env-liner-pattern),
+    var(--env-liner-ground);
+  background-size: 100% 100%, 44px 44px, 100% 100%;
+  background-position: 0 0, center top, 0 0;
+  box-shadow:
+    inset 0 0 0 5px var(--env-base),
+    inset 0 0 0 6px color-mix(in srgb, var(--env-trim) 70%, transparent);
 }

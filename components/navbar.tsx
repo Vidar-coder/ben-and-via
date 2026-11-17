@@ -122,28 +122,19 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
         isScrolled
-          ? "shadow-[0_10px_24px_color-mix(in_srgb,var(--color-motif-medium)_22%,transparent)]"
-          : "shadow-[0_4px_12px_color-mix(in_srgb,var(--color-motif-medium)_12%,transparent)]"
+          ? "shadow-[0_6px_18px_color-mix(in_srgb,var(--color-motif-deep)_12%,transparent)]"
+          : "shadow-none"
       }`}
       style={{
-        // Soft ivory → blush bar; burgundy is kept for the lettering only
-        background:
-          "linear-gradient(180deg, color-mix(in srgb, var(--color-motif-soft) 94%, transparent) 0%, color-mix(in srgb, var(--color-motif-blush) 90%, transparent) 100%)",
+        // Plain blush-ivory bar; burgundy for the lettering only
+        background: "color-mix(in srgb, var(--color-motif-soft) 96%, transparent)",
         WebkitBackdropFilter: "blur(10px)",
         backdropFilter: "blur(10px)",
         borderBottom:
-          "1px solid color-mix(in srgb, var(--color-motif-medium) 35%, transparent)",
+          "1px solid color-mix(in srgb, var(--color-motif-deep) 16%, transparent)",
       }}
     >
-      {/* Hairline along the bottom edge: dusty rose → sage → dusty rose */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-[2px] pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, var(--color-motif-medium) 20%, var(--color-motif-yellow) 50%, var(--color-motif-medium) 80%, transparent)",
-        }}
-      />
-      
+
       <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 relative">
         <div className="flex justify-between items-center h-12 sm:h-14 md:h-16 gap-3">
           <Link
@@ -175,14 +166,14 @@ export function Navbar() {
                   className={`${link.wideOnly ? "hidden 2xl:inline-block" : ""} ${cinzel.className} group relative whitespace-nowrap px-2.5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 lg:px-3 lg:text-[0.72rem] ${
                     isActive
                       ? "text-[var(--color-motif-deep)]"
-                      : "text-[var(--color-welcome-heading)] hover:text-[var(--color-motif-deep)]"
+                      : "text-[color-mix(in_srgb,var(--color-motif-deep)_70%,transparent)] hover:text-[var(--color-motif-deep)]"
                   }`}
                 >
                   {link.label}
-                  {/* Butter underline that grows from the centre */}
+                  {/* Burgundy underline that grows from the centre */}
                   <span
                     aria-hidden
-                    className={`absolute bottom-1 left-1/2 h-px -translate-x-1/2 bg-[var(--color-motif-medium)] transition-all duration-300 ${
+                    className={`absolute bottom-1 left-1/2 h-px -translate-x-1/2 bg-[var(--color-motif-deep)] transition-all duration-300 ${
                       isActive ? "w-[60%]" : "w-0 group-hover:w-[60%]"
                     }`}
                   />
@@ -200,9 +191,9 @@ export function Navbar() {
               menuButtonColor="var(--color-motif-deep)"
               openMenuButtonColor="#FFFFFF"
               changeMenuColorOnOpen={true}
-              // One soft sky layer slides in just ahead of the panel
-              colors={["var(--color-motif-medium)"]}
-              accentColor="var(--color-welcome-heading)"
+              // One plain burgundy layer slides in just ahead of the panel
+              colors={["var(--color-motif-deep)"]}
+              accentColor="var(--color-motif-deep)"
               isFixed={true}
               activeLink={activeSection}
               onMenuOpen={() => {}}

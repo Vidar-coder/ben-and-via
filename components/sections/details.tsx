@@ -11,10 +11,9 @@ import localFont from "next/font/local"
 import { cinzel } from "@/lib/fonts"
 import { Shirt, Copy, Check, Navigation, Heart, MapPin } from "lucide-react"
 import { motion, useReducedMotion, type Variants } from "motion/react"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
 import { TintedDeco } from "@/components/tinted-deco"
 import { DecoCorners } from "@/components/deco-corners"
-import { SectionBackdrop } from "@/components/section-backdrop"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 
 const theSeasons = localFont({
@@ -43,9 +42,6 @@ const C = {
   light: "var(--color-motif-soft)",
 } as const
 
-// Same circle pattern as the gallery / love story sections (PlainBubbles paints the base)
-const sectionBg = "var(--color-bg-pattern-base)"
-
 // Soft white edge so text stays crisp over the circles (matches the gallery)
 const onBgGlow = "0 1px 0 rgb(255 255 255 / 85%), 0 0 12px rgb(255 255 255 / 70%)"
 
@@ -70,7 +66,7 @@ const softPanelStyle = {
 
 // Primary button: dusty rose → charcoal with white text (matches the rest of the invitation)
 const primaryButtonBg =
-  "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)"
+  "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
 
 
 
@@ -853,11 +849,10 @@ export function Details() {
   return (
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden`}
-      style={{ background: sectionBg }}
+      style={ivorySectionStyle}
     >
-      {/* Circle pattern + pink paper wash and rising hearts, same as the love story (section-backdrop.tsx) */}
-      <PlainBubbles />
-      <SectionBackdrop />
+      {/* Cream lace ground with lace edging, same as the welcome card / love story */}
+      <IvoryBackdrop />
       <Section
         id="details"
         className="relative z-10 pt-14 pb-12 sm:pt-16 sm:pb-14 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20 overflow-hidden"

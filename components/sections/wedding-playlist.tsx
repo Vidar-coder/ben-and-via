@@ -7,10 +7,9 @@ import { cinzel } from "@/lib/fonts"
 import localFont from "next/font/local"
 import { Music2, Disc3 } from "lucide-react"
 import { motion, useReducedMotion, type Variants } from "motion/react"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
-import { SectionBackdrop } from "@/components/section-backdrop"
 import { TintedDeco } from "@/components/tinted-deco"
 import { DecoCorners } from "@/components/deco-corners"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 interface SpotifyPlaybackUpdate {
   playingURI: string
@@ -102,7 +101,7 @@ const aboveTheBeyond = localFont({
 // White card, navy headings, body-blue text; dusty-blue buttons (no yellow for text).
 const TEAL = "var(--color-welcome-navy)"
 const BUTTON =
-  "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)"
+  "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
 const BUTTON_SHADOW =
   "0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 22%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)"
 const IVORY = "#FFF8F2"
@@ -111,9 +110,6 @@ const NAVY = TEAL
 const BODY = "var(--color-welcome-text)"
 const ACCENT = "var(--color-welcome-heading)"
 const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 60%, transparent)"
-
-// Same circle pattern as the gallery (PlainBubbles paints the base)
-const sectionBg = "var(--color-bg-pattern-base)"
 
 // Text sitting directly on the circle pattern: navy (or dusty blue) with a soft white edge
 const textGlow = "0 1px 0 rgb(255 255 255 / 90%), 0 0 12px rgb(255 255 255 / 75%)"
@@ -295,12 +291,10 @@ export function WeddingPlaylist() {
   return (
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden`}
-      style={{ background: sectionBg }}
+      style={ivorySectionStyle}
     >
-      {/* Same circle pattern as the gallery */}
-      <PlainBubbles />
-      {/* Pink paper wash + grain and rising hearts, same as the love story (section-backdrop.tsx) */}
-      <SectionBackdrop />
+      {/* Cream lace ground with lace edging, same as the welcome card / love story */}
+      <IvoryBackdrop />
       <section
         id="playlist"
         className="relative z-10 overflow-hidden pt-10 pb-9 sm:pt-16 sm:pb-14 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20"

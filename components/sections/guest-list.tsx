@@ -29,6 +29,7 @@ import { modalTitleSize, sectionType, welcomeTitleSize } from "@/lib/section-typ
 import { fetchUntilReady, isAbortError } from "@/lib/fetch-until-ready"
 import { fetchInvitationList, invalidateInvitationData, readCachedInvitationList } from "@/lib/invitation-data"
 import { TintedDeco } from "@/components/tinted-deco"
+import { SilkScreen } from "@/components/silk-screen"
 
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -54,7 +55,7 @@ const IVORY = "#FFF8F2"
 const PAPER = "#FFF8F2"
 // Guest names and avatars
 const LEAF = NAVY
-const DEEP_GRADIENT = "linear-gradient(180deg, var(--color-welcome-heading) 0%, var(--color-welcome-navy) 100%)"
+const DEEP_GRADIENT = "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)" // burgundy satin buttons
 // Round avatar behind the person icon in search results
 const SAGE_GRADIENT = `linear-gradient(160deg, ${PEACH_MID} 0%, ${PEACH} 100%)`
 const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 55%, transparent)"
@@ -617,6 +618,8 @@ export function GuestList() {
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-visible`}
     >
+    {/* Soft screen over the silk behind the RSVP card */}
+    <SilkScreen />
     <section
       id="guest-list"
       className="relative z-30 scroll-mt-16 overflow-visible px-5 pb-10 pt-12 sm:scroll-mt-20 sm:px-8 sm:pb-12 sm:pt-14 md:scroll-mt-24"

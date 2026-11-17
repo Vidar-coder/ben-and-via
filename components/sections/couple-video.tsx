@@ -10,9 +10,8 @@ import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 import localFont from "next/font/local"
 import Image from "next/image"
 import React from "react"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
-import { SectionBackdrop } from "@/components/section-backdrop"
 import { HEART_PATH } from "@/components/rising-hearts"
+import { IVORY_GOLD, IVORY_LACE_EDGE, IVORY_SECTION_BACKGROUND } from "@/lib/ivory-lace"
 
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -26,16 +25,22 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-// Paper frame with a blush edge (same as the gallery / love story photo frames)
+// Cream mat with a fine gold edge and a warm golden shadow (same look as the welcome card)
 const videoFrameStyle = {
-  borderColor: "color-mix(in srgb, var(--color-motif-blush) 90%, transparent)",
-  background: "var(--color-motif-soft)",
-  boxShadow:
-    "0 0 0 6px color-mix(in srgb, var(--color-motif-soft) 70%, transparent), 0 18px 40px -18px color-mix(in srgb, var(--color-welcome-navy) 32%, transparent)",
+  borderColor: `color-mix(in srgb, ${IVORY_GOLD} 65%, transparent)`,
+  background: "#FBF6EE",
+  boxShadow: [
+    "0 0 0 6px #FBF6EE",
+    `0 0 0 7px color-mix(in srgb, ${IVORY_GOLD} 40%, transparent)`,
+    "0 22px 44px -20px rgb(120 90 50 / 38%)",
+  ].join(", "),
 } as const
 
-// Soft white edge so text stays crisp over the circles and hearts (matches the gallery)
-const onBgGlow = "0 1px 0 rgb(255 255 255 / 85%), 0 0 12px rgb(255 255 255 / 70%)"
+// Cream lace ground for the whole section (shared with the love story below)
+const sectionBackground = { background: IVORY_SECTION_BACKGROUND } as const
+
+// Light lift so text stays crisp over the lace
+const onBgGlow = "0 1px 0 rgb(255 255 255 / 80%)"
 
 declare global {
   interface Window {
@@ -44,20 +49,20 @@ declare global {
   }
 }
 
-// Warm-gray hairlines either side of a dusty-rose heart (same as the other sections)
+// Gold hairlines either side of a small gold heart
 function OrnamentalDivider() {
   return (
     <div className="flex items-center justify-center gap-2" aria-hidden>
       <span
         className="h-px w-10 sm:w-16"
-        style={{ background: "linear-gradient(to right, transparent, var(--color-motif-medium))" }}
+        style={{ background: `linear-gradient(to right, transparent, ${IVORY_GOLD})` }}
       />
-      <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill="var(--color-motif-accent)">
+      <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill={IVORY_GOLD}>
         <path d={HEART_PATH} />
       </svg>
       <span
         className="h-px w-10 sm:w-16"
-        style={{ background: "linear-gradient(to left, transparent, var(--color-motif-medium))" }}
+        style={{ background: `linear-gradient(to left, transparent, ${IVORY_GOLD})` }}
       />
     </div>
   )
@@ -349,10 +354,9 @@ function useVideoPlayer(videoSrc: string, youtubeId: string, armed: boolean) {
   }
 }
 
-// skyBackdrop: false when a parent already paints the circle pattern behind this and the
-// next section (invitation-page.tsx → video + love story). Either way the section gets the
-// shared pink paper wash and rising hearts (section-backdrop.tsx), like the other sections.
-export function CoupleVideo({ skyBackdrop = true }: { skyBackdrop?: boolean } = {}) {
+// The section paints its own ivory-and-gold lace ground (like the welcome card), so it looks the
+// same wherever it sits. skyBackdrop is kept for compatibility and no longer changes anything.
+export function CoupleVideo(_props: { skyBackdrop?: boolean } = {}) {
   const siteConfig = useSiteConfig()
   // Fall back to the bundled config if a remote override is missing this block.
   const content = siteConfig.coupleVideo ?? defaultSiteConfig.coupleVideo
@@ -415,11 +419,25 @@ export function CoupleVideo({ skyBackdrop = true }: { skyBackdrop?: boolean } = 
   return (
     <section
       id="couple-video"
-      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden px-4 pb-10 pt-8 sm:px-6 sm:pb-12 sm:pt-10 md:pb-16 md:pt-12`}
-      style={skyBackdrop ? { background: "var(--color-bg-pattern-base)" } : undefined}
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden px-10 pb-10 pt-8 sm:px-12 sm:pb-12 sm:pt-10 md:pb-16 md:pt-12`}
+      style={sectionBackground}
     >
-      {skyBackdrop && <PlainBubbles />}
-      <SectionBackdrop />
+      {/* Lace edging down both sides of the section, with a gold rule along the top */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-1 w-[26px] opacity-80 sm:left-3"
+        style={{ background: `${IVORY_LACE_EDGE} 0 0 / 26px 24px repeat-y` }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-1 w-[26px] -scale-x-100 opacity-80 sm:right-3"
+        style={{ background: `${IVORY_LACE_EDGE} 0 0 / 26px 24px repeat-y` }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-10 top-0 h-px"
+        style={{ background: `linear-gradient(to right, transparent, ${IVORY_GOLD}, #E9D3A6, ${IVORY_GOLD}, transparent)` }}
+      />
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -434,7 +452,7 @@ export function CoupleVideo({ skyBackdrop = true }: { skyBackdrop?: boolean } = 
           </div>
           <p
             className={`font-goudy-italic mx-auto mt-4 max-w-xl sm:mt-5 md:mt-6 ${sectionType.textSnug}`}
-            style={{ color: "var(--color-welcome-text)", textShadow: onBgGlow, fontWeight: 600 }}
+            style={{ color: "#44413C", textShadow: onBgGlow, fontWeight: 600 }}
           >
             {content.subtitle}
           </p>
@@ -513,17 +531,17 @@ export function CoupleVideo({ skyBackdrop = true }: { skyBackdrop?: boolean } = 
                       className="absolute inset-0"
                       style={{
                         background:
-                          "linear-gradient(to top, color-mix(in srgb, var(--color-welcome-navy) 45%, transparent), transparent 60%)",
+                          "linear-gradient(to top, rgb(58 4 20 / 45%), transparent 60%)",
                       }}
                     />
                     <span className="absolute inset-0 flex items-center justify-center">
                       <span
                         className="relative flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20 md:h-24 md:w-24"
                         style={{
-                          backgroundColor: "color-mix(in srgb, var(--color-welcome-heading) 92%, transparent)",
-                          border: "2px solid rgb(255 255 255 / 85%)",
+                          background: "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)",
+                          border: "2px solid #E9D3A6",
                           boxShadow:
-                            "0 0 0 6px rgb(255 255 255 / 25%), 0 10px 26px color-mix(in srgb, var(--color-welcome-navy) 35%, transparent)",
+                            "0 0 0 6px rgb(251 246 238 / 35%), 0 10px 26px rgb(58 4 20 / 35%)",
                         }}
                       >
                         {started && !player.failed && !player.playing && !player.ended && player.time === 0 ? (
@@ -559,7 +577,7 @@ export function CoupleVideo({ skyBackdrop = true }: { skyBackdrop?: boolean } = 
                     }`}
                     style={{
                       background:
-                        "linear-gradient(to top, color-mix(in srgb, var(--color-welcome-navy) 70%, transparent), transparent)",
+                        "linear-gradient(to top, rgb(40 20 16 / 70%), transparent)",
                     }}
                   >
                     <button
@@ -590,11 +608,11 @@ export function CoupleVideo({ skyBackdrop = true }: { skyBackdrop?: boolean } = 
                     >
                       <span
                         className="absolute inset-y-0 left-0 rounded-full"
-                        style={{ width: `${progress * 100}%`, background: "var(--color-motif-blush)" }}
+                        style={{ width: `${progress * 100}%`, background: "#E9D3A6" }}
                       />
                       <span
                         className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
-                        style={{ left: `${progress * 100}%`, background: "var(--color-motif-accent)" }}
+                        style={{ left: `${progress * 100}%`, background: IVORY_GOLD, boxShadow: "0 0 0 2px #FBF6EE" }}
                       />
                     </div>
                     <span
@@ -629,7 +647,7 @@ export function CoupleVideo({ skyBackdrop = true }: { skyBackdrop?: boolean } = 
         <footer
           className="mt-8 space-y-4 border-t pt-6 text-center sm:mt-10 sm:space-y-5 sm:pt-8 md:mt-12"
           style={{
-            borderColor: "color-mix(in srgb, var(--color-motif-blush) 80%, transparent)",
+            borderColor: `color-mix(in srgb, ${IVORY_GOLD} 40%, transparent)`,
           }}
         >
           <OrnamentalDivider />

@@ -16,7 +16,7 @@ export const HEART_PATH =
   "M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.5 5c2 0 3.5 1.1 4.3 2.6h2.4C14 6.1 15.5 5 17.5 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"
 
 // `seed` shifts positions / timing so stacked bands don't look identical
-const makeHearts = (count: number, seed = 0) =>
+const makeHearts = (count: number, seed = 0, colors: readonly string[] = RISE_COLORS) =>
   Array.from({ length: count }, (_, n) => {
     const i = n + seed * 7
     return {
@@ -27,7 +27,7 @@ const makeHearts = (count: number, seed = 0) =>
       drift: `${((i % 2 ? 1 : -1) * (8 + (i % 4) * 6))}px`,
       tilt: `${(i % 2 ? 1 : -1) * (6 + (i % 3) * 6)}deg`,
       peak: 0.25 + ((i * 7) % 6) * 0.11,
-      color: RISE_COLORS[i % RISE_COLORS.length],
+      color: colors[i % colors.length],
     }
   })
 
@@ -67,9 +67,11 @@ type RisingHeartsProps = {
    *  top to bottom. The bands scroll with the content (no parallax). */
   fill?: boolean
   className?: string
+  /** Heart colours (cycled); defaults to the shared pink set */
+  colors?: readonly string[]
 }
 
-export function RisingHearts({ dense = false, fill = false, className = "" }: RisingHeartsProps) {
+export function RisingHearts({ dense = false, fill = false, className = "", colors = RISE_COLORS }: RisingHeartsProps) {
   const reduceMotion = useReducedMotion()
   const ref = useRef<HTMLDivElement>(null)
   const [bands, setBands] = useState(1)
@@ -90,7 +92,7 @@ export function RisingHearts({ dense = false, fill = false, className = "" }: Ri
   }, [fill])
 
   if (reduceMotion) return null
-  if (!fill) return <HeartLayer hearts={makeHearts(count)} className={className} />
+  if (!fill) return <HeartLayer hearts={makeHearts(count, 0, colors)} className={className} />
 
   // Each band rises from its own bottom edge; bands overlap upward, the outer layer clips
   return (
@@ -98,7 +100,7 @@ export function RisingHearts({ dense = false, fill = false, className = "" }: Ri
       {Array.from({ length: bands }, (_, b) => (
         <HeartLayer
           key={b}
-          hearts={makeHearts(count, b)}
+          hearts={makeHearts(count, b, colors)}
           className="story-rise--band"
           style={{ top: "auto", bottom: `${(b * 100) / bands}%`, height: `${100 / bands}%` }}
         />

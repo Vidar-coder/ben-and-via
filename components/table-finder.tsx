@@ -44,7 +44,7 @@ const BODY = "var(--color-welcome-text)"
 const LEAF = "color-mix(in srgb, var(--color-motif-yellow) 70%, #44413C)" // deep sage green
 const SUN = "var(--color-motif-accent)"
 const NAV_GOLD =
-  "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)"
+  "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
 const GOLD_BORDER = "color-mix(in srgb, var(--color-motif-medium) 65%, transparent)"
 const GOLD_BORDER_SOFT = "color-mix(in srgb, var(--color-motif-medium) 35%, transparent)"
 const CHAMPAGNE = "var(--color-motif-medium)" // sky — used for soft highlight tints

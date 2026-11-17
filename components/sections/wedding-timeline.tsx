@@ -17,6 +17,7 @@ import { cinzel } from "@/lib/fonts"
 import localFont from "next/font/local"
 import Image from "next/image"
 import { TintedDeco } from "@/components/tinted-deco"
+import { SilkScreen } from "@/components/silk-screen"
 
 
 const theSeasons = localFont({
@@ -203,6 +204,8 @@ export function WeddingTimeline() {
   return (
     <MotionConfig reducedMotion="user">
     <div className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full bg-transparent`}>
+    {/* Soft screen over the silk so the white timeline reads clearly */}
+    <SilkScreen />
     <section
       id="wedding-timeline"
       className="relative z-10 overflow-hidden py-10 sm:py-12 md:py-16 lg:py-20"

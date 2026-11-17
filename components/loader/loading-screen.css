@@ -5106,3 +5106,174 @@
   color: #9B6554;
   text-shadow: none;
 }
+
+/* ==========================================================================
+   Home hero (plain) — ivory & gold lace colour pass, matching the welcome card and
+   the envelope. Kept last so it wins over the older passes above.
+     cream       #FBF6EE → #F0E5D5 — page ground, with the welcome card's faint gold lace
+     gold        #B8925A — rules, frames, dots, countdown labels (#9C7A43 for "Invited!")
+     burgundy    #6A0D28 — "YOU'RE", the date, the venue, countdown numbers
+     charcoal    #44413C — the quieter lines ("We are getting married", the time)
+   ========================================================================== */
+.home-hero--plain {
+  --hh-burgundy: #6A0D28;
+  --hh-gold: #B8925A;
+  --hh-gold-deep: #9C7A43;
+  --hh-gold-light: #E9D3A6;
+  --hh-cream: #FBF6EE;
+  --hh-cream-deep: #F0E5D5;
+  --hh-charcoal: #44413C;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgb(255 253 248 / 85%) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E %3Cg fill='%23B8925A' fill-opacity='0.16'%3E%3Ccircle cx='11' cy='11' r='1.2'/%3E%3Ccircle cx='14.20' cy='11.00' r='1.1'/%3E%3Ccircle cx='12.60' cy='13.77' r='1.1'/%3E%3Ccircle cx='9.40' cy='13.77' r='1.1'/%3E%3Ccircle cx='7.80' cy='11.00' r='1.1'/%3E%3Ccircle cx='9.40' cy='8.23' r='1.1'/%3E%3Ccircle cx='12.60' cy='8.23' r='1.1'/%3E%3Ccircle cx='33' cy='33' r='1.2'/%3E%3Ccircle cx='36.20' cy='33.00' r='1.1'/%3E%3Ccircle cx='34.60' cy='35.77' r='1.1'/%3E%3Ccircle cx='31.40' cy='35.77' r='1.1'/%3E%3Ccircle cx='29.80' cy='33.00' r='1.1'/%3E%3Ccircle cx='31.40' cy='30.23' r='1.1'/%3E%3Ccircle cx='34.60' cy='30.23' r='1.1'/%3E%3C/g%3E %3Cg fill='%23B8925A' fill-opacity='0.12'%3E%3Ccircle cx='33' cy='11' r='0.8'/%3E%3Ccircle cx='11' cy='33' r='0.8'/%3E%3Ccircle cx='22' cy='22' r='0.6'/%3E%3Ccircle cx='0' cy='22' r='0.6'/%3E%3Ccircle cx='44' cy='22' r='0.6'/%3E%3Ccircle cx='22' cy='0' r='0.6'/%3E%3Ccircle cx='22' cy='44' r='0.6'/%3E%3C/g%3E %3C/svg%3E") 0 0 / 44px 44px,
+    linear-gradient(180deg, var(--hh-cream) 0%, #F6EEE2 55%, var(--hh-cream-deep) 100%);
+}
+
+/* Soft cream mist behind the wording */
+.home-hero--plain .home-hero-mist {
+  background: radial-gradient(
+    ellipse at center,
+    rgb(251 246 238 / 80%) 0%,
+    rgb(251 246 238 / 55%) 40%,
+    rgb(251 246 238 / 15%) 60%,
+    transparent 74%
+  );
+}
+
+/* Double frame in champagne gold */
+.home-hero-plain-frame {
+  border-color: color-mix(in srgb, var(--hh-gold, #B8925A) 60%, transparent);
+}
+.home-hero-plain-frame::after {
+  border-color: color-mix(in srgb, var(--hh-gold, #B8925A) 35%, transparent);
+}
+
+/* Title: "YOU'RE" burgundy, "Invited!" in deep gold script */
+.home-hero--plain .home-hero-title-main {
+  color: var(--hh-burgundy);
+  -webkit-text-fill-color: var(--hh-burgundy);
+  text-shadow: none;
+}
+.home-hero--plain .home-hero-title-script {
+  color: var(--hh-gold-deep);
+  -webkit-text-fill-color: var(--hh-gold-deep);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 60%);
+}
+
+/* "We are getting married" — quiet charcoal italic */
+.home-hero--plain .home-hero-eyebrow {
+  color: var(--hh-charcoal);
+  text-shadow: none;
+}
+
+/* Date: burgundy, framed by fine gold rules */
+.home-hero--plain .home-hero-date-weekday,
+.home-hero--plain .home-hero-date-side {
+  color: var(--hh-burgundy);
+  text-shadow: none;
+}
+.home-hero--plain .home-hero-date-weekday::before {
+  background: linear-gradient(90deg, transparent, var(--hh-gold));
+}
+.home-hero--plain .home-hero-date-weekday::after {
+  background: linear-gradient(90deg, var(--hh-gold), transparent);
+}
+.home-hero--plain .home-hero-date-side {
+  border-block-color: color-mix(in srgb, var(--hh-gold) 70%, transparent);
+}
+.home-hero--plain .home-hero-date-day {
+  color: var(--hh-burgundy);
+  -webkit-text-fill-color: var(--hh-burgundy);
+  filter: none;
+}
+
+/* Time in charcoal between gold dots; venue in burgundy */
+.home-hero--plain .home-hero-meta-time,
+.home-hero--plain .home-hero-meta-venue {
+  text-shadow: none;
+}
+.home-hero--plain .home-hero-meta-time {
+  color: var(--hh-charcoal);
+}
+.home-hero--plain .home-hero-meta-time::before,
+.home-hero--plain .home-hero-meta-time::after {
+  background: var(--hh-gold);
+}
+.home-hero--plain .home-hero-meta-venue {
+  color: var(--hh-burgundy);
+}
+
+/* Cover photo: cream mat, gold hairline frame and arch, warm golden shadow */
+.home-hero-cover::before {
+  border-color: color-mix(in srgb, var(--hh-gold, #B8925A) 60%, transparent);
+}
+.home-hero-cover__frame {
+  background: var(--hh-cream-deep, #F0E5D5);
+  border-color: var(--hh-cream, #FBF6EE);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--hh-gold, #B8925A) 55%, transparent),
+    0 30px 55px -30px rgb(120 90 50 / 35%),
+    0 10px 24px -14px rgb(184 146 90 / 35%);
+}
+.home-hero-cover__frame::after {
+  background: linear-gradient(180deg, transparent 72%, rgb(251 246 238 / 35%) 100%);
+}
+
+/* Countdown band: soft champagne rising from the bottom edge, gold hairline, burgundy numbers,
+   gold labels */
+.home-hero--plain .home-hero-countdown-bar {
+  background: linear-gradient(
+    to top,
+    rgb(240 229 213 / 98%) 0%,
+    rgb(246 238 226 / 92%) 50%,
+    rgb(251 246 238 / 40%) 80%,
+    transparent 100%
+  );
+  border-top: 0;
+}
+.home-hero--plain .home-hero-countdown-bar > div::before {
+  content: "";
+  display: block;
+  width: min(12rem, 50%);
+  height: 1px;
+  margin: 0 auto 0.7rem;
+  background: linear-gradient(90deg, transparent, var(--hh-gold), var(--hh-gold-light), var(--hh-gold), transparent);
+}
+.home-hero--plain .home-hero-countdown-heading {
+  color: var(--hh-charcoal);
+  text-shadow: none;
+}
+.home-hero--plain .home-hero-countdown-value {
+  color: var(--hh-burgundy);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+.home-hero--plain .home-hero-countdown-label {
+  color: var(--hh-gold-deep);
+  text-shadow: none;
+}
+
+/* ==========================================================================
+   Love story chapters — hearts & shadows in the story motif
+     golden yellow #F6C44F · cream #FFF8E6 · olive sage #7A8F5A · warm taupe #C4B49A
+   (rising heart colours are set in StorySection.tsx → STORY_HEART_COLORS)
+   ========================================================================== */
+/* Soft glow behind each chapter on the photo's side: warm taupe at the heart of it, a breath of
+   golden yellow, fading out — instead of the old charcoal-and-peach shadow */
+.love-story-root .story-open-wash--left,
+.love-story-root .story-open-wash--right {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, #C4B49A 42%, transparent) 0%,
+    color-mix(in srgb, #F6C44F 18%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+/* Photo frame: cream mat, taupe hairline, a soft olive-tinted shadow */
+.love-story-root .story-open-photo {
+  background: #FFF8E6;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #C4B49A 70%, transparent),
+    0 18px 34px -16px rgb(122 143 90 / 38%),
+    0 6px 14px -8px rgb(196 180 154 / 45%);
+}

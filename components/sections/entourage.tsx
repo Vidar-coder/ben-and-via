@@ -9,9 +9,9 @@ import { cinzel } from "@/lib/fonts"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { fetchUntilReady, isAbortError } from "@/lib/fetch-until-ready"
 import { fetchInvitationList, readCachedInvitationList } from "@/lib/invitation-data"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
 import { TintedDeco } from "@/components/tinted-deco"
 import { DecoCorners } from "@/components/deco-corners"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 
 const theSeasons = localFont({
@@ -33,9 +33,6 @@ const NAVY = "var(--color-ink-deep)"
 const SCRIPT = "var(--color-ink-accent)"
 const BODY = "var(--color-welcome-text)"
 const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 60%, transparent)"
-
-// Section background = the hero's circle pattern (PlainBubbles paints its own aqua base)
-const sectionBg = "var(--color-bg-pattern-base)"
 
 // Text sitting directly on the circle pattern (colors: globals.css → --color-on-pattern*)
 const onBg = {
@@ -816,10 +813,10 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
     <div
       ref={sectionRef}
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden`}
-      style={{ background: sectionBg }}
+      style={ivorySectionStyle}
     >
-      {/* Same circle pattern as the hero */}
-      <PlainBubbles />
+      {/* Cream lace ground with lace edging, same as the welcome card / love story */}
+      <IvoryBackdrop />
       <Section
         id="entourage"
         className="relative z-10 overflow-hidden pt-5 pb-5 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14"

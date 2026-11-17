@@ -12,6 +12,7 @@ import localFont from "next/font/local"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 import { HEART_PATH } from "@/components/rising-hearts"
+import { SilkScreen } from "@/components/silk-screen"
 
 
 const theSeasons = localFont({
@@ -63,9 +64,9 @@ const silkGlowStyle = {
     `radial-gradient(ellipse at center, rgb(${HALO} / 38%) 0%, rgb(${HALO} / 18%) 48%, transparent 74%)`,
 } as const
 
-// Primary button: deep navy with a soft peach ring
+// Primary button: burgundy satin with a soft blush ring
 const buttonStyle = {
-  background: "linear-gradient(180deg, #9B6554 0%, #875547 100%)",
+  background: "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)",
   borderColor: "rgb(255 255 255 / 70%)",
   color: "#FFFFFF",
   boxShadow:
@@ -453,6 +454,8 @@ export function Messages() {
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full`}
     >
+    {/* Soft screen over the silk so the white headings and the message wall read clearly */}
+    <SilkScreen />
     <section
       id="messages"
       className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14"

@@ -7,10 +7,9 @@ import { cinzel } from "@/lib/fonts"
 import localFont from "next/font/local"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
-import { SectionBackdrop } from "@/components/section-backdrop"
 import { TintedDeco } from "@/components/tinted-deco"
 import { DecoCorners } from "@/components/deco-corners"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 
 const theSeasons = localFont({
@@ -34,9 +33,6 @@ const IVORY = "#FFF8F2"
 const BODY = "var(--color-welcome-text)"
 const ACCENT = "var(--color-welcome-heading)"
 const SKY_TINT = (pct: number) => `color-mix(in srgb, var(--color-motif-medium) ${pct}%, white)`
-
-// Same circle pattern as the gallery (PlainBubbles paints the base)
-const sectionBg = "var(--color-bg-pattern-base)"
 
 // Text sitting directly on the circle pattern: navy (or dusty blue) with a soft white edge
 const textGlow = "0 1px 0 rgb(255 255 255 / 90%), 0 0 12px rgb(255 255 255 / 75%)"
@@ -218,12 +214,11 @@ export function FAQ({ background = true }: { background?: boolean } = {}) {
   return (
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden`}
-      style={background ? { background: sectionBg } : undefined}
+      style={background ? ivorySectionStyle : undefined}
     >
-      {/* Same circle pattern as the gallery, with the light wash + double border
-          (on the invitation page the shared wrapper paints these behind Book of Guests and FAQ) */}
-      {background && <PlainBubbles />}
-      {background && <SectionBackdrop />}
+      {/* Cream lace ground with lace edging + double border (on the invitation page the shared
+          wrapper paints these instead — see invitation-page.tsx) */}
+      {background && <IvoryBackdrop />}
       {background && content.showFrame && <div className="deco-frame" aria-hidden="true" />}
       <section
         id="faq"
@@ -320,7 +315,7 @@ export function FAQ({ background = true }: { background?: boolean } = {}) {
                           isOpen
                             ? {
                                 background:
-                                  "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)",
+                                  "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)",
                                 color: IVORY,
                                 boxShadow: "0 0 0 2px #FFFFFF, 0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 70%, transparent)",
                               }

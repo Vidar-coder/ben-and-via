@@ -18,12 +18,11 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { useSiteConfig } from "@/hooks/use-site-config"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
-import { SectionBackdrop } from "@/components/section-backdrop"
 import { sectionType } from "@/lib/section-typography"
 import { cinzel } from "@/lib/fonts"
 import { TintedDeco } from "@/components/tinted-deco"
 import { DecoCorners } from "@/components/deco-corners"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 
 const theSeasons = localFont({
@@ -42,8 +41,8 @@ const aboveTheBeyond = localFont({
 // White cards, navy headings, body-blue text; dusty-blue buttons that deepen to navy on hover.
 const TEAL = "var(--color-welcome-navy)"
 const BUTTON =
-  "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)"
-const BUTTON_HOVER = "#875547"
+  "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
+const BUTTON_HOVER = "#4E0A1E"
 const BUTTON_SHADOW = "0 8px 18px -10px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)"
 const IVORY = "#FFF8F2"
 const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 60%, transparent)"
@@ -55,9 +54,6 @@ const palette = {
   label: "var(--color-welcome-heading)",
   accent: "var(--color-welcome-heading)",
 } as const
-
-// Same circle pattern as the gallery (PlainBubbles paints the base)
-const sectionBg = "var(--color-bg-pattern-base)"
 
 // Text sitting directly on the background: deep slate with a soft white edge (matches the gallery)
 const onBgGlow = "0 1px 0 rgb(255 255 255 / 85%), 0 0 12px rgb(255 255 255 / 70%)"
@@ -295,12 +291,11 @@ export function Footer({ background = true }: { background?: boolean } = {}) {
   return (
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden`}
-      style={background ? { background: sectionBg } : undefined}
+      style={background ? ivorySectionStyle : undefined}
     >
-      {/* Same circle pattern as the gallery, with the light wash + double border
-          (on the invitation page the shared wrapper paints these behind See You There and the footer) */}
-      {background && <PlainBubbles />}
-      {background && <SectionBackdrop />}
+      {/* Cream lace ground with lace edging + double border (on the invitation page the shared
+          wrapper paints these instead — see invitation-page.tsx) */}
+      {background && <IvoryBackdrop />}
       {background && content.showFrame && <div className="deco-frame" aria-hidden="true" />}
 
       {/* Corner florals (content/site.ts → footer.decos) — bottom only; See You There sits above */}

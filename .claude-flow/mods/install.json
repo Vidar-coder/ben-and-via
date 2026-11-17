@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "installedAt": "2026-11-17T11:51:10.146Z",
+  "files": {
+    "/home/lance/new-invitation-2026/November/Ben-and-Via/Ben-and-via/.claude/settings.json": {
+      "plugins": [
+        "ruflo-mods@ruflo",
+        "ruflo-swarm@ruflo",
+        "ruflo-console@ruflo"
+      ],
+      "marketplace": true,
+      "env": true,
+      "claudeInstalled": [
+        "ruflo-mods@ruflo",
+        "ruflo-swarm@ruflo",
+        "ruflo-console@ruflo"
+      ]
+    }
+  }
+}

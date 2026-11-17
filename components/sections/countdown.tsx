@@ -9,6 +9,7 @@ import { useSiteConfig } from "@/hooks/use-site-config"
 import Counter from "@/components/Counter"
 import Image from "next/image"
 import { parseWeddingDate } from "@/lib/wedding-date"
+import { SilkScreen } from "@/components/silk-screen"
 
 interface TimeLeft {
   days: number
@@ -115,8 +116,8 @@ function CountdownUnit({ value, label }: CountdownUnitProps) {
           className="relative rounded-xl border border-white/80 px-2.5 py-2.5 sm:rounded-2xl sm:px-3.5 sm:py-3.5 md:px-4 md:py-4"
           // Faint navy tint behind each number so it stands out on the peach silk
           style={{
-            background: "color-mix(in srgb, var(--color-welcome-navy) 14%, transparent)",
-            boxShadow: "0 6px 18px -10px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)",
+            background: "rgb(18 22 14 / 45%)",
+            boxShadow: "0 6px 18px -10px rgb(0 0 0 / 55%)",
           }}
         >
           <div className="relative z-10 flex items-center justify-center">
@@ -251,6 +252,8 @@ export function Countdown() {
       // text-shadow is inherited, so every line of text in the countdown gets the navy halo
       style={{ textShadow: ON_SILK_HALO }}
     >
+      {/* Soft screen over the silk so the white text reads (components/silk-screen.tsx) */}
+      <SilkScreen shape="spotlight" strength={0.42} blur />
     <Section
       id="countdown"
       className="relative overflow-hidden py-10 sm:py-12 md:py-16 lg:py-20"

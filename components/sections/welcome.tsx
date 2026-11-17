@@ -5,6 +5,12 @@ import { motion } from "motion/react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { sectionType, welcomeTitleSize } from "@/lib/section-typography"
 import { cinzel } from "@/lib/fonts"
+import {
+  IVORY_GOLD as WELCOME_GOLD,
+  IVORY_LACE_FIELD as WELCOME_LACE_FIELD,
+  IVORY_LACE_EDGE as WELCOME_LACE_EDGE,
+} from "@/lib/ivory-lace"
+import { SilkScreen } from "@/components/silk-screen"
 
 
 const theSeasons = localFont({
@@ -19,6 +25,9 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
+// Ivory-and-gold card: warm cream panel, a faint gold lace field, lace edging down both sides,
+// fine champagne-gold hairline frames and soft light from the top
+
 function OrnamentalDivider({ compact = false }: { compact?: boolean }) {
   return (
     <div className={`flex items-center justify-center ${compact ? "gap-1.5" : "gap-2"}`}>
@@ -26,15 +35,15 @@ function OrnamentalDivider({ compact = false }: { compact?: boolean }) {
         className={`h-px ${compact ? "w-6 sm:w-10" : "w-8 sm:w-12"}`}
         style={{
           background:
-            "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-welcome-navy) 45%, transparent))",
+            `linear-gradient(to right, transparent, color-mix(in srgb, ${WELCOME_GOLD} 70%, transparent))`,
         }}
       />
-      <span className="h-0.5 w-0.5 rounded-full bg-motif-teal/55 sm:h-1 sm:w-1" aria-hidden />
+      <span className="h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5" style={{ background: WELCOME_GOLD, boxShadow: "0 0 0 2px rgb(184 146 90 / 18%)" }} aria-hidden />
       <span
         className={`h-px ${compact ? "w-6 sm:w-10" : "w-8 sm:w-12"}`}
         style={{
           background:
-            "linear-gradient(to left, transparent, color-mix(in srgb, var(--color-welcome-navy) 45%, transparent))",
+            `linear-gradient(to left, transparent, color-mix(in srgb, ${WELCOME_GOLD} 70%, transparent))`,
         }}
       />
     </div>
@@ -89,32 +98,58 @@ export function Welcome() {
       id="welcome"
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative px-4 py-10 sm:px-6 sm:py-14 md:px-8 md:py-16`}
     >
-      <div className="mx-auto w-full max-w-3xl">
+      {/* Soft screen over the silk around the card */}
+      <SilkScreen />
+      <div className="relative mx-auto w-full max-w-3xl">
         <motion.article
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.65, ease: [0.22, 0.61, 0.36, 1] }}
-          className="relative @container/welcome overflow-visible rounded-xl border px-5 py-8 sm:rounded-2xl sm:px-9 sm:py-10 md:px-11 md:py-12"
+          className="relative @container/welcome overflow-visible rounded-xl border px-10 py-8 sm:rounded-2xl sm:px-12 sm:py-10 md:px-14 md:py-12"
           style={{
-            borderColor: "color-mix(in srgb, var(--color-welcome-navy) 22%, transparent)",
-            background: "var(--color-motif-soft)",
-            boxShadow:
-              "0 10px 30px color-mix(in srgb, var(--color-welcome-navy) 18%, transparent)",
+            borderColor: `color-mix(in srgb, ${WELCOME_GOLD} 55%, transparent)`,
+            background: [
+              // soft light falling from the top, a little shade toward the foot
+              "radial-gradient(120% 70% at 50% 0%, rgb(255 253 248 / 85%) 0%, transparent 60%)",
+              "radial-gradient(90% 50% at 50% 100%, rgb(214 190 150 / 18%) 0%, transparent 70%)",
+              WELCOME_LACE_FIELD,
+              "linear-gradient(180deg, #FBF6EE 0%, #F6EEE2 55%, #F0E5D5 100%)",
+            ].join(", "),
+            backgroundSize: "100% 100%, 100% 100%, 44px 44px, 100% 100%",
+            boxShadow: [
+              "inset 0 1px 0 rgb(255 255 255 / 80%)",
+              "inset 0 0 40px rgb(214 190 150 / 18%)",
+              "0 18px 40px -18px rgb(120 90 50 / 30%)",
+              "0 4px 12px rgb(120 90 50 / 10%)",
+            ].join(", "),
           }}
         >
+          {/* Lace edging down both sides (mirrored on the right) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-y-3 left-1.5 w-[26px] sm:left-2.5"
+            style={{ background: `${WELCOME_LACE_EDGE} 0 0 / 26px 24px repeat-y` }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-y-3 right-1.5 w-[26px] -scale-x-100 sm:right-2.5"
+            style={{ background: `${WELCOME_LACE_EDGE} 0 0 / 26px 24px repeat-y` }}
+          />
+
+          {/* Inner hairline frame in champagne gold */}
           <div
             className="wedding-frame-inner hidden min-[400px]:block"
-            style={{ borderColor: "color-mix(in srgb, var(--color-welcome-navy) 22%, transparent)" }}
+            style={{ borderColor: `color-mix(in srgb, ${WELCOME_GOLD} 45%, transparent)` }}
             aria-hidden
           />
 
+          {/* Gilded rule along the top edge */}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-8 top-0 h-px sm:inset-x-10 md:inset-x-12"
             style={{
-              background:
-                "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+              background: `linear-gradient(to right, transparent, ${WELCOME_GOLD}, #E9D3A6, ${WELCOME_GOLD}, transparent)`,
             }}
           />
 
@@ -169,7 +204,7 @@ export function Welcome() {
 
             <footer className="space-y-2 border-t pt-8 text-center sm:space-y-2.5 sm:pt-9 md:pt-10"
               style={{
-                borderColor: "color-mix(in srgb, var(--color-welcome-navy) 18%, transparent)",
+                borderColor: `color-mix(in srgb, ${WELCOME_GOLD} 40%, transparent)`,
               }}
             >
               <p

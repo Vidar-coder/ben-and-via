@@ -3004,16 +3004,23 @@
 
 /* "View the invitation": burgundy pill, the one strong accent on screen */
 .env-invite-screen--plain .env-invite-enter-btn {
-  color: #FFF8F2;
-  background: #44413C;
-  border: 1px solid color-mix(in srgb, #B97865 55%, transparent);
+  color: #F6E9DF;
+  background: linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%);
+  border: 1px solid color-mix(in srgb, #D4B07A 60%, transparent);
   box-shadow:
-    0 0 0 4px rgb(255 248 242 / 60%),
-    0 12px 26px color-mix(in srgb, #44413C 22%, transparent);
+    0 0 0 4px rgb(246 233 223 / 60%),
+    inset 0 1px 0 rgb(255 214 222 / 22%),
+    0 12px 26px color-mix(in srgb, #6A0D28 35%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-enter-btn:hover {
-  background: color-mix(in srgb, #44413C 88%, #44413C);
+  color: #F6E9DF;
+  background: linear-gradient(180deg, #6A0D28 0%, #4E0A1E 100%);
+}
+
+.env-invite-screen--plain .env-invite-enter-btn:focus-visible {
+  outline: 2px solid #D4B07A;
+  outline-offset: 4px;
 }
 
 .env-invite-screen--plain .env-invite-ghost-date {

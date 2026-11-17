@@ -14,8 +14,8 @@ import { prefetchInvitationData } from "@/lib/invitation-data"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { WeddingPlaylist } from "@/components/sections/wedding-playlist"
 import { PlainBubbles } from "@/components/loader/PlainBubbles"
-import { SectionBackdrop } from "@/components/section-backdrop"
 import type { SponsorsList } from "@/components/sections/entourage"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 // Wait this long after the loader starts before mounting the invitation sections behind it
 const MAIN_MOUNT_DELAY_MS = 400
@@ -91,7 +91,9 @@ const sectionsRevealVariants = {
 }
 
 /** WebGL Silk needs a hex color. */
-const SILK_COLOR = "#D9A08C" // peach silk behind the invitation sections
+// Silk behind the invitation sections (React Bits Silk, components/silk.jsx), in the motif sage
+const SILK_COLOR = "#8A9A72" // motif sage
+const SILK_SHEEN_COLOR = "#F6E9DF" // highlights tinted blush ivory
 
 type InvitationPageProps = {
   /** Which principal-sponsor sheet the entourage shows (googleAPI.sponsorsInviteOne / Two) */
@@ -277,11 +279,18 @@ export function InvitationPage({ sponsorsList, showEntourage = true }: Invitatio
                   }
                 >
                   <Silk
-                    speed={8}
-                    scale={0.9}
                     color={SILK_COLOR}
-                    noiseIntensity={0}
-                    rotation={0.3}
+                    sheenColor={SILK_SHEEN_COLOR}
+                    speed={5}
+                    scale={1}
+                    rotation={0}
+                    sheen={0.5}
+                    depth={0.5}
+                    glow={0.3}
+                    noiseIntensity={1.5}
+                    mouseInteraction
+                    clickRipple
+                    intro
                   />
                 </Suspense>
               </motion.div>
@@ -318,7 +327,7 @@ export function InvitationPage({ sponsorsList, showEntourage = true }: Invitatio
               {/* One continuous circle pattern behind the video and love story (same as Details) — no seam between them */}
               <div className="relative">
                 <PlainBubbles />
-               <CoupleVideo skyBackdrop={false} />
+               {/* <CoupleVideo skyBackdrop={false} /> */}
                 <LoveStory skyBackdrop={false} />
               </div>
               <Countdown />
@@ -329,12 +338,10 @@ export function InvitationPage({ sponsorsList, showEntourage = true }: Invitatio
               <WeddingTimeline />
               {showEntourage && <Entourage sponsorsList={sponsorsList} />}
               <GuestList />
-              {/* One continuous circle pattern behind Book of Guests and FAQ — no seam between them */}
-              <div className="relative isolate" style={{ background: "var(--color-bg-pattern-base)" }}>
-                {/* Pattern repeated down the height so circles stay dense across both sections */}
-                <PlainBubbles bands={3} />
-                {/* Pink paper wash + rising hearts (section-backdrop.tsx) + one double border around both sections */}
-                <SectionBackdrop />
+              {/* One continuous cream lace ground behind Book of Guests and FAQ — no seam between them */}
+              <div className="relative isolate" style={ivorySectionStyle}>
+                {/* Lace edging + gilded top rule, and one double border around both sections */}
+                <IvoryBackdrop />
                 {siteConfig.bookOfGuests.showFrame && <div className="deco-frame" aria-hidden="true" />}
                 <BookOfGuests background={false} />
                 <FAQ background={false} />
@@ -344,10 +351,9 @@ export function InvitationPage({ sponsorsList, showEntourage = true }: Invitatio
               <SnapShare />
               {/* Full-bleed photo section — paints its own background, so it sits outside the footer's pattern */}
               <SeeYouThere />
-              <div className="relative isolate" style={{ background: "var(--color-bg-pattern-base)" }}>
-                <PlainBubbles bands={3} />
-                {/* Pink paper wash + rising hearts (section-backdrop.tsx) + double border around the footer */}
-                <SectionBackdrop />
+              <div className="relative isolate" style={ivorySectionStyle}>
+                {/* Cream lace ground + lace edging (same as the other sections) and a double border around the footer */}
+                <IvoryBackdrop />
                 {siteConfig.seeYouThere.plain.showFrame && <div className="deco-frame" aria-hidden="true" />}
                 <Footer background={false} />
               </div>

@@ -67,35 +67,37 @@ export type AttireColor = string | { name: string; hex: string }
 
 // ── The couple ──────────────────────────────────────────────────────────────
 const COUPLE = {
-  bride: "Jaidee Ashley C Mangahis",
-  brideNickname: "Jaidee",
-  groom: "Geronimo E Getida III",
-  groomNickname: "Jiro",
+  bride: "Olivia Bernadette Papilla Reodique",
+  brideNickname: "Via",
+  groom: "Benedict Mariano Dumlao",
+  groomNickname: "Ben",
 }
 
 // ── Date & times ────────────────────────────────────────────────────────────
-const WEDDING_DATE = "February 27, 2027" // e.g. "June 5, 2027"
-const WEDDING_DAY = "Saturday" // 
+const WEDDING_DATE = "January 8, 2027" // e.g. "June 5, 2027"
+const WEDDING_DAY = "Friday" //
 const TIMES = {
   entourageCall: "2:00 PM", // entourage assembly
-  guestArrival: "2:30 PM", // guests arrival / assembly (shown in Event Details + reminders)
-  ceremony: "3:00 PM",
-  reception: "5:00 PM", // start of program
+  guestArrival: "2:00 PM", // arrival at the church (shown in Event Details + reminders)
+  ceremony: "2:30 PM", // wedding ceremony
+  reception: "5:30 PM", // arrival at the reception venue
 }
 
 // ── Venues ──────────────────────────────────────────────────────────────────
 
+// map: a Google Maps search link — swap in the venue's own share link (maps.app.goo.gl/…) if you have it
+// photos: couple photos as placeholders until venue photos are added (files in /public)
 const CEREMONY_VENUE = {
-  name: "Casa Terrazola",
-  address: "Casa Terrazola, Paligawan Road, Brgy. Bucal, Silang, Cavite",
-  map: "https://maps.app.goo.gl/xVv4MkoxmTMeTtDn6",
-  photos: ["/Details/update-recep (1).jpg", "/Details/update-recep (2).jpg", "/Details/update-recep (3).jpg", "/Details/update-recep (4).jpg"],
+  name: "Shrine of the Holy Face of Jesus",
+  address: "Nampicuan, Nueva Ecija",
+  map: "https://www.google.com/maps/search/?api=1&query=Shrine+of+the+Holy+Face+of+Jesus+Nampicuan+Nueva+Ecija",
+  photos: ["/desktop-background/couple (3).webp", "/desktop-background/couple (17).webp", "/desktop-background/couple (22).webp"],
 }
 const RECEPTION_VENUE = {
-  name: " Sheperds Palace, Dalayap, Candaba, Pampanga",
-  address: "brgy Candaba, Pampanga, Philippines",
-  map: "https://maps.app.goo.gl/buRWssEcVn2vuJxf7",
-  photos: ["/Details/reception (4).jpg", "/Details/reception (5).jpg", "/Details/reception (6).jpg"],
+  name: "Sirmata Ecofarm and Nature Park",
+  address: "Cuyapo, Nueva Ecija",
+  map: "https://www.google.com/maps/search/?api=1&query=Sirmata+Ecofarm+and+Nature+Park+Cuyapo+Nueva+Ecija",
+  photos: ["/desktop-background/couple (8).webp", "/desktop-background/couple (12).webp", "/desktop-background/couple (30).webp"],
 }
 
 // ── Venue cards (Event Details section) ─────────────────────────────────────
@@ -108,7 +110,7 @@ const RECEPTION_VENUE = {
 // showDate     = show the big Month / Day / Year
 // showArrival  = show "Arrival: <guest arrival time>" (otherwise "At <time>")
 const VENUE_CARDS = {
-  layout: "combined" as "separate" | "combined",
+  layout: "separate" as "separate" | "combined",
   // Used when layout is "combined"
   combined: {
     badge: "Ceremony & Reception",
@@ -144,7 +146,7 @@ const RSVP = {
   coordinator: "{groom} / {bride}", // {groom} / {bride} → couple nicknames
   phone: "to be announced",
 }
-const HASHTAGS = ["#JiroAndJaidee"] // official wedding hashtag (Snap & Share, reminders)
+const HASHTAGS = ["#BenAndVia"] // official wedding hashtag (Snap & Share, reminders)
 
 // ── Attire guide (Event Details → Attire Guidelines) ────────────────────────
 // SHOW = which cards to display AND their order, top to bottom. Examples:
@@ -165,10 +167,9 @@ const HASHTAGS = ["#JiroAndJaidee"] // official wedding hashtag (Snap & Share, r
 // Guest dress code colors — also shown in the "Dress Code" gentle reminder
 
 const DRESS_CODE_PALETTE: AttireColor[] = [
-  { name: "Deep Burgundy", hex: "#821B35" },
-  { name: "Silver Gray", hex: "#BFC0C5" },
-  { name: "Champagne Beige", hex: "#C7A68D" },
-  { name: "Classic Black", hex: "#252326" },
+  { name: "Green", hex: "#5E8C4A" },
+  { name: "Yellow", hex: "#F2C230" },
+  { name: "Orange", hex: "#E8833A" },
 ];
 
 // Attire groups shown in the Details section (components/sections/details.tsx).
@@ -178,172 +179,89 @@ const DRESS_CODE_PALETTE: AttireColor[] = [
 //   Each side (ladies / gentlemen) has a label, an optional intro (details, with an
 //   optional highlighted phrase) and an optional list of roles with what they wear.
 const ATTIRE = {
-  show: ["guests","sponsors","entourage"] as AttireGroupId[],
+  show: ["guests", "sponsors", "entourage"] as AttireGroupId[],
 
- 
-entourage: {
-  title: "Entourage",
-  image: "/Details/entourage.png",
-  dressCode: "Formal Attire",
-
-  palette: [
-    { name: "Soft Rose Gold", hex: "#D7A19B" },
-    { name: "Dusty Rose", hex: "#D49AA3" },
-    { name: "Light Stone Gray", hex: "#B5AEB0" },
-    { name: "Deep Burgundy", hex: "#851638" },
-    { name: "Charcoal Gray", hex: "#3D393C" },
-  ] as AttireColor[],
-
-  note:
-    "A romantic blend of soft rose gold and dusty rose gowns, " +
-    "complemented by elegant stone gray suits and rich burgundy " +
-    "accents for a timeless, sophisticated celebration.",
-
-  ladies: {
-    label: "Bridesmaids & Flower Girls",
-    details:
-      "Elegant floor-length gowns in soft rose gold and " +
-      "dusty rose, featuring flowing chiffon, satin, or " +
-      "tulle fabrics. The Maid of Honor will stand out in " +
-      "a sophisticated deep burgundy gown. Flower girls " +
-      "may wear matching blush rose dresses with delicate " +
-      "floral accents.",
-    highlight: "Rose Gold, Dusty Rose & Burgundy Gowns",
-    roles: [] as { role: string; attire: string }[],
-  },
-
-  gentlemen: {
-    label: "Groomsmen & Bearers",
-    details:
-      "Classic light stone gray formal suits paired with " +
-      "crisp white shirts, coordinating gray neckties, " +
-      "and polished black formal shoes. The Best Man " +
-      "will wear a distinguished charcoal gray suit " +
-      "with a deep burgundy tie. Bearers may wear " +
-      "matching light gray suits.",
-    highlight: "Stone Gray Suits & Burgundy Accents",
-    roles: [] as { role: string; attire: string }[],
-  },
-},
-
-
-  family: {
-    title: "Family",
-    image: "/Details/Family.png",
-    dressCode: "Formal Attire",
+  entourage: {
+    title: "Entourage",
+    image: "/Details/entourage.png",
+    dressCode: "Classic Filipino",
     palette: [
-      { name: "Blue", hex: "#4E86B7" },
-      { name: "Yellow", hex: "#F6D35B" },
+      { name: "Fuchsia Pink", hex: "#D6337A" },
+      { name: "Barong Ecru", hex: "#EFE6D2" },
       { name: "Black", hex: "#1E1E1E" },
+      { name: "Grey", hex: "#8C8C8C" },
     ] as AttireColor[],
     note: "",
     ladies: {
       label: "Ladies",
       details: "",
       highlight: "",
-      roles: [
-        { role: "Mothers of the Bride & Groom", attire: "Blue long dress." },
-        { role: "Sisters", attire: "Yellow gown." },
-      ],
+      roles: [{ role: "Bridesmaids", attire: "Fuchsia pink" }],
     },
     gentlemen: {
       label: "Gentlemen",
       details: "",
       highlight: "",
       roles: [
-        { role: "Fathers of the Bride & Groom", attire: "Black suit with a blue necktie." },
-        { role: "Brothers", attire: "All-black suit and necktie." },
+        { role: "Best Man", attire: "Barong and black pants" },
+        { role: "Groomsmen", attire: "Barong and grey pants" },
       ],
     },
   },
 
-  
-
-sponsors: {
-  title: "Principal Sponsors",
-  image: "/Details/sponsor.png",
-  dressCode: "Formal Attire",
-
-  palette: [
-    { name: "Coral Pink", hex: "#F58F91" },
-    { name: "Classic Black", hex: "#242225" },
-    { name: "Crisp White", hex: "#FFFFFF" },
-  ] as AttireColor[],
-
-  note:
-    "Elegant coral pink gowns for our Ninangs, " +
-    "beautifully complemented by classic black formal " +
-    "suits for our Ninongs, creating a timeless and " +
-    "sophisticated celebration.",
-
-  ladies: {
-    label: "Ninang",
-    details:
-      "Elegant floor-length coral pink gowns in " +
-      "flowing chiffon, satin, or tulle. Delicate " +
-      "floral embellishments, soft draping, and " +
-      "tasteful beadwork are welcome. Any elegant " +
-      "neckline or sleeve style may be worn.",
-    highlight: "Coral Pink Formal Gowns",
-    roles: [] as { role: string; attire: string }[],
+  family: {
+    title: "Family",
+    image: "/Details/Family.png",
+    dressCode: "Formal Attire",
+    palette: [] as AttireColor[],
+    note: "",
+    ladies: { label: "Ladies", details: "", highlight: "", roles: [] as { role: string; attire: string }[] },
+    gentlemen: { label: "Gentlemen", details: "", highlight: "", roles: [] as { role: string; attire: string }[] },
   },
 
-  gentlemen: {
-    label: "Ninong",
-    details:
-      "Classic black formal suits paired with " +
-      "crisp white long-sleeved dress shirts, " +
-      "black neckties, and polished black " +
-      "leather shoes. A white pocket square " +
-      "may be added for an elegant finishing touch.",
-    highlight: "Classic Black Suits with Black Ties",
-    roles: [] as { role: string; attire: string }[],
-  },
-},
-
-
-
-
-
-guests: {
-  title: "Wedding Guests",
-  image: "/Details/guest.png",
-  dressCode: "Semi-Formal or Formal Attire",
-  palette: DRESS_CODE_PALETTE,
-
-  note:
-    "Celebrate with us in elegant shades of deep burgundy, " +
-    "silver gray, champagne beige, and classic black. " +
-    "Choose your favorite shade from our wedding palette " +
-    "for a timeless and beautifully coordinated celebration.",
-
-  ladies: {
-    label: "Ladies",
-    details:
-      "Elegant midi, ankle-length, or floor-length dresses " +
-      "in deep burgundy, silver gray, or champagne beige. " +
-      "Flowing chiffon, satin, and soft textured fabrics " +
-      "are encouraged. Delicate floral patterns, " +
-      "sophisticated draping, and tasteful embellishments " +
-      "are welcome.",
-    highlight: "Burgundy, Silver Gray & Champagne Beige Dresses",
-    roles: [] as { role: string; attire: string }[],
+  sponsors: {
+    title: "Principal Sponsors",
+    image: "/Details/sponsor.png",
+    dressCode: "Classic Filipino",
+    palette: [
+      { name: "Burgundy", hex: "#6A0D28" },
+      { name: "Barong Ecru", hex: "#EFE6D2" },
+      { name: "Dark Brown", hex: "#4A3226" },
+    ] as AttireColor[],
+    note: "",
+    ladies: {
+      label: "Ninang",
+      details: "",
+      highlight: "",
+      roles: [{ role: "Ninang", attire: "Burgundy" }],
+    },
+    gentlemen: {
+      label: "Ninong",
+      details: "",
+      highlight: "",
+      roles: [{ role: "Ninong", attire: "Barong and dark brown" }],
+    },
   },
 
-  gentlemen: {
-    label: "Gentlemen",
-    details:
-      "Smart semi-formal or formal attire featuring " +
-      "collared shirts, tailored trousers, or blazers " +
-      "in classic black, champagne beige, silver gray, " +
-      "or deep burgundy. Suits are welcome but optional. " +
-      "Complete the look with polished leather dress shoes.",
-    highlight: "Classic Black, Burgundy & Neutral Formal Attire",
-    roles: [] as { role: string; attire: string }[],
+  guests: {
+    title: "Wedding Guests",
+    image: "/Details/guest.png",
+    dressCode: "Summer Palette",
+    palette: DRESS_CODE_PALETTE,
+    note: "Ladies, choose a floor-length dress in green, yellow, or orange from our summer palette.",
+    ladies: {
+      label: "Ladies",
+      details: "Floor-length dresses in green, yellow, or orange.",
+      highlight: "green, yellow, or orange",
+      roles: [] as { role: string; attire: string }[],
+    },
+    gentlemen: {
+      label: "Gentlemen",
+      details: "Polo with chinos or suit trousers.",
+      highlight: "Polo with chinos or suit trousers",
+      roles: [] as { role: string; attire: string }[],
+    },
   },
-},
-
-
 }
 
 // ── Website address (used for QR codes, link previews, table finder) ────────
@@ -367,35 +285,35 @@ const DISPLAY_MODE = "plain" as "photos" | "plain"
 
 // ── Shared images ───────────────────────────────────────────────────────────
 const BRAND = {
-  monogram: "/monogram/Elegant Black Calligraphic J Monogram.png", // monogram (loader, envelope, closing)
-  coupleNameImage: "/Details/newcoupelNames.png", // couple-name lettering (loader, envelope)
-  seal: "/monogram/newSeal.png", // envelope wax seal
+  monogram: "/monogram/new-mono.webp", // monogram (loader, envelope, closing)
+  coupleNameImage: "/monogram/new-mono.png", // couple-name lettering (loader, envelope)
+  seal: "/monogram/new-seal.png", // envelope wax seal
   backgroundMusic: "/background_music/Palagi - Tj Monterde Violin Cover by BOJO.mp3",
 }
 
 // Couple photos reused across the site (gallery, loader, reminders, snap & share, closing)
 // — every portrait in /public/mobile-background
 const COUPLE_PHOTOS = Array.from(
-  { length: 12 },
+  { length: 24 },
   (_, i) => `/mobile-background/couple (${i + 1}).webp`,
 )
 
 // Portraits for the envelope reveal + the main cover photo (soft natural light, no heavy filters)
 const COUPLE_PORTRAITS = {
-  groom: "/mobile-background/couple (7).webp", // left photo in the envelope
-  bride: "/mobile-background/couple (12).webp", // right photo in the envelope
-  cover: "/mobile-background/couple (1).webp", // photo pulled out of the envelope + home hero cover photo
+  groom: "/mobile-background/couple (2).webp", // left photo in the envelope
+  bride: "/mobile-background/couple (15).webp", // right photo in the envelope
+  cover: "/mobile-background/couple (6).webp", // photo pulled out of the envelope + home hero cover photo
 }
 
 // Sliding photo marquee behind the loader and envelope.
 // Phones use the portrait shots in /public/mobile-background, desktop the landscape
 // shots in /public/desktop-background — update the counts when files are added/removed.
-const MARQUEE_PHOTO_COUNT = 26
+const MARQUEE_PHOTO_COUNT = 24
 const MARQUEE_PHOTOS = Array.from(
   { length: MARQUEE_PHOTO_COUNT },
   (_, i) => `/mobile-background/couple (${i + 1}).webp`,
 )
-const MARQUEE_PHOTO_COUNT_DESKTOP = 28
+const MARQUEE_PHOTO_COUNT_DESKTOP = 41
 const MARQUEE_PHOTOS_DESKTOP = Array.from(
   { length: MARQUEE_PHOTO_COUNT_DESKTOP },
   (_, i) => `/desktop-background/couple (${i + 1}).webp`,
@@ -405,13 +323,13 @@ const MARQUEE_PHOTOS_DESKTOP = Array.from(
 // Change a path here to swap it on every section at once.
 // To change ONE section only, override it there, e.g. decos: { ...SECTION_DECOS, footerVine: "" }
 const DECOR = {
-  cornerTopLeft: "/deco/new-deco/top-left.png",
-  cornerTopRight: "/deco/new-deco/top-right.png",
-  cornerBottomLeft: "/deco/new-deco/bottom-left.png",
-  cornerBottomRight: "/deco/new-deco/bottom-right.png",
+  cornerTopLeft: "/deco/new/top-left.png",
+  cornerTopRight: "/deco/new/top-right.png",
+  cornerBottomLeft: "/deco/new/bottom-left.png",
+  cornerBottomRight: "/deco/new/bottom-right.png",
   cornerOverlayTopLeft: "/deco/ivory-peach-v1/top-left-corner.png", // floral corner layered over the top vines (loader + envelope)
   cornerOverlayTopRight: "/deco/ivory-peach-v1/top-right-corner.png",
-  headerOrnament:  "/deco/new-deco/header.png", // small sprig above titles
+  headerOrnament:  "/deco/new/header.png", // small sprig above titles
   footerVine: "/deco/new-deco/header.png", // long vine at section ends
   sideLeft: "/deco/ivory-peach-v1/side-left.png", // love story side sprigs
   sideRight: "/deco/ivory-peach-v1/side-right.png",
@@ -483,8 +401,8 @@ export const siteConfig = {
     time: TIMES.ceremony,
     venue: CEREMONY_VENUE.name,
     tagline: "are getting married!!!!!",
-    theme: "Gray & Blush Pink",
-    motif: "#9A9294, #A8606F, #EBCBCF, #F3E8E6",
+    theme: "Classic Filipino · Summer Palette",
+    motif: "#C56A4A, #F6E9DF, #8A9A72, #D9C3AB, #6A0D28",
   },
   // Tap-to-open card shown before the loading screen (components/loader/OpeningCard.tsx):
   // a gate-fold card tied with a satin bow. On tap the bow unties, light runs through the gold,
@@ -501,22 +419,20 @@ export const siteConfig = {
     ribbonY: "47.5%",
     images: {
       // Front of the card, split down the middle into the two doors (portrait, ~9:16)
-      // (the -opt files are phone-sized re-encodes of kart.webp / kurdele-fiyonk.webp — ~60% smaller
-      // so the card shows sooner; the originals are kept alongside)
-      card: "/loadingImages/kart-opt.webp",
-      // Bow with its tails on a transparent background (826×1157 — knot at 50% across, 19.5% down)
-      bow: "/loadingImages/kurdele-fiyonk-opt.webp",
-      // The two halves of the ribbon band, transparent background (left half / right half)
-      ribbonLeft: "/loadingImages/kurdele-sol.webp",
-      ribbonRight: "/loadingImages/kurdele-sag.webp",
+      card: "/loading-deco/front-card.png",
+      // Bow with its tails and short band ends, transparent background (1322×1190 — knot at
+      // 50% across, 29% down; band ends are 0.22× its width tall)
+      bow: "/loading-deco/ribbon-whole.png",
+      // A straight piece of the same satin band, transparent margins (1402×1122) — one copy per
+      // side of the card, meeting under the bow
+      band: "/loading-deco/ribbon-band.png",
       // Close-up of the knot laid over the bow's own knot, so the knot can loosen on its own
-      // (square, knot centred; "" to hide)
-      knot: "/loadingImages/muhur.webp",
-      // Paper texture: inside of the doors + background around the card on wide screens (tiles)
-      paper: "/loadingImages/kilif.webp",
-      // Gold light map, same size/framing as `card` — red = gold areas, green = order the light
-      // reaches them (bright = first), blue = sparkle points ("" = simple shimmer instead)
-      goldMap: "/loadingImages/altin.webp",
+      // (same 1322×1190 canvas as `bow`, lined up with it: loops + knot only; "" to hide)
+      knot: "/loading-deco/Knot.png",
+      // Gold light map for the tap shimmer, same size/framing as `card` — red = gold areas,
+      // green = order the light reaches them, blue = sparkle points. "" = simple CSS shimmer
+      // (the old map was drawn for the previous card art, so it is off for front-card.png)
+      goldMap: "",
     },
   },
   // Opening "Save the Date" loading screen (components/loader/LoadingScreen.tsx).
@@ -534,7 +450,7 @@ export const siteConfig = {
     // couple / wedding / ceremony; corners from `cornerDecos` below; headline from `headline`
     poster: {
       // Couple photo with a transparent background, shown in the middle (PNG/WebP; "" to hide)
-      coupleImage: "/Details/couple.png",
+      coupleImage: "/Details/new-couple.png",
       kicker: "Together with their families", // small line above "Save the Date" ("" to hide)
       // Short lines either side of the couple, one entry per line ([] to hide a side)
       sideLeft: ["Two hearts", "One love", "Forever"],
@@ -547,13 +463,13 @@ export const siteConfig = {
       photoVeil: 0.35,
       // Colors — shared with the envelope screen that follows, so the look carries over
       theme: {
-        goldDark: "#6f4c1f", // gold lettering: shadow side
-        gold: "#a67c3d", // gold lettering: main tone
-        goldLight: "#d2b06e", // gold lettering: sheen
-        ink: "#5a4020", // small capital lines (kicker, date line, venue, status)
-        inkSoft: "#6b5230", // venue address
-        washTop: "#cee4f4", // color washed over the top of the photos (sky blue)
-        washBottom: "#f6dee6", // color washed over the bottom of the photos (blush)
+        goldDark: "#6a0d28", // lettering: shadow side (plain burgundy — all three the same = no gradient)
+        gold: "#6a0d28", // lettering: main tone (burgundy)
+        goldLight: "#6a0d28", // lettering: sheen (burgundy)
+        ink: "#5e4535", // small capital lines (kicker, date line, venue, status)
+        inkSoft: "#6f5a48", // venue address
+        washTop: "#f6e9df", // color washed over the top of the photos (blush ivory)
+        washBottom: "#e3e2d2", // color washed over the bottom of the photos (sage mist)
       },
       // Optional image for the envelope paper that follows the poster (portrait image; its middle
       // band is used, lined up across the flap, front and pocket), e.g. "/loadingImages/kart.webp".
@@ -656,14 +572,14 @@ export const siteConfig = {
   // Our love story (components/sections/love-story.tsx + StorySection)
   loveStory: {
     title: "Our Love Story",
-    subtitle: "ten years of choosing each other",
+    subtitle: "a story written by God",
     // Short opening line under the title ("" hides it)
     intro:
-      "From a high school crush to a “yes” at the crater of Mount Pinatubo, this is the story of how Yvan and Roan found their way to forever.",
+      "From a game of chess to a “yes” before the altar in Baguio — this is the story of how Benedict and Olivia found their way to forever.",
     // Small sprig above the title ("" hides it)
     headerOrnament: DECOR.headerOrnament,
     // Shown above a chapter's title when it has no date, e.g. "Chapter 03"
-    chapterLabel: "Our Story",
+    chapterLabel: "Chapter",
     // Photo description used when a chapter has no imageAlt
     photoAlt: "{groom} and {bride}",
     // Large faint chapter number (01, 02 …) behind each chapter's text
@@ -691,73 +607,36 @@ export const siteConfig = {
 
 chapters: [
   {
-    date: "Where It All Began",
-    title: "The Beginning of Our Story",
-    image: "/mobile-background/couple (17).webp",
+    date: "",
+    title: "How We Met",
+    image: "/mobile-background/couple (12).webp",
     imageAlt: "{groom} and {bride} together",
     imagePosition: "center 25%",
     paragraphs: [
-      "Every love story has a beginning, and theirs started with a simple moment that would eventually mean everything. When {groom} and {bride} first crossed paths, neither could have imagined the beautiful journey that awaited them. What seemed like an ordinary encounter would one day become the start of something extraordinary.",
+      "Bata pa lamang kami nang magkrus ang aming mga landas sa tulong ng larong chess. Hinding-hindi ko malilimutan ang araw na napahanga ko siya sa aking paglalaro—ang mismong sandali na iyon ang naging dahilan upang tawagin niya akong “master”. Noong una, bihira lamang kaming mag-usap sa Facebook sapagkat hindi kami ganoon kalapit sa isa't isa; isang simpleng kumustahan lamang tapos taon na naman ang aabutin bago ulit magkaroon ng kumbersasyon. Wala pa man akong ganap na nauunawaan sa kahulugan ng pag-ibig sa mga panahong iyon, napatunayan kong ang tamang panahon lamang pala ang may kakayahang magpalitaw sa taong itinakda para sa iyo.",
+      "— Benedict",
     ],
   },
   {
-    date: "The First Chapter",
-    title: "Getting to Know Each Other",
-    image: "/mobile-background/couple (9).webp",
-    imageAlt: "{groom} and {bride} smiling together",
-    imagePosition: "center 35%",
-    paragraphs: [
-      "What began as a simple connection slowly grew through conversations, laughter, and moments of getting to know one another. With every shared story and every little smile, {groom} and {bride} discovered something special in each other's company.",
-    ],
-  },
-  {
-    date: "Little Moments",
-    title: "The Beauty of Simple Things",
-    image: "/mobile-background/couple (25).webp",
-    imageAlt: "{groom} and {bride} together",
-    imagePosition: "center 20%",
-    paragraphs: [
-      "Sometimes, the most meaningful memories are made in the simplest moments. From unexpected laughter to heartfelt conversations, every experience brought them another memory to treasure. Slowly, those ordinary days became part of a story neither would ever forget.",
-    ],
-  },
-  {
-    date: "Growing Closer",
-    title: "A Connection Worth Cherishing",
-    image: "/mobile-background/couple (21).webp",
+    date: "September 3, 2026 · Baguio City",
+    title: "The Proposal",
+    image: "/mobile-background/couple (16).webp",
     imageAlt: "{groom} and {bride} together",
     imagePosition: "center 25%",
     paragraphs: [
-      "As time passed, their connection continued to grow. They began to understand each other's dreams, personalities, and little imperfections. Somewhere along the way, they realized that being together made even the simplest days feel a little more special.",
+      "Isang mahalumigmig na umaga noong Setyembre 3, 2026 sa Lungsod ng Baguio, nagtungo kami sa Mirador Heritage and Eco-Spirituality Park—ang mismong araw na itinakda ng Maykapal upang hilingin ang kanyang kamay sa pag-iisang-dibdib. Sa kabila ng iba't ibang emosyong nag-uunahan sa aking dibdib, buong-puso ko muna itong ipinagdasal sa loob ng kapilya. Doon ay damang-dama ko ang banal na presensya ng Diyos. Nabalot ako ng kapayapaan at pagmamahal—isang tila apoy sa loob ng aking puso na muling nagpaliyab sa pananampalatayang matagal na nalamigan. Sa harap ng altar, lumuhod ako habang nakatitig sa kanyang mga mata at mahigpit na hawak ang singsing. Sa kanyang matamis na pagbigkas ng salitang “oo”, kasabay ng dahan-dahang pagpatak ng aming mga luha, naging saksi ang Langit sa pagbubukas ng isang bagong kabanata ng aming buhay.",
+      "— Benedict",
     ],
   },
   {
-    date: "Something Special",
-    title: "When Friendship Turned Into Love",
-    image: "/mobile-background/couple (14).webp",
-    imageAlt: "{groom} and {bride} laughing together",
+    date: "",
+    title: "Our Story",
+    image: "/mobile-background/couple (11).webp",
+    imageAlt: "{groom} and {bride} walking hand in hand",
     imagePosition: "center 25%",
     paragraphs: [
-      "What started as a simple connection gradually blossomed into something deeper. The little things began to mean more, and every moment together became something to look forward to. Without even realizing it, {groom} and {bride} were writing the first pages of their own beautiful love story.",
-    ],
-  },
-  {
-    date: "Falling Into Place",
-    title: "A Love That Felt Like Home",
-    image: "/mobile-background/couple (18).webp",
-    imageAlt: "{groom} and {bride} together",
-    imagePosition: "center 25%",
-    paragraphs: [
-      "With every shared memory, their feelings grew stronger. Through laughter, meaningful conversations, and life's little adventures, they found happiness and comfort in one another. Love became more than just a feeling. It became a friendship, a safe place, and a beautiful reason to keep choosing each other.",
-    ],
-  },
-  {
-    date: "The Day We Said Yes",
-    title: "The Beginning of Something Beautiful",
-    image: "/mobile-background/couple (25).webp",
-    imageAlt: "{groom} and {bride} together",
-    imagePosition: "center 25%",
-    paragraphs: [
-      "And then came the moment that marked a new chapter in their journey. {groom} and {bride} chose to turn their growing love into a beautiful commitment to one another. From that day forward, they continued building memories, celebrating milestones, overcoming challenges, and discovering new reasons to fall in love with each other every day.",
+      "Ang kuwento ng aming pag-iibigan ay mahihahalintulad namin sa isang nobelang punong-puno ng kaganapan. Bawat kabanata ay may kuwento ngunit sa pinakahuling yugto nito ay masusumpungan pa rin namin isa’t isa at mananaig pa rin ang dalawang pusong sinubok man ng panahon sa kanilang nakaraan ngunit nahanap pa rin ang liwanag at kasagutan na matagal na nilang inaasam… ang mahanap ang tunay at wagas na pag-iibigan.",
+      "Sa loob ng isang taon na pagmamahalan, sa wakas magaganap o mangyayari na ang aming planong pag-iisang dibdib. Malayo na ang aming narating ngunit batid naming malayo pa ang aming babagtasin tungo sa pangarap namin… ang magkaroon ng masaya at payapang pamilya. Mamahalin namin ang isa’t isa hanggang sa aming huling paghinga, ngunit batid naming mas mahal kami ng Diyos na Siyang nakapagitna at Siyang may akda sa kuwentong pagmamahalan nina Benedict at Olivia.",
     ],
   },
 ] as StoryChapter[],
@@ -830,7 +709,7 @@ chapters: [
     // Cards, colors, images and which groups show → QUICK SETUP → ATTIRE
     attire: {
       title: "Attire Guidelines",
-      description: "Our day is dressed in soft blues and warm peach. We'd love for you to wear them with us. Please find your role below.",
+      description: "Our theme is Classic Filipino in a summer palette. We'd love for you to dress with us — please find your role below.",
       // Shown above a card's palette
       paletteTitle: "Dress Code Palette",
       paletteSubtitle: "", // script line under the palette title — "" hides it
@@ -868,7 +747,7 @@ chapters: [
           variant: "accent" as "accent" | "soft",
           showPalette: true,
           paragraphs: [
-            "Kindly come in semi-formal attire in soft blues or warm peach from our palette.",
+            "Gentlemen: polo with chinos or suit trousers. Ladies: floor-length dresses in green, yellow, or orange from our summer palette.",
             "Please avoid casual clothes and all-white outfits.",
           ],
         },
@@ -969,65 +848,18 @@ chapters: [
     //             "arrival" | "guests" | "rings" | "departure" | "cocktail" | "fireworks" | "dance"
     //   description: not shown on the site (kept only as a note)
     events: [
-      // Couple's preparation (official run of show) — hidden from guests; set show: true to list them
-      {
-        show: false,
-        time: "2:00 PM",
-        title: "Bride's Solo & Team Bride",
-        description: "Photo & video of the bride and her team.",
-        location: "{ceremony}",
-        image: "/weddingTimeline/arrival.png",
-        icon: "arrival" as TimelineIconName,
-      },
-      {
-        show: false,
-        time: "2:30 PM",
-        title: "Bride Family Portraits",
-        description: "Photo & video with the bride's family.",
-        location: "{ceremony}",
-        image: "/weddingTimeline/PhotoSession.png",
-        icon: "rings" as TimelineIconName,
-      },
-      {
-        show: false,
-        time: "3:00 PM",
-        title: "First Touch & Prayer",
-        description: "The couple settles, prays and rests (optional, no first look).",
-        location: "{ceremony}",
-        image: "/weddingTimeline/WeddingCeremony.png",
-        icon: "rings" as TimelineIconName,
-      },
-      // Guest-facing schedule
       {
         show: true,
-        time: TIMES.guestArrival,
-        title: "Guest Arrival",
-        description: "Our coordinators will welcome you and help you find your seat.",
+        time: "2:00 PM",
+        title: "Arrival",
+        description: "Guests arrive at the church.",
         location: "{ceremony}",
         image: "/weddingTimeline/Elegant Wedding Guests Arrive Sign.png",
         icon: "guests" as TimelineIconName,
       },
       {
-        show: false,
-        time: "4:00 PM",
-        title: "Entourage Line-Up",
-        description: "The entourage lines up for the processional.",
-        location: "{ceremony}",
-        image: "/weddingTimeline/Wedding Entourage Call Time Logo.png",
-        icon: "arrival" as TimelineIconName,
-      },
-      {
-        show: false,
-        time: "2:00 PM",
-        title: "Entourage Call",
-        description: "The processional begins.",
-        location: "{ceremony}",
-        image: "/weddingTimeline/assemble.png",
-        icon: "rings" as TimelineIconName,
-      },
-      {
         show: true,
-        time: "3:30 PM",
+        time: "2:30 PM",
         title: "Wedding Ceremony",
         description: "We exchange our vows before God, family and friends.",
         location: "{ceremony}",
@@ -1036,45 +868,45 @@ chapters: [
       },
       {
         show: true,
-        time: "4:30 PM",
-        title: "Pictorials & Recessional",
-        description: "Join us for photos with the newlyweds.",
+        time: "4:00 PM",
+        title: "Post-Nup Pictorial",
+        description: "Photos with the newlyweds.",
         location: "{ceremony}",
         image: "/weddingTimeline/PhotoSession.png",
         icon: "rings" as TimelineIconName,
       },
       {
         show: true,
-        time: "5:00 PM",
-        title: "Grazing Table, Photo Booth & Coffee Cart",
-        description: "Enjoy the grazing table, photo booth, coffee cart and tattoo station.",
-        location: "{reception}",
-        image: "/weddingTimeline/CockTailHour.png",
-        icon: "cocktail" as TimelineIconName,
-      },
-      {
-        show: false,
-        time: "5:20 PM",
-        title: "Couple's Retouch",
-        description: "",
+        time: "5:30 PM",
+        title: "Arrival at the Reception",
+        description: "Guests make their way to the reception venue.",
         location: "{reception}",
         image: "/weddingTimeline/arrival.png",
         icon: "arrival" as TimelineIconName,
       },
       {
         show: true,
+        time: "5:30 – 6:00 PM",
+        title: "Bite & Mingle",
+        description: "Light bites while everyone settles in.",
+        location: "{reception}",
+        image: "/weddingTimeline/CockTailHour.png",
+        icon: "cocktail" as TimelineIconName,
+      },
+      {
+        show: true,
         time: "6:00 PM",
-        title: "Pre-Program",
-        description: "Our host warms up the evening.",
+        title: "The Celebration",
+        description: "The program proper begins.",
         location: "{reception}",
         image: "/weddingTimeline/reception welcom.png",
         icon: "fireworks" as TimelineIconName,
       },
       {
         show: true,
-        time: "6:30 PM",
-        title: "Reception Program & Dinner",
-        description: "Dinner is served as the program begins.",
+        time: "7:00 PM",
+        title: "Dinner",
+        description: "Dinner is served.",
         location: "{reception}",
         image: "/weddingTimeline/DinnerService.png",
         icon: "cocktail" as TimelineIconName,
@@ -1082,7 +914,25 @@ chapters: [
       {
         show: true,
         time: "8:00 PM",
-        title: "End of Program",
+        title: "Toast & Speeches",
+        description: "Words of love from family and friends.",
+        location: "{reception}",
+        image: "/weddingTimeline/cakecutting.png",
+        icon: "fireworks" as TimelineIconName,
+      },
+      {
+        show: true,
+        time: "8:30 – 9:30 PM",
+        title: "Cocktail Hour",
+        description: "Drinks, music and dancing.",
+        location: "{reception}",
+        image: "/weddingTimeline/dance.png",
+        icon: "dance" as TimelineIconName,
+      },
+      {
+        show: true,
+        time: "9:30 PM",
+        title: "Grand Exit",
         description: "Thank you for celebrating with us!",
         location: "{reception}",
         image: "/weddingTimeline/SendOff.png",
@@ -1474,7 +1324,7 @@ chapters: [
       card: "#FFFFFF",                                                                 // letter card
       cardEdge: "color-mix(in srgb, var(--color-motif-medium) 65%, transparent)",      // letter card border
       accountCard: "color-mix(in srgb, var(--color-motif-medium) 12%, white)",         // e-gift account card
-      button: "linear-gradient(180deg, var(--color-welcome-heading) 0%, color-mix(in srgb, var(--color-welcome-heading) 72%, var(--color-welcome-navy)) 100%)", // gift seal, selected tab, Save QR
+      button: "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)", // gift seal, selected tab, Save QR
       line: "var(--color-motif-yellow)",                                               // sage dividers
       glow: "color-mix(in srgb, var(--color-motif-medium) 30%, transparent)",          // tab track / borders
       background: "var(--color-motif-cream)",                                          // section background
@@ -1494,10 +1344,12 @@ chapters: [
     // ⚠ The QR file names are swapped — checked by decoding each QR:
     //   /QR/BDO.png → pays the GCash account (G-Xchange, "BR*******E L** A.")
     //   /QR/BPI.png → pays the BDO account (Banco de Oro, "Brei", account ending 8451)
+    // ⚠ These three accounts belong to the previous couple — hidden (show: false). Replace the
+    //   label / accountName / accountNumber / qr with Ben & Via's accounts, then set show: true.
     accounts: [
-      { show: true, label: "GCash", accountName: "JA***R AS***Y M.", accountNumber: "0955 491 ****", qr: "/QR/new-gcash.png" },
-      { show: true, label: "UNION BANK", accountName: "JAIDEE ASHLEY C MANGAHIS", accountNumber: "**** **** 5550", qr: "/QR/new-union.png" },
-      { show: true, label: "RCBC", accountName: "GERONIMO III GETIDA", accountNumber: "**** 4681", qr: "/QR/new-rcbp.png" },
+      { show: false, label: "GCash", accountName: "JA***R AS***Y M.", accountNumber: "0955 491 ****", qr: "/QR/new-gcash.png" },
+      { show: false, label: "UNION BANK", accountName: "JAIDEE ASHLEY C MANGAHIS", accountNumber: "**** **** 5550", qr: "/QR/new-union.png" },
+      { show: false, label: "RCBC", accountName: "GERONIMO III GETIDA", accountNumber: "**** 4681", qr: "/QR/new-rcbp.png" },
     ] as { show: boolean; label: string; accountName: string; accountNumber: string; qr: string }[],
     // Leave any path "" to hide that decoration
     decos: { ...SECTION_DECOS },
@@ -1838,31 +1690,15 @@ chapters: [
     note: "We kindly request our guests to dress in attire following our Whimsical Spring Minimalist palette.",
   },
   narratives: {
-    ourStory: `Once upon a signature…
+    ourStory: `Ang kuwento ng aming pag-iibigan ay mahihahalintulad namin sa isang nobelang punong-puno ng kaganapan. Bawat kabanata ay may kuwento ngunit sa pinakahuling yugto nito ay masusumpungan pa rin namin isa’t isa at mananaig pa rin ang dalawang pusong sinubok man ng panahon sa kanilang nakaraan ngunit nahanap pa rin ang liwanag at kasagutan na matagal na nilang inaasam… ang mahanap ang tunay at wagas na pag-iibigan.
 
-Our story began with a simple signature, one that slowly turned into something magical. He was my financial advisor, and I was there to sign documents. It was July 5, 2021, and we met at the Lobby of the building. Little did we know, that ordinary day would start a story neither of us expected.
-
-I wasn't looking for anything, yet somehow, our connection grew in its own gentle, unexpected way. And then, on June 1, 2022, our story truly began—we became us. We found a love that feels like home.
-
-Our journey wasn't rushed, but perfectly timed. We believe that God brought us together in His own way and season.
-
-With hearts full of gratitude, we step into this new chapter hand in hand, trusting His plan and celebrating a love rooted in faith, patience, and grace.
-
-Today, we choose each other- again and again- and we can't wait to celebrate this new chapter with the people we love most.`,
-    groom: `The first time Mark saw Catherine, time seemed to slow down. It was an ordinary day that instantly became unforgettable: one smile, one hello, and suddenly his world had a new center. He didn't have the perfect words ready, but he knew he had met someone who felt like home.
-
-Early conversations turned into late-night talks, sharing dreams, favorite meals, and whispered prayers for a future together. With every small adventure—coffee runs, long drives, quiet walks—Mark found himself choosing her over and over again. He loved how she laughed freely, how she listened with her whole heart, and how her faith steadied him.
-
-There were seasons of distance and long workdays, but every reunion reminded him why he stayed patient: because Catherine was worth every mile and every minute apart. When he finally knelt to ask for her hand, it wasn't a question of "if," only "when can we start forever?"`,
-    bride: `Catherine remembers the first time Mark said her name. It was gentle but sure, a kindness that made her feel both seen and safe. In that softness, she found a partner who met her with the same grace she prayed to give.
-
-Mark's steadiness won her heart: the way he showed up, even when schedules were tight, and how he always found lightness in the small things. He celebrated her wins, held space for her worries, and never hesitated to choose "us" in every decision.
-
-Now, as they prepare to say yes before God and the people they love most, Catherine is grateful for the patience, humor, and hope Mark brings to every day. She knows this next chapter is just the start of the love story they get to write together.`,
+Sa loob ng isang taon na pagmamahalan, sa wakas magaganap o mangyayari na ang aming planong pag-iisang dibdib. Malayo na ang aming narating ngunit batid naming malayo pa ang aming babagtasin tungo sa pangarap namin… ang magkaroon ng masaya at payapang pamilya. Mamahalin namin ang isa’t isa hanggang sa aming huling paghinga, ngunit batid naming mas mahal kami ng Diyos na Siyang nakapagitna at Siyang may akda sa kuwentong pagmamahalan nina Benedict at Olivia.`,
+    groom: `Bata pa lamang kami nang magkrus ang aming mga landas sa tulong ng larong chess. Hinding-hindi ko malilimutan ang araw na napahanga ko siya sa aking paglalaro—ang mismong sandali na iyon ang naging dahilan upang tawagin niya akong “master”. Noong una, bihira lamang kaming mag-usap sa Facebook sapagkat hindi kami ganoon kalapit sa isa't isa; isang simpleng kumustahan lamang tapos taon na naman ang aabutin bago ulit magkaroon ng kumbersasyon. Wala pa man akong ganap na nauunawaan sa kahulugan ng pag-ibig sa mga panahong iyon, napatunayan kong ang tamang panahon lamang pala ang may kakayahang magpalitaw sa taong itinakda para sa iyo.`,
+    bride: `Isang mahalumigmig na umaga noong Setyembre 3, 2026 sa Lungsod ng Baguio, nagtungo kami sa Mirador Heritage and Eco-Spirituality Park—ang mismong araw na itinakda ng Maykapal upang hilingin ang kanyang kamay sa pag-iisang-dibdib. Sa harap ng altar, lumuhod ako habang nakatitig sa kanyang mga mata at mahigpit na hawak ang singsing. Sa kanyang matamis na pagbigkas ng salitang “oo”, naging saksi ang Langit sa pagbubukas ng isang bagong kabanata ng aming buhay.`,
   },
   colors: {
-    primary: "#87AE73",
-    secondary: "#F5F5DC",
+    primary: "#C56A4A", // terracotta
+    secondary: "#F6E9DF", // blush ivory
   },
   // Wedding playlist (components/sections/wedding-playlist.tsx). {couple} → "Groom & Bride" nicknames.
   playlist: {

@@ -7,7 +7,7 @@ import { StorySection } from "@/components/StorySection"
 import { layeredSectionTitleSize } from "@/lib/section-typography"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { siteConfig as defaultSiteConfig } from "@/content/site"
-import { SkyBackdrop } from "@/components/sky-backdrop"
+import { IVORY_GOLD, IVORY_LACE_EDGE, IVORY_SECTION_BACKGROUND } from "@/lib/ivory-lace"
 import "@/components/loader/loading-screen.css"
 import { TintedDeco } from "@/components/tinted-deco"
 import { StoryGlyphText } from "@/lib/story-glyph-text"
@@ -28,8 +28,8 @@ const aboveTheBeyond = localFont({
 const revealEase = [0.22, 1, 0.36, 1] as const
 
 
-// Soft white edge so text stays crisp over the sky backdrop
-const onBgGlow = "0 1px 0 rgb(255 255 255 / 85%), 0 0 12px rgb(255 255 255 / 70%)"
+// Light lift so text stays crisp over the lace (same as the couple video section)
+const onBgGlow = "0 1px 0 rgb(255 255 255 / 80%)"
 
 function formatStoryParagraph(
   paragraph: string,
@@ -46,12 +46,16 @@ function OrnamentalDivider() {
     <div className="flex items-center justify-center gap-1.5">
       <span
         className="h-px w-10 sm:w-16"
-        style={{ background: "linear-gradient(to right, transparent, var(--color-motif-yellow))" }}
+        style={{ background: `linear-gradient(to right, transparent, ${IVORY_GOLD})` }}
       />
-      <span className="h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5" style={{ background: "var(--color-motif-accent)" }} aria-hidden />
+      <span
+        className="h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5"
+        style={{ background: IVORY_GOLD, boxShadow: "0 0 0 2px rgb(184 146 90 / 18%)" }}
+        aria-hidden
+      />
       <span
         className="h-px w-10 sm:w-16"
-        style={{ background: "linear-gradient(to left, transparent, var(--color-motif-yellow))" }}
+        style={{ background: `linear-gradient(to left, transparent, ${IVORY_GOLD})` }}
       />
     </div>
   )
@@ -121,8 +125,9 @@ function chapterTextFromParagraphs(
   )
 }
 
-// skyBackdrop: false when a parent already paints one sky behind this and the previous section
-export function LoveStory({ skyBackdrop = true }: { skyBackdrop?: boolean } = {}) {
+// The section paints its own ivory-and-gold lace ground, the same as the couple video section above
+// it. skyBackdrop is kept for compatibility and no longer changes anything.
+export function LoveStory(_props: { skyBackdrop?: boolean } = {}) {
   const siteConfig = useSiteConfig()
   const loading = siteConfig.loadingScreen ?? defaultSiteConfig.loadingScreen
   const loveStory = siteConfig.loveStory ?? defaultSiteConfig.loveStory
@@ -156,18 +161,34 @@ export function LoveStory({ skyBackdrop = true }: { skyBackdrop?: boolean } = {}
       // painted by the parent wrapper) — its translucent wash then softens the circles behind it.
       // (A bare `isolate` would put the section at z-index auto, under the circles' opaque base.)
       className={`love-story-root ${theSeasons.variable} ${aboveTheBeyond.variable} relative z-[2] min-h-screen w-full overflow-x-hidden`}
+      style={{ background: IVORY_SECTION_BACKGROUND }}
     >
-      {skyBackdrop && <SkyBackdrop haze />}
-      {/* Paper backdrop in the loading screen's colors (loading-screen.css → .love-story-bg) */}
-      {isPlain && (
-        <div className="love-story-bg" aria-hidden="true">
-          <span className="love-story-bg__grain" />
-        </div>
-      )}
+      {/* Lace edging down both sides and a gold rule along the top (same as the couple video) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-1 z-[1] w-[26px] opacity-80 sm:left-3"
+        style={{ background: `${IVORY_LACE_EDGE} 0 0 / 26px 24px repeat-y` }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-1 z-[1] w-[26px] -scale-x-100 opacity-80 sm:right-3"
+        style={{ background: `${IVORY_LACE_EDGE} 0 0 / 26px 24px repeat-y` }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-10 top-0 z-[1] h-px"
+        style={{ background: `linear-gradient(to right, transparent, ${IVORY_GOLD}, #E9D3A6, ${IVORY_GOLD}, transparent)` }}
+      />
 
       {/* Corner florals at the section's four corners, sized per corner like the loader
-          (original artwork colors), over a thin double border */}
-      {isPlain && showFrame && <div className="love-story-frame" aria-hidden="true" />}
+          (original artwork colors), over a thin double border in champagne gold */}
+      {isPlain && showFrame && (
+        <div
+          className="love-story-frame"
+          aria-hidden="true"
+          style={{ "--color-motif-medium": IVORY_GOLD } as React.CSSProperties}
+        />
+      )}
       {(
         [
           { src: corners.topLeft, pos: "tl", className: "left-0 top-0" },

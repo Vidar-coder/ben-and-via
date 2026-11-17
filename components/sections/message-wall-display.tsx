@@ -15,7 +15,7 @@ import { useSiteConfig } from "@/hooks/use-site-config"
 // Cards are white paper with navy text; buttons are dusty blue with white text.
 const TEAL = "var(--color-welcome-navy)"
 const BLUE = "var(--color-welcome-heading)"
-const BUTTON = "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)"
+const BUTTON = "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
 const BUTTON_EDGE = "rgb(255 255 255 / 70%)"
 const SUN = "var(--color-motif-accent)"
 const PAPER = "#FFF8F2"

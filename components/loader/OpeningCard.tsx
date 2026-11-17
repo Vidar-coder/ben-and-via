@@ -12,15 +12,16 @@ import './opening-card.css';
 export const OPENING_CARD_MOBILE_MEDIA = '(max-width: 767px)';
 
 // Choreography after the tap (ms) — keep in sync with the delays in opening-card.css
-//   0–1200    light runs up through the gold filigree (GoldGlint, WebGL)
-//   0–200     tail is tugged: the knot squeezes, the tails pull taut
-//   150–750   the loops are drawn back into the knot
-//   450–900   the knot loosens and twists free
-//   550–1250  ribbon band halves glide off the card edges; tails slip down and away
-//   1000–2350 a point of light kindles at the seam's centre, runs up and down the crack and
-//             warms the doors' inner edges
-//   1750–3850 latch gives, the doors swing open on their hinges (3D); rays and sparkles
-//             pour out of the opening and the light fades onto the invitation
+// (modelled on public/loading-deco/sampleribbonanimationwhenclick.mp4)
+//   0–1200    a shimmer runs up the card (GoldGlint when a gold map is set)
+//   0–300     the bow tightens as the tail is tugged
+//   150–1050  the bow is pulled apart: the band halves slide out to the far left and right,
+//             opening the middle; the loops compress and collapse into the knot; the tails
+//             loosen and swing down under gravity — the wrapped knot stays intact
+//   850–1450  what is left (knot and hanging tails) drops down the card and fades
+//   1250–1650 a line of light kindles down the seam between the doors
+//   1750–3850 the latch gives and the two halves of the front card swing open on their hinges
+//             (3D); warm light and sparkles spill out and the invitation is revealed behind
 const GLINT_MS = 1200;
 
 // Sparkles that drift out of the opening doors (deterministic, so SSR and client agree)
@@ -35,11 +36,14 @@ const MOTES = Array.from({ length: 22 }, (_, i) => {
     delay: ((i * 7) % 10) / 20,
   };
 });
+// The bow image is cut into these pieces (clip paths in opening-card.css), drawn back to front
+const BOW_PARTS = ['loop-left', 'loop-right', 'tail-left', 'tail-right', 'knot'] as const;
+
 // Mount the LoadingScreen once the gold glint (JS-driven) has finished but before the doors
 // move: its first render blocks the main thread for a moment, which would freeze the glint,
 // while the CSS seam light keeps running on the compositor and the closed doors hide the mount
 const LOADER_START_MS = 1250;
-const DONE_MS = 3900;
+const DONE_MS = 4150;
 const REDUCED_LOADER_START_MS = 0;
 const REDUCED_DONE_MS = 600;
 
@@ -63,10 +67,8 @@ export const OpeningCard: React.FC<OpeningCardProps> = ({ onOpenStart, onOpened,
   const IMG = {
     card: src(img.card),
     bow: src(img.bow),
-    ribbonLeft: src(img.ribbonLeft),
-    ribbonRight: src(img.ribbonRight),
+    band: src(img.band),
     knot: src(img.knot),
-    paper: src(img.paper),
     goldMap: src(img.goldMap),
   };
   const hintText = hint ?? content.hintText ?? defaults.hintText;
@@ -77,11 +79,11 @@ export const OpeningCard: React.FC<OpeningCardProps> = ({ onOpenStart, onOpened,
   // Start fetching the artwork with the HTML so the card is never painted blank
   // (phones only when mobileOnly — desktop never shows the card, so never downloads it)
   // (the card art and bow first — they are what the guest sees)
-  for (const path of [IMG.card, IMG.bow, IMG.ribbonLeft, IMG.ribbonRight, IMG.knot]) {
+  for (const path of [IMG.card, IMG.bow, IMG.knot, IMG.band]) {
     if (!path) continue;
     preload(path, {
       as: 'image',
-      ...((path === IMG.card || path === IMG.bow) && { fetchPriority: 'high' as const }),
+      ...(path !== IMG.band && { fetchPriority: 'high' as const }),
       ...(mobileOnly && { media: OPENING_CARD_MOBILE_MEDIA }),
     });
   }
@@ -128,7 +130,7 @@ export const OpeningCard: React.FC<OpeningCardProps> = ({ onOpenStart, onOpened,
       style={
         {
           '--oc-card': IMG.card ? `url("${IMG.card}")` : 'none',
-          '--oc-paper': IMG.paper ? `url("${IMG.paper}")` : 'none',
+          '--oc-band': IMG.band ? `url("${IMG.band}")` : 'none',
           '--oc-band-y': ribbonY,
         } as React.CSSProperties
       }
@@ -142,12 +144,10 @@ export const OpeningCard: React.FC<OpeningCardProps> = ({ onOpenStart, onOpened,
         onClick={open}
         onKeyDown={onKeyDown}
       >
-        {/* Light inside the card — a bright core and slowly turning rays, revealed as the doors part */}
+        {/* Warm glow behind the card, swelling as the light floods it */}
         <div className="opening-card__light" aria-hidden="true" />
-        <div className="opening-card__rays" aria-hidden="true" />
 
-        {/* Gate-fold doors on outer hinges — card art on the front, cream paper inside,
-            a visible board edge, and shading/gloss that follow the swing */}
+        {/* Gate-fold card — each door shows its half of the card art; the card dissolves into the light */}
         <div className="opening-card__scene" aria-hidden="true">
           {(['left', 'right'] as const).map((side) => (
             <div key={side} className={`opening-card__door opening-card__door--${side}`}>
@@ -163,9 +163,11 @@ export const OpeningCard: React.FC<OpeningCardProps> = ({ onOpenStart, onOpened,
           ))}
         </div>
 
-        {/* Light kindling at the centre of the seam and leaking through the crack */}
+        {/* Light kindling at the centre of the seam and leaking through the crack, then widening
+            into a glittering column that floods the card */}
         <div className="opening-card__seam" aria-hidden="true" />
         <div className="opening-card__flare" aria-hidden="true" />
+        <div className="opening-card__flood" aria-hidden="true" />
         {!reduceMotion && (
           <div className="opening-card__motes" aria-hidden="true">
             {MOTES.map((m, i) => (
@@ -200,36 +202,37 @@ export const OpeningCard: React.FC<OpeningCardProps> = ({ onOpenStart, onOpened,
         )}
         <div className="opening-card__shimmer" aria-hidden="true" />
 
-        {/* Ribbon band wrapped around the card: two ends meeting under the bow */}
+        {/* Ribbon band wrapped around the card: the band art on each side, meeting under the bow
+            (the right half is mirrored so the satin's sheen is symmetrical) */}
         <div className="opening-card__ribbon" aria-hidden="true">
-          <div className="opening-card__ribbon-end opening-card__ribbon-end--left">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IMG.ribbonLeft} alt="" loading="lazy" draggable={false} />
-          </div>
-          <div className="opening-card__ribbon-end opening-card__ribbon-end--right">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IMG.ribbonRight} alt="" loading="lazy" draggable={false} />
-          </div>
+          <div className="opening-card__ribbon-end opening-card__ribbon-end--left" />
+          <div className="opening-card__ribbon-end opening-card__ribbon-end--right" />
         </div>
 
-        {/* Bow, split so it can untie: loops draw back into the knot while the tails slip away;
-            the close-up knot (muhur) sits over the bow's own knot and loosens on its own */}
+        {/* Bow, cut into pieces so it can be untied: the loops collapse into the knot, the tails
+            loosen and drop under their own weight, and the wrapped knot stays intact in the middle.
+            Knot.png (behind) fills any gaps at rest and fades as the loops collapse */}
         <div className="opening-card__bow" aria-hidden="true">
-          <div className="opening-card__bow-part opening-card__bow-part--tails">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IMG.bow} alt="" className="opening-card__bow-img" loading="lazy" draggable={false} fetchPriority="high" />
-          </div>
-          <div className="opening-card__bow-part opening-card__bow-part--loops">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IMG.bow} alt="" className="opening-card__bow-img" loading="lazy" draggable={false} />
-          </div>
-          <span className="opening-card__knot-glow" />
           {IMG.knot && (
             <div className="opening-card__seal">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={IMG.knot} alt="" loading="lazy" draggable={false} />
             </div>
           )}
+          {BOW_PARTS.map((part, i) => (
+            <div key={part} className={`opening-card__bow-part opening-card__bow-part--${part}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={IMG.bow}
+                alt=""
+                className="opening-card__bow-img"
+                loading="lazy"
+                draggable={false}
+                {...(i === 0 && { fetchPriority: 'high' as const })}
+              />
+            </div>
+          ))}
+          <span className="opening-card__knot-glow" />
         </div>
 
         <p className="opening-card__hint" aria-hidden="true">

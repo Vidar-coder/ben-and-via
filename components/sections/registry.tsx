@@ -9,6 +9,7 @@ import { Download, Expand, Gift, Heart, X } from "lucide-react"
 import { AnimatePresence, motion, useReducedMotion, type Variants } from "motion/react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
+import { SilkScreen } from "@/components/silk-screen"
 
 
 const theSeasons = localFont({
@@ -150,6 +151,8 @@ export function Registry() {
     <div
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full overflow-hidden`}
     >
+      {/* Soft screen over the silk so the white heading reads clearly */}
+      <SilkScreen />
       <section
         id="registry"
         className="relative z-10 overflow-hidden pt-14 pb-12 sm:pt-16 sm:pb-14 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20"

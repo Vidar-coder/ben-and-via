@@ -83,9 +83,9 @@ function getFocusLiftPhase(phase: EnvelopePhase): 'idle' | 'opening' | 'photos' 
   return 'cta';
 }
 
-const photoEmergenceEase: Transition = { duration: 2.35, ease: [0.22, 1, 0.18, 1] };
-const letterEmergenceEase: Transition = { duration: 3.05, ease: [0.5, 0.02, 0.14, 1] };
-const flapEase: Transition = { duration: 1.1, ease: [0.65, 0, 0.35, 1] };
+const photoEmergenceEase: Transition = { duration: 1.5, ease: [0.22, 1, 0.18, 1] };
+const letterEmergenceEase: Transition = { duration: 1.9, ease: [0.5, 0.02, 0.14, 1] };
+const flapEase: Transition = { duration: 0.8, ease: [0.65, 0, 0.35, 1] };
 const inviteExitEase: Transition = { duration: 1.65, ease: [0.22, 1, 0.36, 1], delay: 0.75 };
 const inviteEnterEase: Transition = { duration: 1.2, ease: [0.22, 1, 0.36, 1] };
 const letterExitEase: Transition = { duration: 1.55, ease: [0.16, 1, 0.3, 1] };
@@ -96,14 +96,14 @@ const INVITE_EXIT_MS = 2500;
 //   center — it lifts off and glides to the middle of the screen (envelope softly dims behind)
 //   expand — it opens to full screen
 //   fade   — the screen fades into the home hero (same photo)
-const PHOTO_PULL_MS = 3000;
-const PHOTO_CENTER_MS = 950;
-const PHOTO_CENTER_HOLD_MS = 450;
-const PHOTO_EXPAND_MS = 1100;
-const PHOTO_HOLD_MS = 800;
-const PHOTO_FADE_MS = 1000;
+const PHOTO_PULL_MS = 1900;
+const PHOTO_CENTER_MS = 700;
+const PHOTO_CENTER_HOLD_MS = 250;
+const PHOTO_EXPAND_MS = 850;
+const PHOTO_HOLD_MS = 400;
+const PHOTO_FADE_MS = 700;
 // Slow pull in three beats: the top edge peeks over the pocket lip, pauses, then glides all the way out
-const PHOTO_RISE_S = 2.8;
+const PHOTO_RISE_S = 1.8;
 const photoCardRiseEase: Transition = {
   duration: PHOTO_RISE_S,
   times: [0, 0.32, 0.46, 1],
@@ -114,6 +114,17 @@ const photoExpandEase: Transition = { duration: PHOTO_EXPAND_MS / 1000, ease: [0
 
 type FlyRect = { top: number; left: number; width: number; height: number };
 
+// Romantic entrance (poster backdrop): rose petals drifting down while the envelope floats in
+// (deterministic, so SSR and client agree)
+const ARRIVE_PETALS = Array.from({ length: 14 }, (_, i) => ({
+  x: 4 + ((i * 37) % 92), // start across the top of the screen (%)
+  size: 11 + ((i * 7) % 10), // px
+  delay: ((i * 5) % 16) / 10, // s
+  dur: 4 + ((i * 3) % 8) / 5, // s
+  drift: (i % 2 ? 1 : -1) * (18 + ((i * 11) % 42)), // sideways sway (px)
+  spin: (i % 2 ? 1 : -1) * (160 + ((i * 47) % 240)), // deg
+  tone: i % 3, // ivory / summer terracotta / champagne
+}));
 export const Hero: React.FC<HeroProps> = ({
   onOpen,
   onTransitionStart,
@@ -369,26 +380,26 @@ export const Hero: React.FC<HeroProps> = ({
 
     setLiveMessage('Pressing seal.');
     setPhase('seal-press');
-    await wait(180);
+    await wait(150);
 
     setLiveMessage('Breaking seal.');
     setPhase('seal-break');
-    await wait(320);
+    await wait(250);
 
     setLiveMessage('Opening envelope.');
     setPhase('flap-open');
-    await wait(1100);
+    await wait(800);
 
     setLiveMessage('Invitation rising.');
     setPhase('rising');
-    await wait(isPlain ? 2400 : 3200);
+    await wait(isPlain ? 1500 : 2000);
 
     setLiveMessage('Photos revealing.');
     setPhase('photos');
-    await wait(isPlain ? 2600 : 3600);
+    await wait(isPlain ? 1600 : 2200);
 
     setPhase('revealed');
-    await wait(650);
+    await wait(400);
 
     setPhase('cta');
     setLiveMessage('Invitation ready.');
@@ -568,6 +579,10 @@ export const Hero: React.FC<HeroProps> = ({
 
   if (!mounted) return null;
 
+  // The envelope makes its entrance (CSS .is-arriving) when it follows the loading screen
+  const isArriving = isPlain && enterFromLoading && visible && !reduceMotion;
+  const romanticArrival = isArriving && posterBackdrop;
+
   // With the photo reveal, the envelope stays put while the card is pulled out, then fades
   const envelopeLeaving = usePhotoExit
     ? exitStage === 'expand' || exitStage === 'fade'
@@ -605,7 +620,7 @@ export const Hero: React.FC<HeroProps> = ({
 
   return (
     <motion.div
-      className={`env-invite-screen${isPlain ? ' env-invite-screen--plain' : ''}${posterBackdrop ? ' env-invite-screen--poster' : ''}${envelopeTexture ? ' env-invite-screen--textured' : ''}${isPlain && enterFromLoading && visible && !reduceMotion ? ' is-arriving' : ''} ${visible ? '' : 'is-hidden'}`}
+      className={`env-invite-screen${isPlain ? ' env-invite-screen--plain' : ''}${posterBackdrop ? ' env-invite-screen--poster' : ''}${envelopeTexture ? ' env-invite-screen--textured' : ''}${isArriving ? ' is-arriving' : ''} ${visible ? '' : 'is-hidden'}`}
       // Photo reveal keeps the open-envelope look the whole time (letter stays under the pocket lip)
       data-phase={isExiting && !usePhotoExit ? 'exiting' : phase}
       aria-hidden={!visible}
@@ -657,6 +672,32 @@ export const Hero: React.FC<HeroProps> = ({
           corners={cornerDecos}
           veil={poster.photoVeil}
         />
+      )}
+
+      {romanticArrival && (
+        <>
+          {/* A warm blush-gold glow blooms where the envelope comes to rest */}
+          <div className="env-invite-romance-glow" aria-hidden="true" />
+          {/* Rose petals drifting down past the envelope */}
+          <div className="env-invite-romance-petals" aria-hidden="true">
+            {ARRIVE_PETALS.map((p, i) => (
+              <span
+                key={i}
+                className={`env-invite-romance-petal env-invite-romance-petal--${p.tone}`}
+                style={
+                  {
+                    '--x': `${p.x}%`,
+                    '--s': `${p.size}px`,
+                    '--delay': `${p.delay}s`,
+                    '--dur': `${p.dur}s`,
+                    '--drift': `${p.drift}px`,
+                    '--spin': `${p.spin}deg`,
+                  } as React.CSSProperties
+                }
+              />
+            ))}
+          </div>
+        </>
       )}
 
       {isPlain && !posterBackdrop && (
@@ -1004,7 +1045,7 @@ export const Hero: React.FC<HeroProps> = ({
                             liftedPhoto={liftedPhoto}
                             onToggle={toggleLiftedPhoto}
                             interactive={photosInteractive}
-                            emergenceDelay={index === 0 ? 0.25 : 0.6}
+                            emergenceDelay={index === 0 ? 0.15 : 0.4}
                             reduceMotion={reduceMotion}
                             isExiting={isExiting && !usePhotoExit}
                             envelopePair
@@ -1030,14 +1071,14 @@ export const Hero: React.FC<HeroProps> = ({
                             liftedPhoto={liftedPhoto}
                             onToggle={toggleLiftedPhoto}
                             interactive={photosInteractive}
-                            emergenceDelay={index === 0 ? 0.55 : 1.0}
+                            emergenceDelay={index === 0 ? 0.35 : 0.65}
                             reduceMotion={reduceMotion}
                             isExiting={isExiting}
                             envelopePair
                           />
                         ))
                       : envelopePolaroids.desktop.map((photo, index) => {
-                          const delays = [0.55, 1.0, 1.45, 1.7] as const;
+                          const delays = [0.35, 0.65, 0.95, 1.15] as const;
                           const variantsBySide: Record<PhotoSide, Variants> = {
                             left: photoLeftVariants,
                             center: photoCenterVariants,
@@ -1055,7 +1096,7 @@ export const Hero: React.FC<HeroProps> = ({
                               liftedPhoto={liftedPhoto}
                               onToggle={toggleLiftedPhoto}
                               interactive={photosInteractive}
-                              emergenceDelay={delays[index] ?? 1.7}
+                              emergenceDelay={delays[index] ?? 1.15}
                               reduceMotion={reduceMotion}
                               isExiting={isExiting}
                             />
@@ -1306,8 +1347,9 @@ type FoldGeo = {
   scale: number;
 };
 
-// Warm brown shading so the folds read naturally on the peach paper
-const FOLD_SHADE = '#9B6554';
+// Shading for the folds — follows the envelope's --env-fold-shade (ivory/gold poster paper),
+// falling back to warm brown for the peach paper
+const FOLD_SHADE = 'var(--env-fold-shade, #9B6554)';
 
 /** A paper fold: a crisp dark crease with light catching the edge just below it */
 function FoldCrease({ d }: { d: string }) {
@@ -1324,17 +1366,17 @@ function FoldDefs({ id, scale }: { id: string; scale: number }) {
   return (
     <defs>
       <linearGradient id={`${id}-side-l`} x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stopColor={FOLD_SHADE} stopOpacity="0.14" />
-        <stop offset="1" stopColor={FOLD_SHADE} stopOpacity="0" />
+        <stop offset="0" style={{ stopColor: FOLD_SHADE }} stopOpacity="0.14" />
+        <stop offset="1" style={{ stopColor: FOLD_SHADE }} stopOpacity="0" />
       </linearGradient>
       <linearGradient id={`${id}-side-r`} x1="1" y1="0" x2="0" y2="0">
-        <stop offset="0" stopColor={FOLD_SHADE} stopOpacity="0.14" />
-        <stop offset="1" stopColor={FOLD_SHADE} stopOpacity="0" />
+        <stop offset="0" style={{ stopColor: FOLD_SHADE }} stopOpacity="0.14" />
+        <stop offset="1" style={{ stopColor: FOLD_SHADE }} stopOpacity="0" />
       </linearGradient>
       <linearGradient id={`${id}-bottom`} x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.2" />
         <stop offset="0.55" stopColor="#FFFFFF" stopOpacity="0.06" />
-        <stop offset="1" stopColor={FOLD_SHADE} stopOpacity="0.06" />
+        <stop offset="1" style={{ stopColor: FOLD_SHADE }} stopOpacity="0.06" />
       </linearGradient>
       <filter id={`${id}-soft`} x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation={1.1 * scale} />

@@ -8,11 +8,10 @@ import { cinzel } from "@/lib/fonts"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 import { fetchInvitationList } from "@/lib/invitation-data"
-import { PlainBubbles } from "@/components/loader/PlainBubbles"
-import { SectionBackdrop } from "@/components/section-backdrop"
 import { TintedDeco } from "@/components/tinted-deco"
 import { DecoCorners } from "@/components/deco-corners"
 import { GlyphText } from "@/lib/glyph-text"
+import { IvoryBackdrop, ivorySectionStyle } from "@/components/ivory-backdrop"
 
 
 const theSeasons = localFont({
@@ -40,13 +39,10 @@ const TEAL_SOFT = "color-mix(in srgb, var(--color-welcome-text) 70%, white)"
 // Slate blue — guest names
 const LEAF = "var(--color-motif-accent)"
 const DEEP_GRADIENT =
-  "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)"
+  "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
 // Dusty blue → slate blue — monograms
 const SAGE_GRADIENT =
   "linear-gradient(180deg, var(--color-motif-medium) 0%, var(--color-motif-accent) 100%)"
-
-// Section background = the circle pattern used across the invitation (PlainBubbles paints the base)
-const sectionBg = "var(--color-bg-pattern-base)"
 
 // Text sitting directly on the circle pattern: navy (or dusty blue) with a soft white edge
 const textGlow = "0 1px 0 rgb(255 255 255 / 90%), 0 0 12px rgb(255 255 255 / 75%)"
@@ -350,12 +346,11 @@ export function BookOfGuests({ background = true }: { background?: boolean } = {
     <div
       id="guests"
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative isolate z-10 overflow-hidden pt-12 pb-10 sm:pt-14 sm:pb-12 md:pt-16 md:pb-14 lg:pt-20 lg:pb-16`}
-      style={background ? { background: sectionBg } : undefined}
+      style={background ? ivorySectionStyle : undefined}
     >
-      {/* Same circle pattern as the gallery, with the light wash + double border
-          (on the invitation page the shared wrapper paints these behind Book of Guests and FAQ) */}
-      {background && <PlainBubbles />}
-      {background && <SectionBackdrop />}
+      {/* Cream lace ground with lace edging + double border (on the invitation page the shared
+          wrapper paints these instead — see invitation-page.tsx) */}
+      {background && <IvoryBackdrop />}
       {background && copy.showFrame && <div className="deco-frame" aria-hidden="true" />}
 
       {/* Corner florals (content/site.ts → bookOfGuests.decos) — top only; FAQ continues below */}

@@ -10,6 +10,7 @@ import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 import Image from "next/image"
 import { PuhonBanner } from "@/components/puhon-closing"
+import { SilkScreen } from "@/components/silk-screen"
 
 
 const theSeasons = localFont({
@@ -24,20 +25,19 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-// Header + closing text sit on the dusty-blue page backdrop: white (script in butter)
-// with a soft navy shadow.
-const OUTSIDE_TEXT = "#44413C"
-const OUTSIDE_TEXT_MUTED = "rgba(68, 65, 60, 0.92)"
-const OUTSIDE_SCRIPT = "var(--color-welcome-heading)"
+// Header + closing text sit on the screened sage silk: white lettering (script in blush ivory)
+// with a deep olive halo.
+const OUTSIDE_TEXT = "#FFFFFF"
+const OUTSIDE_TEXT_MUTED = "rgb(255 255 255 / 92%)"
+const OUTSIDE_SCRIPT = "#F6E9DF"
 const OUTSIDE_TITLE_SHADOW =
-  "0 1px 0 color-mix(in srgb, var(--color-motif-soft) 45%, transparent), 0 2px 10px color-mix(in srgb, var(--color-motif-soft) 40%, transparent), 0 8px 28px color-mix(in srgb, var(--color-motif-soft) 30%, transparent)"
-const READABLE_SHADOW =
-  "0 1px 2px color-mix(in srgb, var(--color-motif-soft) 55%, transparent), 0 2px 10px color-mix(in srgb, var(--color-motif-soft) 40%, transparent)"
+  "0 1px 1px rgb(18 22 14 / 60%), 0 2px 10px rgb(18 22 14 / 55%), 0 8px 28px rgb(18 22 14 / 40%)"
+const READABLE_SHADOW = "0 1px 2px rgb(18 22 14 / 70%), 0 2px 10px rgb(18 22 14 / 50%)"
 
 // Card palette — white paper, navy headings, body-blue text, dusty-blue buttons.
 const TEAL = "var(--color-welcome-navy)"
 const BUTTON =
-  "linear-gradient(180deg, #9B6554 0%, color-mix(in srgb, #9B6554 72%, #875547) 100%)"
+  "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
 const BLUE = "var(--color-welcome-heading)"
 const IVORY = "#FFF8F2"
 const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 60%, transparent)"
@@ -462,6 +462,8 @@ export function SnapShare() {
       id="snap-share"
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative z-10 bg-transparent pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14`}
     >
+      {/* Soft screen over the silk so the white heading and closing lines read clearly */}
+      <SilkScreen />
       <div className="relative z-20 mx-auto max-w-6xl px-4 @container/snap-share sm:px-6 md:px-8">
         <div className="relative z-20 px-6 text-center sm:px-10 md:px-12">
           <div className="mx-auto mb-5 sm:mb-6 md:mb-7">
