@@ -583,7 +583,7 @@ export const siteConfig = {
     // Photo description used when a chapter has no imageAlt
     photoAlt: "{groom} and {bride}",
     // Large faint chapter number (01, 02 …) behind each chapter's text
-    showChapterNumbers: false,
+    showChapterNumbers: true,
     // Small heart divider between chapters
     showChapterDividers: true,
     // Closing block: big word, hashtag, then the verse (also shown in Snap & Share)
@@ -607,35 +607,104 @@ export const siteConfig = {
 
 chapters: [
   {
-    date: "",
-    title: "How We Met",
-    image: "/mobile-background/couple (12).webp",
+    date: "How We Met",
+    title: "Crossing Paths",
+    image: "/mobile-background/couple (1).webp",
     imageAlt: "{groom} and {bride} together",
-    imagePosition: "center 25%",
+    imagePosition: "center 28%",
     paragraphs: [
-      "Bata pa lamang kami nang magkrus ang aming mga landas sa tulong ng larong chess. Hinding-hindi ko malilimutan ang araw na napahanga ko siya sa aking paglalaro—ang mismong sandali na iyon ang naging dahilan upang tawagin niya akong “master”. Noong una, bihira lamang kaming mag-usap sa Facebook sapagkat hindi kami ganoon kalapit sa isa't isa; isang simpleng kumustahan lamang tapos taon na naman ang aabutin bago ulit magkaroon ng kumbersasyon. Wala pa man akong ganap na nauunawaan sa kahulugan ng pag-ibig sa mga panahong iyon, napatunayan kong ang tamang panahon lamang pala ang may kakayahang magpalitaw sa taong itinakda para sa iyo.",
+      "Bata pa lamang kami nang magkrus ang aming mga landas sa tulong ng larong chess.",
+    ],
+  },
+  {
+    date: "How We Met",
+    title: "“Master”",
+    image: "/mobile-background/couple (2).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
+    paragraphs: [
+      "Hinding-hindi ko malilimutan ang araw na napahanga ko siya sa aking paglalaro—ang mismong sandali na iyon ang naging dahilan upang tawagin niya akong “master”.",
+    ],
+  },
+  {
+    date: "How We Met",
+    title: "A Simple Kumustahan",
+    image: "/mobile-background/couple (3).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
+    paragraphs: [
+      "Noong una, bihira lamang kaming mag-usap sa Facebook sapagkat hindi kami ganoon kalapit sa isa't isa; isang simpleng kumustahan lamang tapos taon na naman ang aabutin bago ulit magkaroon ng kumbersasyon.",
+    ],
+  },
+  {
+    date: "How We Met",
+    title: "In the Right Time",
+    image: "/mobile-background/couple (4).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
+    paragraphs: [
+      "Wala pa man akong ganap na nauunawaan sa kahulugan ng pag-ibig sa mga panahong iyon, napatunayan kong ang tamang panahon lamang pala ang may kakayahang magpalitaw sa taong itinakda para sa iyo.",
       "— Benedict",
     ],
   },
   {
     date: "September 3, 2026 · Baguio City",
     title: "The Proposal",
-    image: "/mobile-background/couple (16).webp",
+    image: "/mobile-background/couple (5).webp",
     imageAlt: "{groom} and {bride} together",
-    imagePosition: "center 25%",
+    imagePosition: "center 28%",
     paragraphs: [
-      "Isang mahalumigmig na umaga noong Setyembre 3, 2026 sa Lungsod ng Baguio, nagtungo kami sa Mirador Heritage and Eco-Spirituality Park—ang mismong araw na itinakda ng Maykapal upang hilingin ang kanyang kamay sa pag-iisang-dibdib. Sa kabila ng iba't ibang emosyong nag-uunahan sa aking dibdib, buong-puso ko muna itong ipinagdasal sa loob ng kapilya. Doon ay damang-dama ko ang banal na presensya ng Diyos. Nabalot ako ng kapayapaan at pagmamahal—isang tila apoy sa loob ng aking puso na muling nagpaliyab sa pananampalatayang matagal na nalamigan. Sa harap ng altar, lumuhod ako habang nakatitig sa kanyang mga mata at mahigpit na hawak ang singsing. Sa kanyang matamis na pagbigkas ng salitang “oo”, kasabay ng dahan-dahang pagpatak ng aming mga luha, naging saksi ang Langit sa pagbubukas ng isang bagong kabanata ng aming buhay.",
+      "Isang mahalumigmig na umaga noong Setyembre 3, 2026 sa Lungsod ng Baguio, nagtungo kami sa Mirador Heritage and Eco-Spirituality Park—ang mismong araw na itinakda ng Maykapal upang hilingin ang kanyang kamay sa pag-iisang-dibdib.",
+    ],
+  },
+  {
+    date: "The Proposal",
+    title: "A Prayer in the Chapel",
+    image: "/mobile-background/couple (6).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
+    paragraphs: [
+      "Sa kabila ng iba't ibang emosyong nag-uunahan sa aking dibdib, buong-puso ko muna itong ipinagdasal sa loob ng kapilya. Doon ay damang-dama ko ang banal na presensya ng Diyos.",
+    ],
+  },
+  {
+    date: "The Proposal",
+    title: "A Faith Rekindled",
+    image: "/mobile-background/couple (7).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
+    paragraphs: [
+      "Nabalot ako ng kapayapaan at pagmamahal—isang tila apoy sa loob ng aking puso na muling nagpaliyab sa pananampalatayang matagal na nalamigan.",
+    ],
+  },
+  {
+    date: "The Proposal",
+    title: "Before the Altar",
+    image: "/mobile-background/couple (8).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
+    paragraphs: [
+      "Sa harap ng altar, lumuhod ako habang nakatitig sa kanyang mga mata at mahigpit na hawak ang singsing. Sa kanyang matamis na pagbigkas ng salitang “oo”, kasabay ng dahan-dahang pagpatak ng aming mga luha, naging saksi ang Langit sa pagbubukas ng isang bagong kabanata ng aming buhay.",
       "— Benedict",
     ],
   },
   {
-    date: "",
-    title: "Our Story",
-    image: "/mobile-background/couple (11).webp",
-    imageAlt: "{groom} and {bride} walking hand in hand",
-    imagePosition: "center 25%",
+    date: "Our Story",
+    title: "Like a Novel",
+    image: "/mobile-background/couple (9).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
     paragraphs: [
       "Ang kuwento ng aming pag-iibigan ay mahihahalintulad namin sa isang nobelang punong-puno ng kaganapan. Bawat kabanata ay may kuwento ngunit sa pinakahuling yugto nito ay masusumpungan pa rin namin isa’t isa at mananaig pa rin ang dalawang pusong sinubok man ng panahon sa kanilang nakaraan ngunit nahanap pa rin ang liwanag at kasagutan na matagal na nilang inaasam… ang mahanap ang tunay at wagas na pag-iibigan.",
+    ],
+  },
+  {
+    date: "Our Story",
+    title: "Our Forever",
+    image: "/mobile-background/couple (10).webp",
+    imageAlt: "{groom} and {bride} together",
+    imagePosition: "center 28%",
+    paragraphs: [
       "Sa loob ng isang taon na pagmamahalan, sa wakas magaganap o mangyayari na ang aming planong pag-iisang dibdib. Malayo na ang aming narating ngunit batid naming malayo pa ang aming babagtasin tungo sa pangarap namin… ang magkaroon ng masaya at payapang pamilya. Mamahalin namin ang isa’t isa hanggang sa aming huling paghinga, ngunit batid naming mas mahal kami ng Diyos na Siyang nakapagitna at Siyang may akda sa kuwentong pagmamahalan nina Benedict at Olivia.",
     ],
   },

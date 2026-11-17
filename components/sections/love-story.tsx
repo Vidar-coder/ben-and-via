@@ -104,6 +104,10 @@ function LoveStoryTitle({
   )
 }
 
+// A paragraph that starts with "— " (e.g. "— Benedict") is the author's sign-off: set apart as a
+// small italic signature with a short gold rule, instead of a normal paragraph
+const SIGNATURE = /^\s*[—–-]\s+/
+
 function chapterTextFromParagraphs(
   paragraphs: readonly string[],
   groom: string,
@@ -111,16 +115,29 @@ function chapterTextFromParagraphs(
 ) {
   return (
     <>
-      {paragraphs.map((paragraph, index) => (
-        <p
-          key={index}
-          className={
-            paragraphs.length > 1 && index < paragraphs.length - 1 ? "mb-4" : undefined
-          }
-        >
-          <StoryGlyphText text={formatStoryParagraph(paragraph, groom, bride)} />
-        </p>
-      ))}
+      {paragraphs.map((paragraph, index) => {
+        const text = formatStoryParagraph(paragraph, groom, bride)
+        if (SIGNATURE.test(text)) {
+          return (
+            <p
+              key={index}
+              className="love-story-signature mt-3 inline-flex items-center gap-2 font-goudy-italic italic"
+              style={{ color: "var(--color-welcome-navy)", fontSize: "1.05em", letterSpacing: "0.02em" }}
+            >
+              <span aria-hidden className="h-px w-6" style={{ background: IVORY_GOLD }} />
+              <StoryGlyphText text={text.replace(SIGNATURE, "")} />
+            </p>
+          )
+        }
+        return (
+          <p
+            key={index}
+            className={paragraphs.length > 1 && index < paragraphs.length - 1 ? "mb-4" : undefined}
+          >
+            <StoryGlyphText text={text} />
+          </p>
+        )
+      })}
     </>
   )
 }
