@@ -33,16 +33,17 @@ const TONES = {
     rule: "#B97865",
     shadow: glow,
   },
+  // Ivory text, summer-yellow accents, deep sage shadow (matches "See you there")
   light: {
     title: "#FFF8F2",
-    accent: "#D9A08C",
-    lead: "#FFF8F2",
-    body: "rgb(255 248 242 / 94%)",
-    mark: "rgb(217 160 140 / 75%)",
-    rule: "rgb(217 160 140 / 85%)",
-    // Layered burgundy shadow: crisp edge plus a soft halo so ivory reads on any photo
+    accent: "#F2C230",
+    lead: "#FFFFFF",
+    body: "rgb(255 248 242 / 96%)",
+    mark: "rgb(242 194 48 / 80%)",
+    rule: "rgb(232 131 58 / 90%)",
+    // Layered deep-sage shadow: crisp edge plus a soft halo so ivory reads on any photo
     shadow:
-      "0 1px 2px rgb(68 65 60 / 85%), 0 2px 8px rgb(68 65 60 / 60%), 0 0 22px rgb(68 65 60 / 45%)",
+      "0 1px 2px rgb(31 38 24 / 90%), 0 2px 8px rgb(31 38 24 / 65%), 0 0 22px rgb(31 38 24 / 50%)",
   },
 } as const
 
@@ -137,7 +138,7 @@ export function PuhonBanner() {
       className="relative isolate overflow-hidden rounded-[1.5rem] sm:rounded-[2rem]"
       style={{
         boxShadow:
-          "0 0 0 1px color-mix(in srgb, #C5BDB5 45%, transparent), 0 0 0 6px rgb(255 248 242 / 35%), 0 26px 50px -28px color-mix(in srgb, #44413C 45%, transparent)",
+          "0 0 0 1px color-mix(in srgb, var(--color-motif-silver) 60%, transparent), 0 0 0 6px rgb(255 248 242 / 35%), 0 26px 50px -28px rgb(31 38 24 / 55%)",
       }}
     >
       {images.map((src, i) => (
@@ -162,13 +163,24 @@ export function PuhonBanner() {
           />
         </div>
       ))}
-      {/* Burgundy wash — deeper in the middle where the text sits, so ivory text reads while the photos stay visible */}
+      {/* Deep sage wash — darkest in the middle where the text sits, warm terracotta through the
+          middle band, so ivory text reads while the photos stay visible */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(85% 70% at 50% 50%, rgb(68 65 60 / 52%) 0%, rgb(68 65 60 / 34%) 60%, rgb(68 65 60 / 22%) 100%), linear-gradient(180deg, rgb(68 65 60 / 10%) 0%, rgb(68 65 60 / 25%) 100%)",
+            "radial-gradient(80% 62% at 50% 50%, rgb(31 38 24 / 62%) 0%, rgb(31 38 24 / 42%) 60%, rgb(31 38 24 / 26%) 100%), linear-gradient(180deg, rgb(31 38 24 / 30%) 0%, rgb(197 106 74 / 12%) 45%, rgb(31 38 24 / 45%) 100%)",
+        }}
+      />
+      {/* Golden-hour glow along the bottom edge */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(75% 40% at 50% 100%, rgb(232 131 58 / 28%) 0%, rgb(242 194 48 / 10%) 55%, transparent 100%)",
+          mixBlendMode: "soft-light",
         }}
       />
       <PuhonText tone="light" className="px-5 py-14 sm:px-10 sm:py-20 md:py-24" />

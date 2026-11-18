@@ -34,17 +34,21 @@ const OUTSIDE_TITLE_SHADOW =
   "0 1px 1px rgb(18 22 14 / 60%), 0 2px 10px rgb(18 22 14 / 55%), 0 8px 28px rgb(18 22 14 / 40%)"
 const READABLE_SHADOW = "0 1px 2px rgb(18 22 14 / 70%), 0 2px 10px rgb(18 22 14 / 50%)"
 
-// Card palette — white paper, navy headings, body-blue text, dusty-blue buttons.
-const TEAL = "var(--color-welcome-navy)"
+// Card palette — light motif: white / sage-mist cards, sage edges, charcoal headings,
+// deep-sage labels, yellow + orange accents. Burgundy stays on buttons only.
+const YELLOW = "#F2C230"
+const ORANGE = "#E8833A"
+const SUN_LINE = `linear-gradient(to right, transparent, ${YELLOW}, ${ORANGE}, transparent)`
+const TEAL = "var(--color-welcome-text)" // charcoal headings
 const BUTTON =
   "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
-const BLUE = "var(--color-welcome-heading)"
+const BLUE = "color-mix(in srgb, var(--color-motif-silver) 62%, #1F2618)" // deep sage labels
 const IVORY = "#FFF8F2"
-const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 60%, transparent)"
-const PALE = "color-mix(in srgb, var(--color-motif-medium) 16%, white)"
+const HAIRLINE = "color-mix(in srgb, var(--color-motif-silver) 55%, transparent)"
+const PALE = "color-mix(in srgb, var(--color-motif-silver) 14%, white)"
 const TEAL_SOFT = "color-mix(in srgb, var(--color-welcome-text) 75%, white)"
 const BUTTON_SHADOW =
-  "0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 22%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)"
+  `0 0 0 3px color-mix(in srgb, ${YELLOW} 28%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)`
 
 const palette = {
   body: "var(--color-welcome-text)",
@@ -58,7 +62,7 @@ const outsideDividerLineStyle = {
 } as const
 
 const insideDividerLineStyle = {
-  background: "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+  background: SUN_LINE,
 } as const
 
 const ct = {
@@ -71,10 +75,10 @@ const ct = {
 
 const cardStyle = {
   background:
-    "radial-gradient(90% 35% at 50% 0%, rgb(255 255 255 / 95%) 0%, transparent 70%), linear-gradient(180deg, #FFFFFF 0%, color-mix(in srgb, var(--color-motif-medium) 10%, white) 100%)",
+    "radial-gradient(90% 35% at 50% 0%, rgb(255 255 255 / 95%) 0%, transparent 70%), linear-gradient(180deg, #FFFFFF 0%, color-mix(in srgb, var(--color-motif-silver) 12%, white) 100%)",
   border: `1px solid ${HAIRLINE}`,
   boxShadow:
-    "0 0 0 5px rgb(255 255 255 / 25%), 0 24px 50px -28px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)",
+    "0 0 0 5px rgb(255 255 255 / 25%), 0 24px 50px -28px rgb(31 38 24 / 50%)",
 } as const
 
 
@@ -82,7 +86,7 @@ function OutsideDivider() {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <span className="h-px w-6 sm:w-10" style={outsideDividerLineStyle} />
-      <span className="h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5" style={{ background: "var(--color-motif-accent)" }} aria-hidden />
+      <span className="h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5" style={{ background: YELLOW, boxShadow: "0 1px 3px rgb(18 22 14 / 50%)" }} aria-hidden />
       <span className="h-px w-6 sm:w-10" style={outsideDividerLineStyle} />
     </div>
   )
@@ -175,7 +179,7 @@ function MomentPhoto({ src, alt, sizes, className = "" }: { src: string; alt: st
       className={`group relative h-full w-full overflow-hidden rounded-xl ${className}`}
       style={{
         background: PALE,
-        boxShadow: `0 0 0 1px ${HAIRLINE}, 0 10px 22px -16px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)`,
+        boxShadow: `0 0 0 1px ${HAIRLINE}, 0 10px 22px -16px rgb(31 38 24 / 55%)`,
       }}
     >
       <Image
@@ -273,7 +277,7 @@ export function SnapShare() {
   ) => (
     <div
       className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-2xl p-3 sm:p-4"
-      style={{ background: IVORY, boxShadow: `0 0 0 1px ${HAIRLINE}, 0 0 0 5px color-mix(in srgb, var(--color-motif-medium) 12%, transparent), 0 14px 28px -20px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)` }}
+      style={{ background: "#FFFFFF", boxShadow: `0 0 0 1px ${HAIRLINE}, 0 0 0 5px color-mix(in srgb, ${YELLOW} 18%, transparent), 0 14px 28px -20px rgb(31 38 24 / 45%)` }}
     >
       <div className="flex w-full max-w-full justify-center overflow-hidden rounded-xl bg-white">
         <QRCodeCanvas
@@ -340,7 +344,7 @@ export function SnapShare() {
               className="flex w-full min-w-0 items-center justify-between gap-2 rounded-xl px-3.5 py-2.5 transition-all duration-200 active:scale-[0.98]"
               style={{
                 background: isCopied ? PALE : IVORY,
-                boxShadow: `inset 0 0 0 1px ${isCopied ? "color-mix(in srgb, var(--color-motif-yellow) 75%, transparent)" : HAIRLINE}`,
+                boxShadow: `inset 0 0 0 1px ${isCopied ? ORANGE : HAIRLINE}`,
               }}
             >
               <span
@@ -351,7 +355,7 @@ export function SnapShare() {
               </span>
               <span
                 className={`${cinzel.className} flex flex-shrink-0 items-center gap-1 whitespace-nowrap ${sectionType.label} font-semibold uppercase tracking-wider`}
-                style={{ color: isCopied ? "color-mix(in srgb, var(--color-motif-yellow) 70%, #44413C)" : BLUE }}
+                style={{ color: isCopied ? "color-mix(in srgb, #E8833A 75%, #44413C)" : BLUE }}
               >
                 {isCopied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                 {isCopied ? content.hashtags.copied : content.hashtags.copy}

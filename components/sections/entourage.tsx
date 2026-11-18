@@ -27,12 +27,14 @@ const aboveTheBeyond = localFont({
 })
 
 // Palette lives in globals.css → motif / welcome tokens.
-const PAPER = "var(--color-welcome-bg-soft)"
+// Light arch: near-white paper with a soft yellow glow at the crown and a sage-mist base
+const PAPER =
+  "radial-gradient(70% 28% at 50% 0%, color-mix(in srgb, #F2C230 12%, white) 0%, transparent 100%), linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 45%, color-mix(in srgb, var(--color-motif-silver) 10%, white) 100%)"
 const ACCENT = "var(--color-welcome-heading)" // dusty blue — readable on light backgrounds (was sunshine yellow)
 const NAVY = "var(--color-ink-deep)"
 const SCRIPT = "var(--color-ink-accent)"
 const BODY = "var(--color-welcome-text)"
-const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 60%, transparent)"
+const HAIRLINE = "color-mix(in srgb, var(--color-motif-silver) 60%, transparent)" // sage inner frame
 
 // Text sitting directly on the circle pattern (colors: globals.css → --color-on-pattern*)
 const onBg = {
@@ -46,13 +48,13 @@ const onBgLineStyle = {
 } as const
 
 const dividerLineStyle = {
-  background: "linear-gradient(to right, transparent, var(--color-motif-medium), transparent)",
+  background: "linear-gradient(to right, transparent, #F2C230, #E8833A, transparent)",
 } as const
 
 const cardStyle = {
   background: PAPER,
   boxShadow:
-    "0 26px 56px -30px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent), inset 0 1px 0 rgb(255 255 255 / 80%)",
+    "0 0 0 1px color-mix(in srgb, var(--color-motif-silver) 45%, transparent), 0 0 0 6px rgb(255 255 255 / 45%), 0 26px 56px -30px rgb(31 38 24 / 40%), inset 0 1px 0 rgb(255 255 255 / 90%)",
 } as const
 
 
@@ -289,7 +291,7 @@ function GroupDivider() {
       <motion.div className="h-px w-full" style={dividerLineStyle} variants={lineDraw} />
       <motion.span
         className="absolute h-1.5 w-1.5 rotate-45"
-        style={{ background: "var(--color-motif-medium)" }}
+        style={{ background: "linear-gradient(135deg, #F2C230, #E8833A)" }}
         variants={{
           hidden: { scale: 0, rotate: 45 },
           show: { scale: [0, 1.6, 1], rotate: 225, transition: { duration: 0.9, delay: 0.35, ease: revealEase } },
