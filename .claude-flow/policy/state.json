@@ -85,10 +85,50 @@
         "policyHash": "sha256:00b63b2f746eb8b9095bbd5e1dbae4ddd74fd92a6740b72f59f4069fbfda4737"
       },
       "hash": "sha256:6c1199431f836d67a0a0441c47c5b5a4a9a4cecff586df4686a0399b394d9faf"
+    },
+    {
+      "payload": {
+        "receiptId": "sha256:a84440ed3a8519df788108244ad08e7dfa5fb39f55f3fe0b837c7711dca2a407",
+        "previousReceiptHash": "sha256:6c1199431f836d67a0a0441c47c5b5a4a9a4cecff586df4686a0399b394d9faf",
+        "sequence": 2,
+        "issuedAt": 1794994236216,
+        "request": {
+          "identity": {
+            "id": "legacy-cli",
+            "type": "legacy"
+          },
+          "action": {
+            "type": "mcp.tool.call",
+            "resource": "hooks_intelligence_verified-ingest",
+            "tool": "hooks_intelligence_verified-ingest",
+            "server": "ruflo",
+            "network": false,
+            "destructive": false
+          },
+          "context": {
+            "metadata": {
+              "inputDigest": "sha256:b72ed13cb525af2592de7b88e763277fa14592edc468666510c59a8cf02dd505"
+            },
+            "now": 1794994236216
+          },
+          "requestId": "11867f16-2f16-446f-a32e-43031909c065"
+        },
+        "decision": {
+          "requestId": "11867f16-2f16-446f-a32e-43031909c065",
+          "outcome": "allowed",
+          "enforcedOutcome": "allowed",
+          "mode": "legacy",
+          "reason": "legacy-default-allow",
+          "matchedRules": [],
+          "obligations": []
+        },
+        "policyHash": "sha256:00b63b2f746eb8b9095bbd5e1dbae4ddd74fd92a6740b72f59f4069fbfda4737"
+      },
+      "hash": "sha256:8773b4acb4d819beff60be758fab385ed007b8e99ab2fd4e4ad90236977cc8b2"
     }
   ],
   "migratedAt": 1794916713348,
   "migratedFrom": "pre-ADR-324; capabilities=.swarm/memory.db",
-  "ledgerLength": 2,
-  "ledgerHead": "sha256:6c1199431f836d67a0a0441c47c5b5a4a9a4cecff586df4686a0399b394d9faf"
+  "ledgerLength": 3,
+  "ledgerHead": "sha256:8773b4acb4d819beff60be758fab385ed007b8e99ab2fd4e4ad90236977cc8b2"
 }

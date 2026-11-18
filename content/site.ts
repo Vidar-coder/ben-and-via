@@ -1730,8 +1730,8 @@ Sa loob ng isang taon na pagmamahalan, sa wakas magaganap o mangyayari na ang am
     showFrame: true,
     embedUrl:
     //https://open.spotify.com/embed/playlist/5sT43YjdM8pJ3xtEkrxyEY?utm_source=generator&si=e5e64aa63fd04356
-      "https://open.spotify.com/embed/playlist/7C4HRnOxlSQLY3k3PXAboT?utm_source=generator&si=221cd9aedc8b4269",
-    spotifyUrl: "https://open.spotify.com/playlist/3qesZSzCWmz37nL3oi8CDp?si=-7C4HRnOxlSQLY3k3PXAboT",
+      "https://open.spotify.com/embed/playlist/7C4HRnOxlSQLY3k3PXAboT?utm_source=generator&si=217968ea51b34ca6",
+    spotifyUrl: "https://open.spotify.com/playlist/7C4HRnOxlSQLY3k3PXAboT?si=HXBehL6-TWWUuqNeUAHoNA",
   },
   // Closing "See you there!" section (components/sections/see-you-there.tsx).
   //   photos mode (loadingScreen.display "photos") → full-screen couple photo
