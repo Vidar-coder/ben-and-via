@@ -1679,3 +1679,159 @@ img[src*="%2Flovestorydeco%2F"] {
 .entourage-corners .deco-corner--br {
   width: min(54vw, 440px);
 }
+
+/* ── Proposal page (components/proposal-page.tsx) ───────────────────────── */
+/* Arched doorway around the couple illustration (sage green + soft gold, like the motif) */
+/* Whole doorway (frame, sky and couple) melts into the card at the bottom. The fade sits on a
+   wrapper padded past the door, so the couple and frame glow overlapping the arch aren't clipped. */
+.proposal-door-wrap {
+  margin: -5rem -3.5rem 0;
+  padding: 5rem 3.5rem 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
+}
+.proposal-door {
+  position: relative;
+  aspect-ratio: 3 / 4.1;
+}
+.proposal-door__frame {
+  position: absolute;
+  inset: 0;
+  padding: 3px;
+  border-radius: 999px 999px 0 0;
+  background: linear-gradient(165deg, #F3E3B0 0%, #D9BE74 22%, #8A9A72 55%, #5F6F4E 80%, #C9B26A 100%);
+  box-shadow:
+    0 0 0 4px #FFFBF2,
+    0 0 0 5px color-mix(in srgb, #8A9A72 55%, transparent),
+    0 0 0 9px color-mix(in srgb, #E8D29A 22%, transparent),
+    0 24px 44px -24px rgb(62 78 44 / 65%);
+}
+.proposal-door__inner {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 999px 999px 0 0;
+  /* Garden at golden hour: warm gold halo behind the couple, butter-yellow sky, sage below */
+  background:
+    radial-gradient(58% 40% at 50% 55%, rgb(255 246 214 / 95%) 0%, rgb(247 226 160 / 55%) 45%, transparent 75%),
+    radial-gradient(120% 55% at 50% 0%, #FBF1CF 0%, transparent 72%),
+    linear-gradient(180deg, #EFE3AE 0%, #C9D0A0 32%, #A3B183 60%, #7E8F63 85%, #66764E 100%);
+  box-shadow: inset 0 0 0 1px rgb(255 251 238 / 80%), inset 0 0 28px rgb(52 66 36 / 35%);
+}
+/* Soft golden rays fanning up from behind the couple */
+.proposal-door__rays {
+  position: absolute;
+  inset: -20% -40% 0;
+  z-index: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 70%, rgb(255 244 205 / 30%) 0deg 4deg, transparent 4deg 14deg);
+  -webkit-mask-image: radial-gradient(60% 60% at 50% 70%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(60% 60% at 50% 70%, #000 0%, transparent 75%);
+  animation: proposal-rays 30s linear infinite;
+  transform-origin: 50% 70%;
+}
+@keyframes proposal-rays {
+  to { transform: rotate(360deg); }
+}
+/* Twinkling gold sparkles in the sky */
+.proposal-door__sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    radial-gradient(1.5px 1.5px at 22% 18%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 70% 12%, #FFF6D8 50%, transparent 100%),
+    radial-gradient(2px 2px at 82% 30%, #F2D98C 50%, transparent 100%),
+    radial-gradient(1px 1px at 14% 38%, #fff 50%, transparent 100%),
+    radial-gradient(2px 2px at 48% 8%, #F2D98C 50%, transparent 100%),
+    radial-gradient(1px 1px at 36% 26%, #fff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 62% 34%, #FFF6D8 50%, transparent 100%);
+  animation: proposal-twinkle 3.2s ease-in-out infinite alternate;
+}
+@keyframes proposal-twinkle {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+/* The couple stands in front of the doorway, a little larger than it, so they overlap the arch */
+.proposal-door__img {
+  position: absolute;
+  left: -22%;
+  bottom: 0;
+  z-index: 2;
+  width: 144%;
+  height: 126%;
+  max-width: none;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 10px 14px rgb(52 66 36 / 28%));
+}
+/* Titles: burgundy → terracotta lettering */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .proposal-title-gradient {
+    background: linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #A9463A 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 1px 0 rgb(255 255 255 / 70%));
+  }
+}
+
+/* Role name in the question: soft blush underline sweep */
+.proposal-role-highlight {
+  background-image: linear-gradient(transparent 62%, color-mix(in srgb, var(--color-motif-blush) 45%, transparent) 62%, color-mix(in srgb, var(--color-motif-blush) 45%, transparent) 92%, transparent 92%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* One slow light sweep across the card paper */
+.proposal-card-paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 55%) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: proposal-sheen 2.4s cubic-bezier(0.22, 1, 0.36, 1) 1.2s 1 forwards;
+}
+@keyframes proposal-sheen {
+  to { transform: translateX(120%); }
+}
+
+/* Primary button: soft shine every few seconds */
+.proposal-btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 32%) 50%, transparent 70%);
+  transform: translateX(-130%);
+  animation: proposal-btn-shine 4.5s ease-in-out 2.5s infinite;
+}
+@keyframes proposal-btn-shine {
+  0%, 60% { transform: translateX(-130%); }
+  85%, 100% { transform: translateX(130%); }
+}
+
+/* Answer-card icon: ring that ripples out */
+.proposal-icon-ring {
+  border: 1.5px solid color-mix(in srgb, var(--color-motif-accent) 45%, transparent);
+  animation: proposal-ring 2.4s ease-out 0.6s infinite;
+}
+@keyframes proposal-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.65); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proposal-door__rays,
+  .proposal-door__sparkles,
+  .proposal-card-paper::after,
+  .proposal-btn-shine::after,
+  .proposal-icon-ring { animation: none; }
+  .proposal-card-paper::after,
+  .proposal-btn-shine::after { display: none; }
+}

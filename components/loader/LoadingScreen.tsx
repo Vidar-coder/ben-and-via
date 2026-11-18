@@ -186,6 +186,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
     }) as React.CSSProperties;
 
   const ceremonyLine = siteConfig.ceremony.time ?? '';
+  const arrivalLine = (siteConfig.ceremony.guestsTime ?? '').trim();
   const coupleNames = `${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname}`;
   const venueName = (siteConfig.ceremony.location ?? '').trim();
   const venueAddress = (() => {
@@ -284,6 +285,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
           }
           weekday={silkDate?.weekday ?? ''}
           time={ceremonyLine}
+          arrivalTime={arrivalLine}
           venueName={poster.showVenue ? venueName : ''}
           venueAddress={poster.showVenue ? venueAddress : ''}
           corners={cornerDecos}
@@ -520,6 +522,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
           {content.showCeremonyDetails && (ceremonyLine || siteConfig.ceremony.location) && (
             <div className="loading-screen__std-venue ls-reveal" style={revealDelay(900, 3200)}>
               {ceremonyLine && <span className="loading-screen__std-venue-time">{ceremonyLine}</span>}
+              {arrivalLine && (
+                <span className="loading-screen__std-venue-time">Guest Arrival · {arrivalLine}</span>
+              )}
               {siteConfig.ceremony.location && (
                 <span className="loading-screen__std-venue-name">{toTitleCase(siteConfig.ceremony.location)}</span>
               )}

@@ -22,6 +22,7 @@ import { ProposalMixedText, proposalMixedTextInter } from "@/lib/proposal-mixed-
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { Hero as InvitationHero } from "@/components/loader/Hero"
 import { LoadingScreen } from "@/components/loader/LoadingScreen"
+import { OpeningCard, OPENING_CARD_MOBILE_MEDIA } from "@/components/loader/OpeningCard"
 import { InvitePhotoBackdrop, PhotoBackground } from "@/components/loader/invite-photo-backdrop"
 import { sectionType, welcomeTitleSize } from "@/lib/section-typography"
 import { sectionBackground } from "@/lib/section-background"
@@ -70,15 +71,12 @@ const aboveTheBeyond = localFont({
 // Every color is a shared invitation role from app/globals.css (--invite-*),
 // so the palette there restyles this page, its cards and its dialogs.
 const IVORY = "var(--invite-paper)"
-const CHAMPAGNE = "var(--invite-accent)"
 const INK = "var(--invite-ink)"
 const CREAM = "var(--invite-body)"
 const LABEL_GOLD = "var(--invite-accent)"
 const SCRIPT_GREEN = "var(--invite-script)"
 const TITLE = "var(--invite-title)"
-const GOLD_BORDER = "var(--invite-line)"
 const GOLD_BORDER_SOFT = "var(--invite-line-soft)"
-const INNER_SURFACE = "var(--invite-paper-tint)"
 
 // Display lettering is flat, like the loading screen's "Save Date"
 const goldGradientText: CSSProperties = { color: TITLE }
@@ -109,15 +107,16 @@ const primaryBtnStyle: CSSProperties = {
     "0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 22%, transparent), 0 12px 24px -12px var(--invite-shadow)",
 }
 
-// White pill with a sky border and navy text
+// Ivory pill with a terracotta border and burgundy text
 const secondaryBtnStyle: CSSProperties = {
-  color: INK,
-  backgroundColor: "#FFFFFF",
-  borderColor: "color-mix(in srgb, var(--color-motif-medium) 75%, transparent)",
+  color: "var(--color-motif-accent)",
+  background: "linear-gradient(180deg, #FFFDFB 0%, #F8EDE5 100%)",
+  borderColor: "color-mix(in srgb, var(--color-motif-medium) 55%, transparent)",
+  boxShadow: "0 8px 18px -14px var(--invite-shadow)",
 }
 
 const primaryBtnClass =
-  `${cinzel.className} touch-manipulation inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-full border px-5 py-3.5 text-[0.72rem] font-semibold uppercase leading-snug tracking-[0.14em] transition-all duration-300 hover:brightness-110 active:scale-[0.98] disabled:opacity-50 sm:px-8 sm:text-xs sm:tracking-[0.2em] sm:hover:scale-[1.02]`
+  `${cinzel.className} proposal-btn-shine relative overflow-hidden touch-manipulation inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-full border px-5 py-3.5 text-[0.72rem] font-semibold uppercase leading-snug tracking-[0.14em] transition-all duration-300 hover:brightness-110 active:scale-[0.98] disabled:opacity-50 sm:px-8 sm:text-xs sm:tracking-[0.2em] sm:hover:scale-[1.02]`
 
 const secondaryBtnClass =
   `${cinzel.className} touch-manipulation inline-flex min-h-11 w-full cursor-pointer items-center justify-center rounded-full border px-5 py-3 text-[0.66rem] font-semibold uppercase leading-snug tracking-[0.12em] transition-all duration-300 active:scale-[0.98] sm:px-8 sm:text-[0.7rem] sm:tracking-[0.18em] sm:hover:scale-[1.02]`
@@ -237,15 +236,15 @@ function CoupleNamesText({ className = "" }: { className?: string }) {
   )
 }
 
-function LayeredProposalTitle({ main, script }: { main: string; script: string }) {
+function LayeredProposalTitle({ main, script, compact = false }: { main: string; script: string; compact?: boolean }) {
   return (
     <h2
       className="welcome-title-lockup relative mx-auto w-full max-w-full text-center"
       style={
         {
-          "--welcome-size": welcomeTitleSize.main,
-          "--script-size": welcomeTitleSize.script,
-          "--script-overlap": welcomeTitleSize.overlap,
+          "--welcome-size": compact ? "var(--modal-title)" : welcomeTitleSize.main,
+          "--script-size": compact ? "var(--modal-script)" : welcomeTitleSize.script,
+          "--script-overlap": compact ? "-0.45rem" : welcomeTitleSize.overlap,
         } as CSSProperties
       }
     >
@@ -338,12 +337,12 @@ function archRadius(inset = "0px"): CSSProperties {
   }
 }
 
-function ProposalCard({ children }: { children: ReactNode }) {
+function ProposalCard({ children, compact = false }: { children: ReactNode; compact?: boolean }) {
   return (
     // Container query: --arch-h follows this card's width (cqi)
     <div
-      className="relative mx-auto w-full max-w-2xl [container-type:inline-size] [--arch-foot:1.4rem] [--frame-1:7px] [--frame-2:12px] sm:[--arch-foot:2rem] sm:[--frame-1:16px] sm:[--frame-2:23px]"
-      style={{ "--arch-h": "min(30cqi, 15rem)" } as CSSProperties}
+      className={`relative mx-auto w-full [container-type:inline-size] [--arch-foot:1.25rem] [--frame-1:6px] [--frame-2:11px] sm:[--arch-foot:2rem] sm:[--frame-1:14px] sm:[--frame-2:21px] ${compact ? "max-w-xl" : "max-w-2xl"}`}
+      style={{ "--arch-h": "min(32cqi, 14rem)" } as CSSProperties}
     >
       <div
         className="pointer-events-none absolute -inset-2 opacity-70 blur-2xl sm:-inset-4"
@@ -351,13 +350,18 @@ function ProposalCard({ children }: { children: ReactNode }) {
         aria-hidden
       />
       <div
-        className="relative overflow-hidden border"
+        className="proposal-card-paper relative overflow-hidden border"
         style={{
           ...archRadius(),
-          // Slightly see-through paper so the photo strip behind reads softly at the edges
-          background: `radial-gradient(90% 30% at 50% 0%, #FFFFFF 0%, transparent 70%), linear-gradient(175deg, rgb(255 255 255 / 96%) 0%, color-mix(in srgb, ${IVORY} 94%, transparent) 55%, color-mix(in srgb, ${INNER_SURFACE} 94%, transparent) 100%)`,
-          borderColor: "color-mix(in srgb, var(--color-motif-medium) 70%, transparent)",
-          boxShadow: "0 30px 70px -36px var(--invite-shadow), inset 0 1px 0 rgb(255 255 255 / 85%)",
+          // Warm ivory paper with a blush glow at the foot; slightly see-through at the edges
+          background: [
+            "radial-gradient(110% 38% at 50% 0%, #FFFDFB 0%, transparent 72%)",
+            "radial-gradient(90% 32% at 50% 100%, color-mix(in srgb, var(--color-motif-blush) 32%, transparent) 0%, transparent 78%)",
+            `linear-gradient(180deg, rgb(255 252 249 / 97%) 0%, color-mix(in srgb, ${IVORY} 96%, transparent) 55%, color-mix(in srgb, #EFD8CA 95%, transparent) 100%)`,
+          ].join(", "),
+          borderColor: "color-mix(in srgb, var(--color-motif-accent) 28%, transparent)",
+          boxShadow:
+            "0 34px 70px -34px color-mix(in srgb, var(--color-motif-accent) 45%, transparent), 0 0 0 1px rgb(255 255 255 / 55%), inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -24px 40px -30px color-mix(in srgb, var(--color-motif-medium) 35%, transparent)",
         }}
       >
         {/* Double hairline frame following the arch, a heart at the top and bottom */}
@@ -384,8 +388,8 @@ function ProposalCard({ children }: { children: ReactNode }) {
 
         {/* Top padding clears the dome: a little more than a third of its height */}
         <div
-          className="relative z-20 px-4 pb-10 text-center min-[400px]:px-5 sm:px-14 sm:pb-16 md:px-16"
-          style={{ paddingTop: "max(2.75rem, calc(var(--arch-h) * 0.42))" }}
+          className="relative z-20 px-5 pb-9 text-center min-[400px]:px-6 sm:px-14 sm:pb-14 md:px-16"
+          style={{ paddingTop: "max(2.5rem, calc(var(--arch-h) * 0.4))" }}
         >
           {children}
         </div>
@@ -422,13 +426,17 @@ function DirectTitle({ eyebrow, title, as = "h2" }: { eyebrow: string; title: st
   return (
     <div>
       {eyebrow ? (
-        <SmallCaps className="tracking-[0.32em] sm:tracking-[0.38em]">
-          <T text={eyebrow} />
-        </SmallCaps>
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3">
+          <span className="h-px w-6 bg-gradient-to-r from-transparent to-[var(--color-motif-medium)] sm:w-10" aria-hidden />
+          <SmallCaps className="tracking-[0.3em] sm:tracking-[0.38em]">
+            <T text={eyebrow} />
+          </SmallCaps>
+          <span className="h-px w-6 bg-gradient-to-l from-transparent to-[var(--color-motif-medium)] sm:w-10" aria-hidden />
+        </div>
       ) : null}
       {title ? (
         <Tag
-          className={`${theSeasons.className} mt-1.5 text-[clamp(1.3rem,6vw,2.05rem)] uppercase leading-[1.08] tracking-[0.06em] [overflow-wrap:anywhere] sm:tracking-[0.1em]`}
+          className={`${theSeasons.className} proposal-title-gradient mt-1.5 text-[clamp(1.35rem,6.4vw,2.1rem)] uppercase leading-[1.1] tracking-[0.07em] [overflow-wrap:anywhere] sm:tracking-[0.1em]`}
           style={{ color: TITLE }}
         >
           <T text={title} />
@@ -489,7 +497,7 @@ function ProposalDirectAsk({
     >
       {ornament ? (
         <motion.div variants={headerItem}>
-          <TintedDeco src={ornament} className="mx-auto mb-3 block h-auto w-20 select-none sm:mb-4 sm:w-28" />
+          <TintedDeco src={ornament} className="mx-auto mb-2.5 block h-auto w-16 select-none sm:mb-4 sm:w-24" />
         </motion.div>
       ) : null}
 
@@ -499,21 +507,33 @@ function ProposalDirectAsk({
 
       {/* Wedding party illustration (site.ts → proposal.coupleImage) — shown as is, no frame */}
       {coupleImage ? (
-        <motion.div variants={headerItem} className="relative -mx-2 mt-4 sm:mx-0 sm:mt-6">
-          <Image
-            src={encodeURI(coupleImage)}
-            alt="Our wedding party"
-            width={1536}
-            height={1024}
-            sizes="(max-width: 640px) 92vw, 512px"
-            className="block h-auto w-full select-none"
-            draggable={false}
-            priority
-          />
+        <motion.div variants={headerItem} className="mx-auto mt-16 w-[11rem] sm:mt-20 sm:w-[13.5rem]">
+          {/* Arched doorway: sage & gold frame, glowing garden sky inside; the couple stands in
+              front and overlaps the arch, and the whole doorway fades out at the bottom */}
+          <div className="proposal-door-wrap">
+          <div className="proposal-door">
+            <div className="proposal-door__frame" aria-hidden>
+              <div className="proposal-door__inner">
+                <span className="proposal-door__rays" />
+                <span className="proposal-door__sparkles" />
+              </div>
+            </div>
+            <Image
+              src={encodeURI(coupleImage)}
+              alt="Our wedding party"
+              width={765}
+              height={1360}
+              sizes="(max-width: 640px) 200px, 248px"
+              className="proposal-door__img select-none"
+              draggable={false}
+              priority
+            />
+          </div>
+          </div>
         </motion.div>
       ) : null}
 
-      <motion.div variants={headerItem} className="mt-6 sm:mt-7">
+      <motion.div variants={headerItem} className="mt-3 sm:mt-5">
         <DirectTitle eyebrow={labels.placeEyebrow ?? ""} title={fill(labels.placeTitle ?? "")} />
         {detailsLine ? (
           <SmallCaps className="mt-2 text-[0.58rem] tracking-[0.22em] sm:text-[0.64rem]" color={palette.bodySoft}>
@@ -540,7 +560,7 @@ function ProposalDirectAsk({
         style={{ color: INK }}
       >
         <T text={`${labels.askQuestion} `} />
-        <span className="capitalize" style={{ color: "var(--color-welcome-heading)" }}>
+        <span className="proposal-role-highlight capitalize" style={{ color: "var(--color-welcome-heading)" }}>
           <T text={`${role.title}?`} />
         </span>
       </motion.h2>
@@ -566,7 +586,7 @@ function ProposalDirectAsk({
         </p>
       </motion.div>
 
-      <motion.div variants={headerItem} className="mx-auto mt-7 flex w-full max-w-sm flex-col gap-3 sm:mt-8">
+      <motion.div variants={headerItem} className="mx-auto mt-6 flex w-full max-w-sm flex-col gap-2.5 sm:mt-8 sm:gap-3">
         <button type="button" disabled={submitting} onClick={onYes} className={primaryBtnClass} style={primaryBtnStyle}>
           {submitting ? labels.saving : <T text={fill(copy.yesButton)} />}
         </button>
@@ -593,31 +613,44 @@ function FlowHeader({
   animated?: boolean
 }) {
   const iconNode = (
-    <div
-      className="flex h-16 w-16 items-center justify-center rounded-full border"
-      style={{
-        borderColor: GOLD_BORDER,
-        background: INNER_SURFACE,
-        boxShadow: `0 0 0 5px ${IVORY}, 0 0 0 6px ${GOLD_BORDER_SOFT}, 0 14px 28px -14px var(--invite-shadow)`,
-      }}
-    >
-      {icon}
+    <div className="relative">
+      {animated && <span className="proposal-icon-ring absolute inset-0 rounded-full" aria-hidden />}
+      <div
+        className="relative flex h-14 w-14 items-center justify-center rounded-full border sm:h-16 sm:w-16"
+        style={{
+          borderColor: "rgb(255 255 255 / 70%)",
+          background: "radial-gradient(circle at 35% 30%, #A8324F 0%, #84183A 45%, #540920 100%)",
+          color: "#FFF8F2",
+          boxShadow: `0 0 0 4px ${IVORY}, 0 0 0 5px ${GOLD_BORDER_SOFT}, 0 16px 30px -14px color-mix(in srgb, var(--color-motif-accent) 60%, transparent)`,
+        }}
+      >
+        {icon}
+      </div>
     </div>
   )
   return (
-    <div className="mb-6">
-      <div className="mb-6 flex justify-center">
-        {animated ? (
-          <motion.div initial={{ scale: 0 }} animate={{ scale: [0, 1.2, 1] }} transition={{ duration: 0.6 }}>
-            {iconNode}
-          </motion.div>
-        ) : (
-          iconNode
-        )}
+    <div className="mb-5 sm:mb-6">
+      <div className="mb-5 flex justify-center sm:mb-6">
+        <motion.div
+          initial={{ scale: 0, rotate: -12 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: "spring", stiffness: 260, damping: 15, delay: 0.15 }}
+        >
+          {iconNode}
+        </motion.div>
       </div>
-      <LayeredProposalTitle main={title} script={script} />
+      <div
+        style={
+          {
+            "--modal-title": "clamp(1.85rem, 9vw, 3.1rem)",
+            "--modal-script": "clamp(1.6rem, 7.6vw, 2.6rem)",
+          } as CSSProperties
+        }
+      >
+        <LayeredProposalTitle main={title} script={script} compact />
+      </div>
       {subheader ? (
-        <SmallCaps className="mx-auto mt-5 max-w-md">
+        <SmallCaps className="mx-auto mt-4 max-w-md sm:mt-5">
           <T text={subheader} />
         </SmallCaps>
       ) : null}
@@ -670,6 +703,25 @@ function ProposalPageInner({ role }: ProposalPageProps) {
 
   const pageScrollLocked = loadingOverlayVisible || showInvitation
   const cinematicEntry = enteringFromInvite && proposalVisible
+
+  // Same ribbon-tied opening card as the main page; the loader starts once it's tapped open.
+  // Controlled by `openingCard.enabled` / `openingCard.mobileOnly` in content/site.ts.
+  const openingCardConfig = useSiteConfig().openingCard
+  const openingCardEnabled = openingCardConfig?.enabled ?? true
+  const openingCardMobileOnly = openingCardConfig?.mobileOnly ?? true
+  const [openingCardVisible, setOpeningCardVisible] = useState(openingCardEnabled)
+  const [loaderStarted, setLoaderStarted] = useState(!openingCardEnabled)
+
+  useEffect(() => {
+    if (!openingCardVisible || !openingCardMobileOnly) return
+    if (window.matchMedia(OPENING_CARD_MOBILE_MEDIA).matches) return
+    setOpeningCardVisible(false)
+    setLoaderStarted(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- decided once, on first load
+  }, [])
+
+  const handleOpeningCardOpenStart = useCallback(() => setLoaderStarted(true), [])
+  const handleOpeningCardOpened = useCallback(() => setOpeningCardVisible(false), [])
 
   useEffect(() => {
     if (inviteeFromLink) {
@@ -790,15 +842,15 @@ function ProposalPageInner({ role }: ProposalPageProps) {
   ) : null
 
   const cardMotion = {
-    initial: { opacity: 0, scale: 0.96 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.96 },
-    transition: { duration: 0.5, ease: "easeOut" as const },
+    initial: { opacity: 0, y: 28, scale: 0.97, filter: "blur(6px)" },
+    animate: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
+    exit: { opacity: 0, y: -18, scale: 0.98, filter: "blur(4px)" },
+    transition: { duration: 0.55, ease: proposalEntryEase },
   }
 
   return (
     <div
-      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative min-h-[100dvh] select-none px-2.5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] sm:px-6 sm:py-16 md:py-20 ${pageScrollLocked ? "overflow-hidden" : "overflow-x-hidden"}`}
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative min-h-[100dvh] select-none px-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] sm:px-6 sm:py-16 md:py-20 ${pageScrollLocked ? "overflow-hidden" : "overflow-x-hidden"}`}
       style={{ background: sectionBackground, color: CREAM }}
     >
       <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
@@ -811,7 +863,11 @@ function ProposalPageInner({ role }: ProposalPageProps) {
         </div>
       )}
 
-      {loadingOverlayVisible && (
+      {openingCardVisible && (
+        <OpeningCard onOpenStart={handleOpeningCardOpenStart} onOpened={handleOpeningCardOpened} />
+      )}
+
+      {loadingOverlayVisible && loaderStarted && (
         <LoadingScreen onFadeStart={handleLoadingFadeStart} onComplete={handleLoadingComplete} />
       )}
 
@@ -846,6 +902,21 @@ function ProposalPageInner({ role }: ProposalPageProps) {
         className={`relative z-10 mx-auto flex min-h-[calc(100dvh-max(1rem,env(safe-area-inset-top))-max(1.5rem,env(safe-area-inset-bottom)))] w-full max-w-3xl flex-col items-center justify-center py-3 sm:min-h-[calc(100dvh-8rem)] sm:py-0 ${proposalVisible ? "" : "pointer-events-none"}`}
         style={{ color: palette.body }}
       >
+        <AnimatePresence>
+          {flowState !== "question" && (
+            <motion.div
+              key="modal-veil"
+              className="pointer-events-none fixed inset-0 z-[5] backdrop-blur-[3px]"
+              style={{ background: "radial-gradient(120% 80% at 50% 45%, rgb(255 248 242 / 35%), color-mix(in srgb, var(--color-motif-accent) 22%, transparent))" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              aria-hidden
+            />
+          )}
+        </AnimatePresence>
+
         <AnimatePresence mode="wait">
           {flowState === "question" && (
             <motion.div key="question" className="relative z-10 w-full" {...cardMotion}>
@@ -867,9 +938,9 @@ function ProposalPageInner({ role }: ProposalPageProps) {
 
           {flowState === "yes_details" && (
             <motion.form key="yes-form" onSubmit={handleYesSubmit} className="relative z-10 w-full" {...cardMotion}>
-              <ProposalCard>
+              <ProposalCard compact>
                 <FlowHeader
-                  icon={<Check className="h-6 w-6" style={{ color: INK }} />}
+                  icon={<Check className="h-6 w-6" />}
                   title={fill(labels.nameForm.title)}
                   script={fill(labels.nameForm.script)}
                   subheader={fill(labels.nameForm.subheader)}
@@ -890,11 +961,11 @@ function ProposalPageInner({ role }: ProposalPageProps) {
                     value={preferredName}
                     onChange={(e) => setPreferredName(e.target.value)}
                     // 16px text on phones so iOS doesn't zoom in while typing
-                    className="font-goudy-italic w-full select-text rounded-full px-5 py-3 text-base transition-all focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-motif-medium)_45%,transparent)] placeholder:text-[color-mix(in_srgb,var(--color-welcome-text)_55%,white)] focus:border-[var(--color-welcome-heading)]"
+                    className="font-goudy-italic w-full select-text rounded-2xl px-5 py-3.5 text-base transition-all focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-motif-medium)_45%,transparent)] placeholder:text-[color-mix(in_srgb,var(--color-welcome-text)_55%,white)] focus:border-[var(--color-welcome-heading)]"
                     style={{
                       color: INK,
-                      backgroundColor: IVORY,
-                      border: `1px solid ${GOLD_BORDER}`,
+                      background: "linear-gradient(180deg, #FFFFFF 0%, #FFF8F2 100%)",
+                      border: "1px solid color-mix(in srgb, var(--color-motif-medium) 45%, transparent)",
                       boxShadow: "inset 0 1px 2px color-mix(in srgb, var(--invite-ink) 6%, transparent)",
                     }}
                   />
@@ -915,18 +986,22 @@ function ProposalPageInner({ role }: ProposalPageProps) {
 
           {flowState === "yes_submitted" && (
             <motion.div key="yes-success" className="relative z-10 w-full" {...cardMotion}>
-              <ProposalCard>
+              <ProposalCard compact>
                 <FlowHeader
                   animated
-                  icon={<Sparkles className="h-7 w-7" style={{ color: CHAMPAGNE }} />}
+                  icon={<Sparkles className="h-6 w-6" />}
                   title={fill(copy.yes.title)}
                   script={fill(copy.yes.script)}
                   subheader={fill(copy.yes.subheader)}
                 />
 
                 <div
-                  className="mx-auto mb-7 max-w-sm rounded-[1.4rem] border px-5 py-4"
-                  style={{ borderColor: GOLD_BORDER_SOFT, backgroundColor: INNER_SURFACE }}
+                  className="relative mx-auto mb-6 max-w-sm rounded-2xl border px-5 py-4 sm:mb-7"
+                  style={{
+                    borderColor: "color-mix(in srgb, var(--color-motif-medium) 35%, transparent)",
+                    background: "linear-gradient(180deg, #FFFDFB 0%, color-mix(in srgb, var(--color-motif-blush) 18%, #FFF8F2) 100%)",
+                    boxShadow: "inset 0 0 0 4px rgb(255 255 255 / 60%), 0 12px 26px -20px var(--invite-shadow)",
+                  }}
                 >
                   {confirmedDisplayName && !isPlayful(copyKey) ? (
                     <>
@@ -958,9 +1033,9 @@ function ProposalPageInner({ role }: ProposalPageProps) {
 
           {flowState === "no_clicked" && (
             <motion.div key="no-confirm" className="relative z-10 w-full" {...cardMotion}>
-              <ProposalCard>
+              <ProposalCard compact>
                 <FlowHeader
-                  icon={<X className="h-6 w-6" style={{ color: CHAMPAGNE }} />}
+                  icon={<X className="h-6 w-6" />}
                   title={fill(copy.no.title)}
                   script={fill(copy.no.script)}
                   subheader={fill(copy.no.subheader)}
@@ -990,9 +1065,9 @@ function ProposalPageInner({ role }: ProposalPageProps) {
 
           {flowState === "no_submitted" && (
             <motion.div key="no-sent" className="relative z-10 w-full" {...cardMotion}>
-              <ProposalCard>
+              <ProposalCard compact>
                 <FlowHeader
-                  icon={<Heart className="h-6 w-6" style={{ color: CHAMPAGNE }} />}
+                  icon={<Heart className="h-6 w-6" />}
                   title={fill(copy.sent.title)}
                   script={fill(copy.sent.script)}
                   subheader={fill(copy.sent.subheader)}

@@ -31,6 +31,8 @@ export interface LoaderPosterProps {
   dateText: string;
   weekday: string;
   time: string;
+  /** Guest arrival time (ceremony.guestsTime), shown under the ceremony time */
+  arrivalTime?: string;
   venueName: string;
   venueAddress: string;
   corners: { topLeft?: string; topRight?: string; bottomLeft?: string; bottomRight?: string };
@@ -174,6 +176,13 @@ export const LoaderPoster: React.FC<LoaderPosterProps> = (p) => {
                 {p.weekday}
                 {p.weekday && p.time && <span className="lp__dot" aria-hidden="true" />}
                 {p.time}
+              </p>
+            )}
+            {p.arrivalTime && (
+              <p className="lp__when lp__arrival lp-in" style={delay(3025)}>
+                Guest Arrival
+                <span className="lp__dot" aria-hidden="true" />
+                {p.arrivalTime}
               </p>
             )}
             {p.venueName && (

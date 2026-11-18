@@ -310,6 +310,11 @@
   letter-spacing: 0.16em;
   color: var(--lp-ink);
 }
+.lp__arrival {
+  margin-top: 0.4cqh;
+  font-size: 1.35cqh;
+  opacity: 0.9;
+}
 .lp__dot {
   width: 0.5cqh;
   height: 0.5cqh;

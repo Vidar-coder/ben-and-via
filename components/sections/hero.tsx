@@ -246,6 +246,7 @@ export function Hero() {
   const ceremonyTimePhrase = formatCeremonyTimePhrase(
     siteConfig.ceremony.time ?? siteConfig.wedding.time,
   )
+  const arrivalTime = (siteConfig.ceremony.guestsTime ?? "").trim()
   const ceremonyName = toTitleCase(siteConfig.ceremony.location || siteConfig.wedding.venue || "")
 
   const fadeUp = (delay: number) => {
@@ -407,6 +408,9 @@ export function Hero() {
         <motion.div className="home-hero-meta mt-5 flex flex-col items-center sm:mt-6" {...fadeUp(0.36)}>
           {/* "3:30 in the afternoon" between peach dots, then the venue in title case */}
           <span className="home-hero-meta-time">{ceremonyTimePhrase}</span>
+          {arrivalTime && (
+            <span className="home-hero-meta-arrival">Guest arrival · {arrivalTime}</span>
+          )}
           <span className="home-hero-meta-venue">{ceremonyName}</span>
         </motion.div>
         </div>
