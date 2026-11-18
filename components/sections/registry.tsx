@@ -117,8 +117,12 @@ export function Registry() {
   const cardStyle = {
     background: c.card,
     border: `1px solid ${c.cardEdge}`,
-    boxShadow: `0 0 0 6px rgb(255 255 255 / 30%), 0 26px 56px -30px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)`,
+    boxShadow: `0 0 0 6px rgb(255 255 255 / 40%), 0 26px 56px -30px rgb(31 38 24 / 45%)`,
   }
+  // Sage seal / avatar gradient
+  const sageGradient =
+    "linear-gradient(160deg, color-mix(in srgb, var(--color-motif-silver) 88%, white) 0%, var(--color-motif-silver) 45%, color-mix(in srgb, var(--color-motif-silver) 70%, #1F2618) 100%)"
+  const sunGradient = `linear-gradient(135deg, ${c.highlight} 0%, ${c.accent} 100%)`
   const dividerLineStyle = { background: `linear-gradient(to right, transparent, ${onBgLine}, transparent)` }
 
   // Enlarged QR (tap the QR to open; Esc / backdrop / X closes)
@@ -201,8 +205,8 @@ export function Registry() {
               <span
                 className="flex h-14 w-14 items-center justify-center rounded-full sm:h-16 sm:w-16"
                 style={{
-                  background: buttonBg,
-                  boxShadow: `0 0 0 5px ${c.card}, 0 0 0 6px ${c.cardEdge}, 0 16px 30px -12px color-mix(in srgb, ${c.title} 55%, transparent)`,
+                  background: sageGradient,
+                  boxShadow: `0 0 0 5px ${c.card}, 0 0 0 7px ${c.highlight}, 0 16px 30px -12px rgb(31 38 24 / 45%)`,
                 }}
                 aria-hidden
               >
@@ -243,7 +247,7 @@ export function Registry() {
               <motion.div variants={itemVariants} className="relative mt-8 sm:mt-9">
                 <div className="flex items-center justify-center gap-2" aria-hidden>
                   <span className="h-px w-8 sm:w-12" style={{ background: `linear-gradient(to right, transparent, ${c.line})` }} />
-                  <span className="h-1 w-1 rotate-45" style={{ background: "var(--color-motif-accent)" }} />
+                  <span className="h-1.5 w-1.5 rotate-45" style={{ background: sunGradient }} />
                   <span className="h-px w-8 sm:w-12" style={{ background: `linear-gradient(to left, transparent, ${c.line})` }} />
                 </div>
                 <p
@@ -266,8 +270,8 @@ export function Registry() {
                     className="mx-auto mt-4 grid w-full max-w-[17rem] gap-1 rounded-full p-1"
                     style={{
                       gridTemplateColumns: `repeat(${accounts.length}, minmax(0, 1fr))`,
-                      background: "#FFFFFF",
-                      boxShadow: `inset 0 0 0 1px ${c.cardEdge}, 0 6px 16px -10px color-mix(in srgb, var(--color-welcome-navy) 40%, transparent)`,
+                      background: c.accountCard,
+                      boxShadow: `inset 0 0 0 1px ${c.cardEdge}, 0 6px 16px -10px rgb(31 38 24 / 30%)`,
                     }}
                   >
                     {accounts.map((account, i) => {
@@ -307,7 +311,7 @@ export function Registry() {
                   id="registry-tabpanel"
                   role={accounts.length > 1 ? "tabpanel" : undefined}
                   aria-labelledby={accounts.length > 1 ? `registry-tab-${activeIndex}` : undefined}
-                  className="mx-auto mt-4 max-w-[17.5rem]"
+                  className="mx-auto mt-4 w-full max-w-[17rem]"
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
@@ -316,28 +320,25 @@ export function Registry() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -8, scale: 0.98 }}
                       transition={{ duration: 0.28, ease }}
-                      className="relative flex flex-col items-center overflow-hidden rounded-[1.4rem] px-5 pb-5 pt-4"
+                      className="relative overflow-hidden rounded-2xl p-3 sm:p-3.5"
                       style={{
-                        background: c.accountCard,
+                        background: "#FFFFFF",
                         border: `1px solid ${c.cardEdge}`,
-                        boxShadow: `0 18px 34px -22px color-mix(in srgb, ${c.title} 45%, transparent)`,
+                        boxShadow: "0 12px 28px -20px rgb(31 38 24 / 40%)",
                       }}
                     >
-                      {/* Inner sage frame */}
-                      <span
-                        aria-hidden
-                        className="pointer-events-none absolute inset-1.5 rounded-[1.1rem] border"
-                        style={{ borderColor: `color-mix(in srgb, ${c.line} 45%, transparent)` }}
-                      />
-                      <p className={`${theSeasons.className} relative mb-3 text-lg uppercase tracking-[0.14em]`} style={{ color: c.title }}>
-                        {active.label}
-                      </p>
+                      {/* Single account (no toggle): show its name on top */}
+                      {accounts.length === 1 ? (
+                        <p className={`${cinzel.className} mb-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em]`} style={{ color: c.eyebrow }}>
+                          {active.label}
+                        </p>
+                      ) : null}
                       {active.qr ? (
                         <button
                           type="button"
                           onClick={() => setZoomQr({ src: active.qr, label: active.label })}
-                          className="group relative block w-full max-w-[13rem] rounded-2xl bg-white p-2 transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)]"
-                          style={{ boxShadow: `0 0 0 1px ${c.cardEdge}, 0 0 0 6px color-mix(in srgb, var(--color-motif-medium) 14%, transparent), 0 14px 26px -16px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)` }}
+                          className="group relative mx-auto block w-full max-w-[13.5rem] rounded-xl p-2 transition-transform duration-300 hover:scale-[1.015] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)]"
+                          style={{ background: "#FFFFFF", boxShadow: `inset 0 0 0 1px ${c.cardEdge}` }}
                           aria-label={`Enlarge ${active.label} QR code`}
                         >
                           {/* Sized by its own width (square) — a % height inside a <button> can collapse to 0 */}
@@ -350,46 +351,44 @@ export function Registry() {
                             className="block aspect-square h-auto w-full object-contain"
                           />
                           <span
-                            className="absolute -bottom-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md"
-                            style={{ background: buttonBg, boxShadow: "0 0 0 2px #FFFFFF" }}
+                            className="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full opacity-80 transition-opacity group-hover:opacity-100"
+                            style={{ background: c.accountCard, color: c.eyebrow, boxShadow: `inset 0 0 0 1px ${c.cardEdge}` }}
                             aria-hidden
                           >
-                            <Expand className="h-3.5 w-3.5" />
+                            <Expand className="h-3 w-3" />
                           </span>
                         </button>
-                      ) : (
-                        <span
-                          className={`${theSeasons.className} flex h-14 w-14 items-center justify-center rounded-full text-xl`}
-                          style={{ background: `color-mix(in srgb, ${c.glow} 80%, transparent)`, color: c.title }}
-                          aria-hidden
-                        >
-                          {active.label.charAt(0)}
-                        </span>
-                      )}
-                      {active.accountName ? (
-                        <p className="font-goudy-italic relative mt-4 text-sm" style={{ color: c.body }}>
-                          {active.accountName}
-                        </p>
                       ) : null}
-                      {active.accountNumber ? (
-                        <p
-                          className={`${cinzel.className} relative mt-0.5 text-[0.82rem] font-semibold tabular-nums tracking-[0.14em]`}
-                          style={{ color: c.title }}
-                        >
-                          {active.accountNumber}
-                        </p>
-                      ) : null}
-                      {active.qr ? (
-                        <a
-                          href={active.qr}
-                          download={qrFileName(active.label, active.qr)}
-                          className={`${cinzel.className} relative mt-3.5 inline-flex items-center gap-1.5 rounded-full border px-5 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] transition-all duration-300 hover:scale-[1.03] hover:brightness-110`}
-                          style={{ background: buttonBg, color: buttonText, borderColor: "rgb(255 255 255 / 70%)", boxShadow: "0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 22%, transparent)" }}
-                        >
-                          <Download className="h-3 w-3" aria-hidden />
-                          {content.saveQrLabel}
-                        </a>
-                      ) : null}
+
+                      {/* Name + number on the left, Save QR on the right */}
+                      <div className="mt-3 flex items-center gap-3 rounded-xl px-3 py-2 text-left" style={{ background: c.accountCard }}>
+                        <div className="min-w-0 flex-1">
+                          {active.accountName ? (
+                            <p className="font-goudy-italic truncate text-[0.85rem] leading-tight" style={{ color: c.body }}>
+                              {active.accountName}
+                            </p>
+                          ) : null}
+                          {active.accountNumber ? (
+                            <p
+                              className={`${cinzel.className} mt-0.5 truncate text-[0.72rem] font-semibold tabular-nums tracking-[0.08em]`}
+                              style={{ color: c.title }}
+                            >
+                              {active.accountNumber}
+                            </p>
+                          ) : null}
+                        </div>
+                        {active.qr ? (
+                          <a
+                            href={active.qr}
+                            download={qrFileName(active.label, active.qr)}
+                            className={`${cinzel.className} inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.58rem] font-semibold uppercase tracking-[0.14em] transition-all duration-300 hover:brightness-110 active:scale-[0.97]`}
+                            style={{ background: buttonBg, color: buttonText }}
+                          >
+                            <Download className="h-3 w-3" aria-hidden />
+                            {content.saveQrLabel}
+                          </a>
+                        ) : null}
+                      </div>
                     </motion.div>
                   </AnimatePresence>
                 </div>
@@ -429,7 +428,7 @@ export function Registry() {
                           <span
                             aria-hidden
                             className="font-goudy-italic text-[0.62em] italic"
-                            style={{ color: c.line }}
+                            style={{ color: c.accent }}
                           >
                             &amp;
                           </span>
@@ -441,7 +440,7 @@ export function Registry() {
                   </div>
                 )
               })()}
-              <Heart className="mx-auto mt-3 h-3.5 w-3.5" style={{ color: "var(--color-motif-accent)", fill: "var(--color-motif-accent)" }} aria-hidden />
+              <Heart className="mx-auto mt-3 h-3.5 w-3.5" style={{ color: c.accent, fill: c.accent }} aria-hidden />
             </motion.div>
           </motion.div>
         </div>
@@ -450,7 +449,7 @@ export function Registry() {
       {mounted && zoomQr && createPortal(
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center p-5 backdrop-blur-md animate-in fade-in duration-200"
-          style={{ background: "color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)" }}
+          style={{ background: "rgb(246 233 223 / 60%)" }}
           role="dialog"
           aria-modal="true"
           aria-label={`${zoomQr.label} QR code`}
@@ -473,7 +472,7 @@ export function Registry() {
             <p className={`${theSeasons.className} mb-3 text-lg uppercase tracking-[0.12em]`} style={{ color: c.title }}>
               {zoomQr.label}
             </p>
-            <div className="relative mx-auto w-full max-w-[18rem] overflow-hidden rounded-xl bg-white p-2" style={{ boxShadow: `0 0 0 1px ${c.glow}` }}>
+            <div className="relative mx-auto w-full max-w-[19rem] rounded-xl bg-white p-2.5" style={{ boxShadow: `inset 0 0 0 1px ${c.cardEdge}` }}>
               <Image
                 src={encodeURI(zoomQr.src)}
                 alt={`${zoomQr.label} QR code`}

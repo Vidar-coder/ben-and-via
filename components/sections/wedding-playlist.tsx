@@ -5,6 +5,7 @@ import { useSiteConfig } from "@/hooks/use-site-config"
 import { useAudio } from "@/contexts/audio-context"
 import { cinzel } from "@/lib/fonts"
 import localFont from "next/font/local"
+import Image from "next/image"
 import { Music2, Disc3 } from "lucide-react"
 import { motion, useReducedMotion, type Variants } from "motion/react"
 import { TintedDeco } from "@/components/tinted-deco"
@@ -105,7 +106,6 @@ const BUTTON =
 const BUTTON_SHADOW =
   "0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 22%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)"
 const IVORY = "#FFF8F2"
-const PAPER = "#FFF8F2"
 const NAVY = TEAL
 const BODY = "var(--color-welcome-text)"
 const ACCENT = "var(--color-welcome-heading)"
@@ -207,6 +207,104 @@ function PlaylistTitle({ title, script }: { title: string; script: string }) {
   )
 }
 
+// Realistic CD half out of its album sleeve. The disc turns slowly and slides further out /
+// spins faster while the Spotify player is playing. The glare stays put while the disc turns.
+function CdAlbum({ cover, label, kicker, playing, still }: { cover: string; label: string; kicker: string; playing: boolean; still: boolean }) {
+  const spin = still ? "" : playing ? "animate-[spin_2.6s_linear_infinite]" : "animate-[spin_9s_linear_infinite]"
+  return (
+    // Box = sleeve + the part of the disc that slides out, so the disc never covers the text beside it
+    <div className="cd-album relative shrink-0" aria-hidden>
+      <style>{`.cd-album{height:6rem;width:9rem}@media(min-width:640px){.cd-album{height:10rem;width:15rem}}`}</style>
+      {/* Disc — sits behind the sleeve */}
+      <motion.div
+        className="absolute left-0 top-[4%] h-[92%] aspect-square"
+        initial={false}
+        animate={{ x: playing ? "62%" : "48%" }}
+        transition={{ duration: still ? 0 : 0.9, ease }}
+      >
+        <div
+          className="relative h-full w-full rounded-full"
+          style={{ boxShadow: "0 10px 22px -8px rgb(31 38 24 / 55%), 0 0 0 1px rgb(0 0 0 / 35%), inset 0 0 0 2px rgb(255 255 255 / 10%)" }}
+        >
+          {/* Spinning part: rainbow foil, grooves and the printed label */}
+          <div
+            className={`absolute inset-0 rounded-full ${spin}`}
+            style={{
+              background: [
+                "repeating-radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0%) 0 1.5px, rgb(255 255 255 / 6%) 1.5px 2.5px)",
+                "conic-gradient(from 0deg, #23252B, #3A4152, #5A4A63, #2E4740, #5C5238, #34445A, #4B3B55, #2C3E3A, #514630, #23252B)",
+              ].join(", "),
+            }}
+          >
+            <div className="absolute inset-[29%] overflow-hidden rounded-full" style={{ boxShadow: "0 0 0 1.5px rgb(255 255 255 / 35%)" }}>
+              {cover ? (
+                <Image src={encodeURI(cover)} alt="" fill sizes="80px" className="object-cover" />
+              ) : (
+                <div className="h-full w-full" style={{ background: "var(--color-motif-silver)" }} />
+              )}
+            </div>
+          </div>
+          {/* Fixed glare across the foil */}
+          <div
+            className="pointer-events-none absolute inset-0 rounded-full"
+            style={{
+              background:
+                "conic-gradient(from 20deg, transparent 0deg, rgb(255 255 255 / 30%) 25deg, transparent 60deg, transparent 180deg, rgb(255 255 255 / 22%) 205deg, transparent 240deg)",
+              mixBlendMode: "screen",
+            }}
+          />
+          {/* Clear plastic hub + centre hole */}
+          <div
+            className="absolute inset-[40%] rounded-full"
+            style={{ background: "rgb(20 22 26 / 55%)", boxShadow: "inset 0 0 0 1px rgb(255 255 255 / 25%), 0 0 0 1px rgb(0 0 0 / 30%)" }}
+          />
+          <div
+            className="absolute inset-[46.5%] rounded-full"
+            style={{ background: "#FFFFFF", boxShadow: "inset 0 1px 2px rgb(0 0 0 / 35%)" }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Album sleeve */}
+      <div
+        className="absolute left-0 top-0 z-10 h-full aspect-square overflow-hidden rounded-[6px]"
+        style={{ boxShadow: "0 14px 28px -12px rgb(31 38 24 / 55%), 0 0 0 1px rgb(255 255 255 / 70%)" }}
+      >
+        {cover ? (
+          <Image src={encodeURI(cover)} alt="" fill sizes="(max-width: 640px) 96px, 160px" className="object-cover" />
+        ) : (
+          <div className="h-full w-full" style={{ background: "linear-gradient(160deg, color-mix(in srgb, var(--color-motif-silver) 80%, white), var(--color-motif-silver))" }} />
+        )}
+        {/* Printed title strip */}
+        <div
+          className="absolute inset-x-0 bottom-0 flex flex-col items-center px-1.5 pb-1.5 pt-6 text-center sm:px-2.5 sm:pb-2.5 sm:pt-9"
+          style={{ background: "linear-gradient(to top, rgb(20 22 18 / 88%) 0%, rgb(20 22 18 / 60%) 50%, transparent 100%)" }}
+        >
+          {kicker ? (
+            <span
+              className={`${cinzel.className} block max-w-full truncate text-[0.4rem] font-semibold uppercase leading-none tracking-[0.22em] text-white/85 sm:text-[0.55rem]`}
+            >
+              {kicker}
+            </span>
+          ) : null}
+          <span className="my-[3px] block h-px w-6 bg-white/60 sm:my-1 sm:w-9" aria-hidden />
+          <p
+            className={`${aboveTheBeyond.className} max-w-full whitespace-nowrap text-[0.95rem] leading-[1.05] text-white sm:text-[1.45rem]`}
+            style={{ textShadow: "0 1px 3px rgb(0 0 0 / 60%)" }}
+          >
+            {label}
+          </p>
+        </div>
+        {/* Thin inset frame, like a printed album cover */}
+        <span className="pointer-events-none absolute inset-[5px] rounded-[3px] border border-white/35 sm:inset-2" aria-hidden />
+        {/* Spine highlight + glossy sheen */}
+        <span className="pointer-events-none absolute inset-y-0 left-0 w-2" style={{ background: "linear-gradient(to right, rgb(255 255 255 / 35%), transparent)" }} />
+        <span className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(125deg, rgb(255 255 255 / 28%) 0%, transparent 38%)" }} />
+      </div>
+    </div>
+  )
+}
+
 export function WeddingPlaylist() {
   const siteConfig = useSiteConfig()
   const content = siteConfig.playlist
@@ -221,6 +319,7 @@ export function WeddingPlaylist() {
   const controllerRef = useRef<SpotifyEmbedController | null>(null)
   const playbackStateRef = useRef<"playing" | "paused">("paused")
   const [playerReady, setPlayerReady] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
   const { pauseMusic, resumeMusic } = useAudio()
 
   useEffect(() => {
@@ -230,6 +329,7 @@ export function WeddingPlaylist() {
     let mounted = true
 
     const handlePlaybackStateChange = (isPlaying: boolean) => {
+      setIsPlaying(isPlaying)
       if (isPlaying && playbackStateRef.current !== "playing") {
         playbackStateRef.current = "playing"
         pauseMusic()
@@ -282,6 +382,7 @@ export function WeddingPlaylist() {
         resumeMusic()
       }
       playbackStateRef.current = "paused"
+      setIsPlaying(false)
       controllerRef.current?.destroy()
       controllerRef.current = null
       setPlayerReady(false)
@@ -342,7 +443,7 @@ export function WeddingPlaylist() {
             </p>
           </motion.div>
 
-          {/* Playlist card — stacked on mobile, side by side on desktop */}
+          {/* Playlist card — phones: CD + title side by side above the player; desktop: two columns */}
           <motion.div
             className="relative mt-6 overflow-hidden rounded-[1.5rem] sm:mt-10 sm:rounded-[2.25rem] md:mt-12"
             style={cardStyle}
@@ -351,31 +452,19 @@ export function WeddingPlaylist() {
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
           >
-            <div className="relative z-20 grid grid-cols-1 items-center gap-4 px-3 py-4 sm:gap-6 sm:px-7 sm:py-9 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-10 md:px-10 md:py-10">
+            <div className="relative z-20 grid grid-cols-1 items-center gap-4 px-3.5 py-4 sm:gap-6 sm:px-7 sm:py-9 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-10 md:px-10 md:py-10">
               {/* Info */}
-              <div className="flex flex-row flex-wrap items-center gap-x-3 gap-y-2 px-1 text-left sm:flex-col sm:flex-nowrap sm:gap-0 sm:px-0 sm:text-center md:items-start md:text-left">
-                <span
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full sm:h-16 sm:w-16"
-                  style={{
-                    background: BUTTON,
-                    boxShadow: `0 0 0 4px ${PAPER}, 0 0 0 5px ${HAIRLINE}, 0 14px 28px -12px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)`,
-                  }}
-                  aria-hidden
-                >
-                  <Disc3
-                    className={`h-6 w-6 sm:h-8 sm:w-8 ${reduceMotion ? "" : "animate-[spin_6s_linear_infinite]"}`}
-                    style={{ color: IVORY }}
-                  />
-                </span>
-                <div className="min-w-0 sm:contents">
+              <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-2 gap-y-3 px-0.5 text-left sm:flex sm:flex-col sm:items-center sm:px-0 sm:text-center md:items-start md:text-left">
+                <CdAlbum cover={content.coverImage} label={`${groomNickname} & ${brideNickname}`} kicker={content.eyebrow} playing={isPlaying} still={Boolean(reduceMotion)} />
+                <div className="relative z-20 min-w-0 max-w-full sm:mt-5">
                   <p
-                    className={`${cinzel.className} text-[0.55rem] font-semibold uppercase tracking-[0.22em] sm:mt-4 sm:text-[0.65rem]`}
+                    className={`${cinzel.className} text-[0.55rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.65rem]`}
                     style={{ color: ACCENT }}
                   >
                     {content.cardEyebrow}
                   </p>
                   <h3
-                    className={`${theSeasons.className} mt-0.5 truncate text-base uppercase leading-tight tracking-[0.06em] sm:mt-1.5 sm:whitespace-normal sm:text-2xl sm:tracking-[0.08em]`}
+                    className={`${theSeasons.className} mt-1 text-base uppercase leading-[1.15] tracking-[0.05em] min-[400px]:text-lg sm:mt-1.5 sm:text-2xl sm:tracking-[0.08em]`}
                     style={{ color: NAVY }}
                     title={playlistName}
                   >
@@ -384,8 +473,8 @@ export function WeddingPlaylist() {
                 </div>
                 {content.cardNote ? (
                   <p
-                    className={`font-goudy-italic w-full text-[0.82rem] leading-snug sm:mt-3 sm:w-auto sm:max-w-sm sm:text-[0.95rem] sm:leading-relaxed md:text-base`}
-                    style={{ color: BODY }}
+                    className={`font-goudy-italic col-span-2 max-w-sm border-t pt-3 text-[0.82rem] leading-snug sm:mt-3 sm:border-t-0 sm:pt-0 sm:text-[0.95rem] sm:leading-relaxed md:text-base`}
+                    style={{ color: BODY, borderColor: HAIRLINE }}
                   >
                     {content.cardNote}
                   </p>

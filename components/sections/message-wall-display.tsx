@@ -11,18 +11,31 @@ import { sectionType } from "@/lib/section-typography"
 import { useSiteConfig } from "@/hooks/use-site-config"
 
 
+// Light motif: white / sage-mist surfaces, sage edges, charcoal text, yellow + orange
+// accents from the guests' summer palette. Burgundy is kept for buttons only.
+const SAGE_DEEP = "color-mix(in srgb, var(--color-motif-silver) 62%, #1F2618)"
+const SAGE_MIST = (pct: number) => `color-mix(in srgb, var(--color-motif-silver) ${pct}%, white)`
+const SAGE_LINE = "color-mix(in srgb, var(--color-motif-silver) 55%, transparent)"
+const CHARCOAL = "var(--color-welcome-text)"
+const YELLOW = "#F2C230"
+const ORANGE = "#E8833A"
+const SUN_GRADIENT = `linear-gradient(135deg, ${YELLOW} 0%, ${ORANGE} 100%)`
+const SUN_RING = `color-mix(in srgb, ${YELLOW} 75%, ${ORANGE})`
+const AVATAR_GRADIENT =
+  "linear-gradient(160deg, color-mix(in srgb, var(--color-motif-silver) 88%, white) 0%, var(--color-motif-silver) 45%, color-mix(in srgb, var(--color-motif-silver) 70%, #1F2618) 100%)"
+
 // Palette lives in globals.css → motif / welcome tokens.
 // Cards are white paper with navy text; buttons are dusty blue with white text.
-const TEAL = "var(--color-welcome-navy)"
-const BLUE = "var(--color-welcome-heading)"
+const TEAL = CHARCOAL
+const BLUE = ORANGE
 const BUTTON = "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)"
 const BUTTON_EDGE = "rgb(255 255 255 / 70%)"
-const SUN = "var(--color-motif-accent)"
-const PAPER = "#FFF8F2"
+const SUN = ORANGE
+const PAPER = "#FFFFFF"
 const IVORY = "#FFF8F2"
 const NAVY = TEAL
 const BODY = "var(--color-welcome-text)"
-const ACCENT = BLUE
+const ACCENT = SAGE_DEEP
 
 const palette = {
   body: BODY,
@@ -32,19 +45,19 @@ const palette = {
 } as const
 
 const messageCardStyle = {
-  background: PAPER,
+  background: `linear-gradient(180deg, ${PAPER} 0%, ${SAGE_MIST(8)} 100%)`,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-medium) 70%, transparent)",
-  boxShadow: "0 16px 34px -22px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)",
+  borderColor: SAGE_LINE,
+  boxShadow: "0 16px 34px -22px rgb(31 38 24 / 40%)",
 } as const
 
-const HAIRLINE = "color-mix(in srgb, var(--color-motif-yellow) 40%, transparent)"
+const HAIRLINE = `color-mix(in srgb, ${YELLOW} 40%, transparent)`
 
 const freshShadow =
-  "0 18px 36px -18px color-mix(in srgb, var(--color-welcome-navy) 80%, transparent), inset 0 1px 0 rgb(255 255 255 / 80%)"
+  `0 0 0 3px color-mix(in srgb, ${YELLOW} 35%, transparent), 0 18px 36px -18px rgb(31 38 24 / 45%), inset 0 1px 0 rgb(255 255 255 / 80%)`
 
-const skeletonBg = "color-mix(in srgb, var(--color-welcome-navy) 12%, transparent)"
+const skeletonBg = SAGE_MIST(30)
 
 interface Message {
   timestamp: string
@@ -158,7 +171,7 @@ function MessageCard({
       {/* Hairline inner frame (turns teal on hover) */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-1.5 rounded-[1.05rem] border transition-colors duration-300 group-hover:border-[color-mix(in_srgb,var(--color-welcome-heading)_45%,transparent)] sm:rounded-[1.15rem]"
+        className="pointer-events-none absolute inset-1.5 rounded-[1.05rem] border transition-colors duration-300 group-hover:border-[color-mix(in_srgb,#E8833A_60%,transparent)] sm:rounded-[1.15rem]"
         style={{ borderColor: HAIRLINE }}
       />
 
@@ -191,7 +204,7 @@ function MessageCard({
       <span
         aria-hidden
         className="font-goudy-italic pointer-events-none absolute bottom-[-0.35em] right-3 select-none text-[5.5rem] leading-none sm:text-[6.5rem]"
-        style={{ color: "color-mix(in srgb, var(--color-motif-medium) 30%, transparent)" }}
+        style={{ color: `color-mix(in srgb, ${YELLOW} 35%, transparent)` }}
       >
         &rdquo;
       </span>
@@ -205,11 +218,11 @@ function MessageCard({
           <div
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full sm:h-9 sm:w-9 md:h-10 md:w-10"
             style={{
-              background: BUTTON,
-              boxShadow: `0 0 0 2px ${IVORY}, 0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 70%, transparent), 0 6px 14px -6px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)`,
+              background: AVATAR_GRADIENT,
+              boxShadow: `0 0 0 2px #FFFFFF, 0 0 0 3.5px ${SUN_RING}, 0 6px 14px -6px rgb(31 38 24 / 45%)`,
             }}
           >
-            <span className={`${cinzel.className} ${sectionType.label} font-semibold`} style={{ color: IVORY }}>
+            <span className={`${cinzel.className} ${sectionType.label} font-semibold`} style={{ color: "#FFFFFF", textShadow: "0 1px 2px rgb(31 38 24 / 35%)" }}>
               {initials(msg.name)}
             </span>
           </div>
@@ -398,9 +411,9 @@ export default function MessageWallDisplay({ messages, loading, freshKey = null 
           <span
             className={`${cinzel.className} ${sectionType.label} rounded-full border px-4 py-2 font-semibold uppercase tracking-[0.16em]`}
             style={{
-              color: IVORY,
-              background: BUTTON,
-              borderColor: BUTTON_EDGE,
+              color: SAGE_DEEP,
+              background: SAGE_MIST(14),
+              borderColor: SAGE_LINE,
             }}
           >
             Your message will appear here
@@ -465,7 +478,7 @@ export default function MessageWallDisplay({ messages, loading, freshKey = null 
                 className="h-1.5 rounded-full transition-all duration-500"
                 style={{
                   width: isActive ? "1.5rem" : "0.375rem",
-                  background: isActive ? "var(--color-motif-silver)" : "rgb(255 255 255 / 50%)",
+                  background: isActive ? SUN_GRADIENT : "rgb(255 255 255 / 55%)",
                 }}
                 aria-label={`Show messages page ${idx + 1} of ${pageCount}`}
                 aria-current={isActive ? "true" : undefined}
@@ -482,8 +495,8 @@ export default function MessageWallDisplay({ messages, loading, freshKey = null 
           aria-describedby={undefined}
           // "!" = override the dialog's default box styles (cn() doesn't merge classes);
           // z-[9999]+ so it sits above the navbar / menu like the site's other popups
-          overlayClassName="z-[9999]! bg-[color-mix(in_srgb,var(--color-welcome-navy)_32%,transparent)]! backdrop-blur-md data-[state=open]:duration-500 data-[state=closed]:duration-300"
-          className="z-[10000]! block! max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)]! max-w-xl! overflow-y-auto rounded-[1.5rem]! border-0! bg-transparent! p-0! shadow-[0_40px_90px_-30px_color-mix(in_srgb,var(--color-welcome-navy)_75%,transparent)]! data-[state=open]:duration-500"
+          overlayClassName="z-[9999]! bg-[rgb(246_233_223/55%)]! backdrop-blur-md data-[state=open]:duration-500 data-[state=closed]:duration-300"
+          className="z-[10000]! block! max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)]! max-w-xl! overflow-y-auto rounded-[1.5rem]! border-0! bg-transparent! p-0! shadow-[0_40px_90px_-30px_rgb(31_38_24/45%)]! data-[state=open]:duration-500"
         >
           {openMessage && (
             <div className="relative">

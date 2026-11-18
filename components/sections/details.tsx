@@ -205,54 +205,42 @@ function DressCodePaletteHeader({
   )
 }
 
-// Light swatches (cream, blush) get charcoal names; darker ones get white
-function isLightHex(hex: string) {
-  const h = hex.replace("#", "")
-  if (h.length !== 6) return false
-  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16))
-  return 0.299 * r + 0.587 * g + 0.114 * b > 186
-}
-
-// Full-width color strip: every color gets an equal share of the card width
+// Round swatches with readable names underneath. Wraps on phones, one centered row on wider screens.
 function DressCodePaletteSwatches({ palette }: { palette: readonly PaletteColor[] }) {
   const named = palette.filter((c) => c.name)
   return (
-    <div
-      className="flex w-full overflow-hidden rounded-xl border-2"
-      style={{
-        borderColor: "#FFFFFF",
-        boxShadow:
-          "0 0 0 1px color-mix(in srgb, var(--color-motif-blush) 90%, transparent), 0 10px 22px -14px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)",
-      }}
+    <ul
+      className="mx-auto flex max-w-2xl flex-wrap items-start justify-center gap-x-4 gap-y-4 px-1 sm:gap-x-7 md:gap-x-9"
       role="img"
       aria-label={`Dress code color palette: ${(named.length ? named.map((c) => c.name) : palette.map((c) => c.hex)).join(", ")}`}
     >
       {palette.map((color, index) => (
-        <div
+        <li
           key={`${color.hex}-${index}`}
-          className={`relative flex min-h-[88px] min-w-0 flex-1 items-center justify-center sm:min-h-[108px] md:min-h-[128px] lg:min-h-[148px] ${
-            index === palette.length - 1 ? "" : "border-r border-white/80"
-          }`}
-          style={{ backgroundColor: color.hex }}
+          className="flex w-[4.5rem] flex-col items-center gap-2 sm:w-24 md:w-28"
           title={color.name || color.hex}
         >
+          <span
+            className="block h-14 w-14 rounded-full sm:h-[4.5rem] sm:w-[4.5rem] md:h-20 md:w-20"
+            style={{
+              backgroundColor: color.hex,
+              border: "3px solid #FFFFFF",
+              boxShadow:
+                "0 0 0 1px color-mix(in srgb, var(--color-motif-blush) 90%, transparent), 0 8px 18px -10px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)",
+            }}
+            aria-hidden
+          />
           {color.name ? (
             <span
-              className="text-[6px] font-semibold uppercase tracking-[0.08em] sm:text-[7px] md:text-[8px] lg:text-[9px]"
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                ...(isLightHex(color.hex)
-                  ? { color: "var(--color-motif-deep)", textShadow: "0 1px 0 rgb(255 255 255 / 60%)" }
-                  : { color: "#FFFFFF", textShadow: "0 1px 2px rgb(0 0 0 / 45%), 0 0 6px rgb(0 0 0 / 25%)" }),
-              }}
+              className={`${cinzel.className} text-center text-[0.58rem] font-semibold uppercase leading-tight tracking-[0.1em] sm:text-[0.66rem] md:text-xs`}
+              style={{ color: C.heading }}
             >
               {color.name}
             </span>
           ) : null}
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 
@@ -474,8 +462,8 @@ function AttireCard({
               alt={alt}
               width={1500}
               height={1000}
-              className="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.01]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1024px"
+              className="h-auto w-full max-w-md object-contain transition-transform duration-700 group-hover:scale-[1.01] sm:max-w-lg md:max-w-xl"
+              sizes="(max-width: 640px) 100vw, 576px"
             />
           </div>
         ) : null}

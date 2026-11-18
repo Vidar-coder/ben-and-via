@@ -21,15 +21,21 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
+// Motif: deep sage (washes), terracotta warmth, summer yellow → orange accents, ivory type
 const IVORY = "#FFF8F2"
-const BUTTER = "var(--color-motif-blush)"
+const YELLOW = "#F2C230"
+const ORANGE = "#E8833A"
+const SUN_GRADIENT = `linear-gradient(90deg, ${YELLOW} 0%, ${ORANGE} 100%)`
+const DEEP = "31 38 24" // deep sage / olive (rgb) — shadows and fades
+const WARM = "197 106 74" // terracotta #C56A4A (rgb) — warm glow in the fade
+const BUTTER = YELLOW
 const entryEase = [0.22, 1, 0.36, 1] as const
 const SLIDE_MS = 5000
 
 const titleSize = "clamp(2.85rem, 13.5vw, 6.75rem)"
 const photoTitleShadow =
-  "0 1px 0 rgb(255 248 242 / 28%), 0 2px 18px rgb(68 65 60 / 60%), 0 12px 36px rgb(68 65 60 / 45%)"
-const softShadow = "0 1px 2px rgb(68 65 60 / 85%), 0 2px 8px rgb(68 65 60 / 70%), 0 6px 24px rgb(68 65 60 / 55%)"
+  `0 1px 0 rgb(255 248 242 / 28%), 0 2px 18px rgb(${DEEP} / 65%), 0 12px 36px rgb(${DEEP} / 50%)`
+const softShadow = `0 1px 2px rgb(${DEEP} / 85%), 0 2px 8px rgb(${DEEP} / 70%), 0 6px 24px rgb(${DEEP} / 55%)`
 
 const stagger: Variants = {
   hidden: {},
@@ -89,7 +95,7 @@ export function SeeYouThere() {
     <section
       id="see-you-there"
       className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative isolate z-10 w-full overflow-hidden`}
-      style={{ background: "var(--color-welcome-navy)" }}
+      style={{ background: `rgb(${DEEP})` }}
     >
       <motion.div
         className="relative min-h-[100svh] w-full"
@@ -125,21 +131,29 @@ export function SeeYouThere() {
           ))}
         </div>
 
-        {/* Mobile wash: the type sits low, so the bottom half goes deep navy */}
+        {/* Mobile wash: the type sits low, so the photo fades through a warm terracotta
+            band into deep sage at the bottom */}
         <div
           className="pointer-events-none absolute inset-0 md:hidden"
           style={{
-            background:
-              "linear-gradient(180deg, rgb(68 65 60 / 40%) 0%, rgb(68 65 60 / 8%) 26%, rgb(68 65 60 / 28%) 45%, rgb(68 65 60 / 78%) 66%, rgb(68 65 60 / 92%) 100%)",
+            background: `linear-gradient(180deg, rgb(${DEEP} / 42%) 0%, rgb(${DEEP} / 4%) 24%, rgb(${WARM} / 14%) 42%, rgb(${DEEP} / 62%) 60%, rgb(${DEEP} / 88%) 78%, rgb(${DEEP} / 96%) 100%)`,
           }}
           aria-hidden
         />
-        {/* md+ wash: the type is centred, so darken a soft oval behind it */}
+        {/* md+ wash: the type is centred, so darken a soft sage oval behind it */}
         <div
           className="pointer-events-none absolute inset-0 hidden md:block"
           style={{
-            background:
-              "radial-gradient(48% 42% at 50% 50%, rgb(68 65 60 / 68%) 0%, rgb(68 65 60 / 40%) 60%, transparent 100%), linear-gradient(180deg, rgb(68 65 60 / 40%) 0%, rgb(68 65 60 / 15%) 35%, rgb(68 65 60 / 15%) 65%, rgb(68 65 60 / 60%) 100%)",
+            background: `radial-gradient(48% 42% at 50% 50%, rgb(${DEEP} / 70%) 0%, rgb(${DEEP} / 40%) 60%, transparent 100%), linear-gradient(180deg, rgb(${DEEP} / 45%) 0%, rgb(${WARM} / 10%) 35%, rgb(${WARM} / 10%) 65%, rgb(${DEEP} / 70%) 100%)`,
+          }}
+          aria-hidden
+        />
+        {/* Golden-hour glow rising from the bottom edge (yellow → orange) */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `radial-gradient(70% 38% at 50% 100%, color-mix(in srgb, ${ORANGE} 30%, transparent) 0%, color-mix(in srgb, ${YELLOW} 10%, transparent) 55%, transparent 100%)`,
+            mixBlendMode: "soft-light",
           }}
           aria-hidden
         />
@@ -157,6 +171,12 @@ export function SeeYouThere() {
               {content.eyebrow}
             </motion.p>
           ) : null}
+          <motion.span
+            variants={rise}
+            className="mt-3 block h-[2px] w-12 rounded-full sm:w-16"
+            style={{ background: SUN_GRADIENT, boxShadow: `0 1px 6px rgb(${DEEP} / 50%)` }}
+            aria-hidden
+          />
 
           <motion.h2 variants={rise} className="relative mt-3 sm:mt-4">
             <span className="sr-only">
@@ -202,7 +222,7 @@ export function SeeYouThere() {
                   className="h-[3px] rounded-full transition-all duration-[1400ms] ease-in-out"
                   style={{
                     width: i === active ? "1.5rem" : "0.5rem",
-                    background: i === active ? BUTTER : "rgb(255 248 242 / 45%)",
+                    background: i === active ? SUN_GRADIENT : "rgb(255 248 242 / 45%)",
                   }}
                 />
               ))}

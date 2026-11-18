@@ -90,14 +90,14 @@ const TIMES = {
 const CEREMONY_VENUE = {
   name: "Shrine of the Holy Face of Jesus",
   address: "Nampicuan, Nueva Ecija",
-  map: "https://www.google.com/maps/search/?api=1&query=Shrine+of+the+Holy+Face+of+Jesus+Nampicuan+Nueva+Ecija",
-  photos: ["/desktop-background/couple (3).webp", "/desktop-background/couple (17).webp", "/desktop-background/couple (22).webp"],
+  map: "https://maps.app.goo.gl/ztiuT56C6wUepQNRA",
+  photos: ["/Details/venue (1).png", "/Details/venue (2).png", "/Details/venue (3).png", "/Details/venue (4).png"],
 }
 const RECEPTION_VENUE = {
-  name: "Sirmata Ecofarm and Nature Park",
+  name: "Sirmata Eco Farm and Nature Park",
   address: "Cuyapo, Nueva Ecija",
-  map: "https://www.google.com/maps/search/?api=1&query=Sirmata+Ecofarm+and+Nature+Park+Cuyapo+Nueva+Ecija",
-  photos: ["/desktop-background/couple (8).webp", "/desktop-background/couple (12).webp", "/desktop-background/couple (30).webp"],
+  map: "https://maps.app.goo.gl/VoxQwBFhx4avpwMz6",
+  photos: ["/Details/reception (1).jpg", "/Details/reception (2).jpg", "/Details/reception (3).jpg"],
 }
 
 // ── Venue cards (Event Details section) ─────────────────────────────────────
@@ -142,7 +142,7 @@ const VENUE_CARDS = {
 
 // ── RSVP & contact ──────────────────────────────────────────────────────────
 const RSVP = {
-  deadline: " January 31, 2026",
+  deadline: " December 31, 2026",
   coordinator: "{groom} / {bride}", // {groom} / {bride} → couple nicknames
   phone: "to be announced",
 }
@@ -221,7 +221,7 @@ const ATTIRE = {
 
   sponsors: {
     title: "Principal Sponsors",
-    image: "/Details/sponsor.png",
+    image: "/Details/sponsors.png",
     dressCode: "Classic Filipino",
     palette: [
       { name: "Burgundy", hex: "#6A0D28" },
@@ -271,9 +271,9 @@ const SITE_URL = "https://jiro-and-jaidee-wedding.digitalinvitationrsvp.com/"
 // Keep it a 1200×630 JPG under ~300 KB — Messenger/WhatsApp silently drop larger images,
 // which is why forwarded links can lose their preview. Exported from /Details/imagepreview.png.
 // Use a NEW filename whenever the image changes — Facebook caches images by URL.
-const LINK_PREVIEW_IMAGE = "/monogram/linkPreview.png"
+const LINK_PREVIEW_IMAGE = "/Details/linkPreview.png"
 // Square fallback (600×600) for apps that show a small square thumbnail
-const LINK_PREVIEW_IMAGE_SQUARE = "/monogram/linkPreview.png"
+const LINK_PREVIEW_IMAGE_SQUARE = "/Details/linkPreview.png"
 
 // Site address with env override applied and no trailing slash — no need to edit
 export const canonicalSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL).replace(/\/$/, "")
@@ -288,7 +288,7 @@ const BRAND = {
   monogram: "/monogram/new-mono.webp", // monogram (loader, envelope, closing)
   coupleNameImage: "/monogram/new-mono.png", // couple-name lettering (loader, envelope)
   seal: "/monogram/new-seal.png", // envelope wax seal
-  backgroundMusic: "/background_music/Palagi - Tj Monterde Violin Cover by BOJO.mp3",
+  backgroundMusic: "/background_music/PALAGI (Wedding Version) - TJ Monterde OFFICIAL AUDIO.mp3",
 }
 
 // Couple photos reused across the site (gallery, loader, reminders, snap & share, closing)
@@ -370,7 +370,7 @@ const COUPLE_LABEL = `${COUPLE.groomNickname} & ${COUPLE.brideNickname}`
    ============================================================================ */
 
 // Principal sponsors Google Apps Script — used by the main page and /inviteone
-const SPONSORS_API = "https://script.google.com/macros/s/AKfycbzCgydo8d4FMuc6tXeJ4eG0aLt9q2__BK0JRV1s6ZQHkNzVxuX3huQf9su9UeY-W_Lp/exec"
+const SPONSORS_API = "https://script.google.com/macros/s/AKfycbw9eopvVX3LEibMCmmhxl_c8R_qH3PpFs7EGFCPa4dv5t_HjTeq_HW45peNzPOfZWvp/exec"
 
 export const siteConfig = {
   siteUrl: SITE_URL,
@@ -382,17 +382,17 @@ export const siteConfig = {
     backgroundMusic: BRAND.backgroundMusic,
   },
   googleAPI:{
-    messageForm: "https://docs.google.com/forms/d/e/1FAIpQLSfGdTUmg4V47AWbXeXo6PIvFn8CdfAlTIZe6erJ8F2UEec5ig/formResponse",   //done
-    message: "https://script.google.com/macros/s/AKfycbzBG5zVkfy8_2_z03EdYzZ95LeS3Fj9pU2oF-zbibvoxt3ShRzvNW0UfY3wd4_KKZof/exec",//done
-    guestList: "https://script.google.com/macros/s/AKfycbwkI8MVy2zkmcWAKpQaHqGTS57FfB2WeSbjUVYDBlVqu97MLn0C-WptqLFn2YO7cRM/exec",  //d  
-    guestRequest: "https://script.google.com/macros/s/AKfycbzQXAop4t9CZbuOGAQ_FpU6u_UpxLrIPUJxQMJzzLoDFRhHshFMiHg6Q2jsoKSaJyfg/exec",  //d
-    entourage: "https://script.google.com/macros/s/AKfycbzzjjJrA_50CpGH_xHXi1HIukgNjERd1BkP3Wh_N16kspPRWDw_0bOZXUOTHWAF6NRt/exec",  //d
+    messageForm: "https://docs.google.com/forms/d/e/1lIGmsKkD1MFMAbS3pbZVJ5rTvckQObmq3zV1cxGaXj4/formResponse",   //done
+    message: "https://script.google.com/macros/s/AKfycbzcUGTUWqmxp1hVtiz3RoGufmxj1vNjjo8sKdjjf-Qe3dYSfjZvX9e2Ndd-GYwvTIWS/exec",//done
+    guestList: "https://script.google.com/macros/s/AKfycbx23NgTY5JU9xis3Z_O3O-ENBXKSHzaygusNK8ejjF6v_6Bga7MtJWtVXmLmA_g0L7P/exec",  //d  
+    guestRequest: "https://script.google.com/macros/s/AKfycbxIhTj0KaRNlUIXg6PKTA4UCvdqc_HGO_B-WQigoJ5RuFcv5zp9oUGsVN3gBSmMk1kH/exec",  //d
+    entourage: "https://script.google.com/macros/s/AKfycbz_Yq0wiJqwwvsfb8Q9-Sz9bSDU5IDVC8xjJWxNEdh1Sz-e0M_MdRZkSv0OBaGm77s/exec",  //d
     sponsors: SPONSORS_API,  //done 
     // Principal sponsors shown on /inviteone and /invitetwo (entourage section)
     sponsorsInviteOne: SPONSORS_API, // same sheet as sponsors above
-    sponsorsInviteTwo: "https://script.google.com/macros/s/AKfycbzCgydo8d4FMuc6tXeJ4eG0aLt9q2__BK0JRV1s6ZQHkNzVxuX3huQf9su9UeY-W_Lp/exec",
+    sponsorsInviteTwo: "https://script.google.com/macros/s/AKfycbw9eopvVX3LEibMCmmhxl_c8R_qH3PpFs7EGFCPa4dv5t_HjTeq_HW45peNzPOfZWvp/exec",
 ////google share 
-    googleShare: "https://docs.google.com/spreadsheets/d/1NdOjBA7qkws1lIYJk3Rl4DNsksvP8C_swWu-0eb1eow/edit?usp=sharing",
+    googleShare: "https://docs.google.com/spreadsheets/d/1Y9cp8E3S8M3fo0lNR3uL0hv8nWR0AUmev9y53I-gEss/edit?usp=sharing",
     videoMessageForm:
       "https://docs.google.com/forms/d/e/1FAIpQLSfeGlEl4CMXWefdvCw6AOPHFS1ROku_rs-Gbofa2LkVJ0sLGQ/viewform", 
   },
@@ -796,11 +796,12 @@ chapters: [
       description: "A few thoughtful notes to help everyone enjoy our celebration.",
       // Small photos that take turns above the "Gentle Reminders" title (files in /public/box)
       images: [
-        "/box/box (1).webp",
-        "/box/box (2).webp",
-        "/box/box (3).webp",
-        "/box/box (4).webp",
+        "/box/box (1).png",
+        "/box/box (2).png",
+        "/box/box (3).png",
+        "/box/box (4).png",
       ],
+      // Keep this to the 3 most important notes — everything else lives in the FAQ (faq.items)
       // showPalette: shows the dress code palette after the first paragraph
       items: [
         {
@@ -827,64 +828,6 @@ chapters: [
           paragraphs: [
             "While your little ones are so dear to us, we have decided to celebrate our day with an intimate, adults-only gathering.",
             "We hope you will be able to share in our joy.",
-          ],
-        },
-        {
-          title: "Unplugged Ceremony",
-          variant: "soft" as "accent" | "soft",
-          showPalette: false,
-          paragraphs: [
-            "We're having a mostly unplugged ceremony. Please keep photos to a minimum and give our photographers room to capture the moment — professional photos will be shared with you after the event.",
-          ],
-        },
-        {
-          title: "Snap & Share",
-          variant: "accent" as "accent" | "soft",
-          showPalette: false,
-          paragraphs: [
-            "After our unplugged ceremony, help us capture and share our precious moments using our official wedding hashtag:",
-            `${HASHTAGS[0]}`,
-          ],
-        },
-        {
-          title: "Note on Gifts",
-          variant: "soft" as "accent" | "soft",
-          showPalette: false,
-          paragraphs: [
-            "With all that we have, we've been truly blessed. Your presence and prayers are all that we request.",
-            "But if you desire to give nonetheless, a monetary gift is one we highly suggest.",
-          ],
-        },
-        {
-          title: "Reception Details",
-          variant: "accent" as "accent" | "soft",
-          showPalette: false,
-          paragraphs: [
-            "Please join us for early dinner, laughter, and dancing after the ceremony.",
-          ],
-        },
-        {
-          title: "Parking",
-          variant: "soft" as "accent" | "soft",
-          showPalette: false,
-          paragraphs: [
-            "Parking for both cars and motorcycles is available inside the venue.",
-          ],
-        },
-        {
-          title: "Keep Our Invitation Private",
-          variant: "soft" as "accent" | "soft",
-          showPalette: false,
-          paragraphs: [
-            "Please keep this just between us! Kindly refrain from posting our invitation online.",
-          ],
-        },
-        {
-          title: "No Surprise Announcements",
-          variant: "soft" as "accent" | "soft",
-          showPalette: false,
-          paragraphs: [
-            "To keep the focus on the celebration, we kindly ask that there be no surprise announcements or proposals during our wedding.",
           ],
         },
       ],
@@ -1276,7 +1219,7 @@ chapters: [
     items: [
       {
         question: "When and where is the wedding?",
-        answer: `Our wedding will be on ${WEDDING_DAY}, ${WEDDING_DATE}. The ceremony begins at ${TIMES.ceremony}, followed by the reception at ${TIMES.reception}.\n\nBoth the ceremony and the reception will be held at ${CEREMONY_VENUE.name}, ${CEREMONY_VENUE.address}, so there is no need to travel between venues. [Open in Google Maps](${CEREMONY_VENUE.map})`,
+        answer: `Our wedding will be on ${WEDDING_DAY}, ${WEDDING_DATE}. The ceremony begins at ${TIMES.ceremony}, followed by the reception at ${TIMES.reception}, with an early dinner, laughter and dancing.\n\n• Ceremony: ${CEREMONY_VENUE.name}, ${CEREMONY_VENUE.address}. [Open in Google Maps](${CEREMONY_VENUE.map})\n• Reception: ${RECEPTION_VENUE.name}, ${RECEPTION_VENUE.address}. [Open in Google Maps](${RECEPTION_VENUE.map})`,
       },
       {
         question: "What time should I arrive?",
@@ -1315,7 +1258,7 @@ chapters: [
       {
         question: "What should I wear?",
         answer:
-          "Please follow the [attire guide](#details) in Event Details.\n\n• Guests: semi-formal in shades of dusty pink or gray. Ladies may wear a short or long dress; gentlemen may wear a polo or long-sleeve shirt with pants.\n• Principal sponsors: Ninang in a formal dress or long gown in cream or beige; Ninong in a long-sleeve barong with black pants.\n• Entourage: dusty pink gowns for the bridesmaids and flower girls; gray suits for the groomsmen and bearers.\n\nKindly avoid casual clothes and all-white outfits.",
+          "Please follow the [attire guide](#details) in Event Details.\n\n• Guests: gentlemen in a polo with chinos or suit trousers; ladies in a floor-length dress in green, yellow, or orange.\n• Principal sponsors: Ninang in burgundy; Ninong in a barong with dark brown.\n• Entourage: bridesmaids in fuchsia pink; best man in a barong with black pants; groomsmen in a barong with grey pants.",
       },
       {
         question: "May we choose our own seats at the reception?",
@@ -1335,7 +1278,7 @@ chapters: [
       {
         question: "Can I take photos and videos during the reception?",
         answer:
-          "Absolutely! Capture all the joy you can. We would love to see your snaps, so please upload them through [Snap and Share](#snap-share).",
+          `Absolutely! Capture all the joy you can. We would love to see your snaps, so please upload them through [Snap and Share](#snap-share) and use our official hashtag, ${HASHTAGS[0]}.`,
       },
       {
         question: "What if I have dietary restrictions or allergies?",
@@ -1345,7 +1288,7 @@ chapters: [
       {
         question: "What gift should we give?",
         answer:
-          "Your presence and prayers are the greatest gifts of all. Should you wish to bless us further, please see our [gift guide](#registry).",
+          "Your presence and prayers are the greatest gifts of all. Should you wish to bless us further, a monetary gift is one we highly suggest. Please see our [gift guide](#registry).",
       },
       {
         question: "Can I share the invitation online?",
@@ -1374,51 +1317,50 @@ chapters: [
     eyebrow: "A Token of Love",
     title: "Gift Guide",
     subtitle: "with gratitude",
-    description: "Your presence on our wedding day is the greatest gift of all.",
+    description: "Having you celebrate with us is the greatest gift of all.",
     paragraphs: [
       // One line per verse line (registry.tsx keeps the line breaks)
       "With all that we have, we've been truly blessed.\nYour presence and prayers are all that we request.\nBut if you desire to give nonetheless,\nA monetary gift is one we highly suggest.",
-      "Your love and generosity mean the world to us.",
+      "Should you wish to bless us as we begin our life together, you may send a gift through either of the accounts below.",
     ],
-    thankYou: "Thank you for being part of our story.", // "" hides the line
+    thankYou: "Thank you for your love, your prayers and your generosity.", // "" hides the line
     signOff: "With joyful hearts,",
     signature: "{groom} & {bride}", // "" falls back to "{groom} & {bride}" nicknames
     // Colors — any CSS color or a palette token from app/globals.css (e.g. "var(--color-motif-accent)")
+    // Light motif: white / sage surfaces, charcoal text, yellow + orange accents; burgundy for buttons only
     colors: {
-      title: "var(--color-welcome-navy)",                                              // "Gift Guide", account names
-      script: "var(--color-welcome-heading)",                                          // drop cap, couple signature
-      eyebrow: "var(--color-welcome-heading)",                                         // small caps labels, icons
+      title: "var(--color-welcome-text)",                                              // account names, numbers
+      script: "color-mix(in srgb, var(--color-motif-silver) 62%, #1F2618)",            // drop cap, couple signature (deep sage)
+      eyebrow: "color-mix(in srgb, var(--color-motif-silver) 62%, #1F2618)",           // small caps labels, icons (deep sage)
       body: "var(--color-welcome-text)",                                               // paragraphs
       soft: "color-mix(in srgb, var(--color-welcome-text) 75%, white)",                // "With joyful hearts," and secondary text
       card: "#FFFFFF",                                                                 // letter card
-      cardEdge: "color-mix(in srgb, var(--color-motif-medium) 65%, transparent)",      // letter card border
-      accountCard: "color-mix(in srgb, var(--color-motif-medium) 12%, white)",         // e-gift account card
-      button: "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)", // gift seal, selected tab, Save QR
-      line: "var(--color-motif-yellow)",                                               // sage dividers
-      glow: "color-mix(in srgb, var(--color-motif-medium) 30%, transparent)",          // tab track / borders
+      cardEdge: "color-mix(in srgb, var(--color-motif-silver) 55%, transparent)",      // card borders (sage)
+      accountCard: "color-mix(in srgb, var(--color-motif-silver) 10%, white)",         // e-gift account card (sage mist)
+      button: "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)",        // selected tab, Save QR, close
+      line: "var(--color-motif-silver)",                                               // sage dividers
+      glow: "color-mix(in srgb, #F2C230 30%, transparent)",                            // soft yellow fill (account without a QR)
+      accent: "#E8833A",                                                               // orange: heart, "&"
+      highlight: "#F2C230",                                                            // yellow: seal ring, diamonds
       background: "var(--color-motif-cream)",                                          // section background
     },
     // E-gift accounts — optional, as many as you like.
     //   showAccounts: false hides the whole block
     //   show:  false hides one account
-    //   qr:    "/QR/BPI.png" to show a QR image, or "" when you have no QR (card shows name + number only).
+    //   qr:    "/QR/BPI.jpg" to show a QR image, or "" when you have no QR (card shows name + number only).
     //          Guests can tap the QR to enlarge it and save it with the "Save QR" button.
     //   accountNumber: shown under the name (display only)
     //   With 2+ visible accounts, guests switch between them with a toggle; each shows its QR and a "Save QR" button
+    // Both QRs checked by decoding (2026-11-18): BPI.jpg → BPI (BOPIPHMM), "Vv";
+    // Gcash.jpg → GCash (GXCHPHM2), "BE*****T D.". Both are InstaPay QRs.
     showAccounts: true,
-    accountsTitle: "For e-gifts",
-    accountsNote: "Choose an account, then scan its QR — tap the QR to enlarge.",
+    accountsTitle: "Send an E-Gift",
+    accountsNote: "Scan with any banking or e-wallet app via InstaPay. Tap the QR to enlarge.",
     saveQrLabel: "Save QR",
-    zoomNote: "Scan with your banking or e-wallet app, or save it and upload from your gallery.",
-    // ⚠ The QR file names are swapped — checked by decoding each QR:
-    //   /QR/BDO.png → pays the GCash account (G-Xchange, "BR*******E L** A.")
-    //   /QR/BPI.png → pays the BDO account (Banco de Oro, "Brei", account ending 8451)
-    // ⚠ These three accounts belong to the previous couple — hidden (show: false). Replace the
-    //   label / accountName / accountNumber / qr with Ben & Via's accounts, then set show: true.
+    zoomNote: "Open your banking or e-wallet app, choose “Scan QR”, and scan this code — or save it and upload it from your gallery.",
     accounts: [
-      { show: false, label: "GCash", accountName: "JA***R AS***Y M.", accountNumber: "0955 491 ****", qr: "/QR/new-gcash.png" },
-      { show: false, label: "UNION BANK", accountName: "JAIDEE ASHLEY C MANGAHIS", accountNumber: "**** **** 5550", qr: "/QR/new-union.png" },
-      { show: false, label: "RCBC", accountName: "GERONIMO III GETIDA", accountNumber: "**** 4681", qr: "/QR/new-rcbp.png" },
+      { show: true, label: "GCash", accountName: "BE*****T D.", accountNumber: "0909 906 ****", qr: "/QR/Gcash.jpg" },
+      { show: true, label: "BPI", accountName: "VV", accountNumber: "**** **** **** **006", qr: "/QR/BPI.jpg" },
     ] as { show: boolean; label: string; accountName: string; accountNumber: string; qr: string }[],
     // Leave any path "" to hide that decoration
     decos: { ...SECTION_DECOS },
@@ -1780,14 +1722,16 @@ Sa loob ng isang taon na pagmamahalan, sa wakas magaganap o mangyayari na ang am
     playlistName: `${COUPLE_LABEL} Wedding`,
     cardNote: "Press play and listen along — every song holds a little piece of our story.",
     buttonText: "Open in Spotify",
+    // CD album art: photo on the sleeve and the disc label ("" = plain sage sleeve)
+    coverImage: COUPLE_PHOTOS[2],
     // Corner florals (sized per corner like the loader) — "" hides any of them
     decos: { ...CORNER_DECOS, headerOrnament: DECOR.headerOrnament },
     // Thin double border around the section (false hides it)
     showFrame: true,
     embedUrl:
     //https://open.spotify.com/embed/playlist/5sT43YjdM8pJ3xtEkrxyEY?utm_source=generator&si=e5e64aa63fd04356
-      "https://open.spotify.com/embed/playlist/3qesZSzCWmz37nL3oi8CDp?utm_source=generator&theme=0&si=fc2adaa226994a3b",
-    spotifyUrl: "https://open.spotify.com/playlist/3qesZSzCWmz37nL3oi8CDp?si=-AZ6VoraSFiN43qV5fpORA",
+      "https://open.spotify.com/embed/playlist/7C4HRnOxlSQLY3k3PXAboT?utm_source=generator&si=221cd9aedc8b4269",
+    spotifyUrl: "https://open.spotify.com/playlist/3qesZSzCWmz37nL3oi8CDp?si=-7C4HRnOxlSQLY3k3PXAboT",
   },
   // Closing "See you there!" section (components/sections/see-you-there.tsx).
   //   photos mode (loadingScreen.display "photos") → full-screen couple photo
@@ -1886,7 +1830,7 @@ Sa loob ng isang taon na pagmamahalan, sa wakas magaganap o mangyayari na ang am
   // Snap & Share (components/sections/snap-share.tsx). {couple} → "Groom & Bride" nicknames.
   snapShare: {
     googleDriveLink:
-      "https://drive.google.com/drive/folders/1_LvIc5I1fW7CaHJKs9Z46EZXpfTHvJ79?usp=sharing",
+      "https://drive.google.com/drive/folders/1UG5DBKcoQ0a8_yRBq8AH6MaiwcVCPV4S?usp=sharing",
     albumQR: "/QR/AlbumQR.png",
     hashtag: HASHTAGS,
     instructions: "Please scan this QR Code and upload the photos and videos you have taken during our wedding reception. We are delighted to see your snaps too!",

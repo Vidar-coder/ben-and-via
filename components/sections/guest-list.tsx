@@ -43,60 +43,68 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
-// Palette (app/globals.css motif tokens): navy #44413C for text, slate navy for labels,
-// peach #B97865 / #D9A08C / #F1C8B8 for accents, frames and soft surfaces.
+// Palette (app/globals.css motif tokens). The section itself keeps its burgundy headings;
+// the modals use the light sage / yellow / orange motif below.
 const NAVY = "var(--color-welcome-navy)"
 const TEAL = "var(--color-welcome-text)"
 const BUTTON = "var(--color-welcome-heading)"
 const PEACH = "var(--color-motif-medium)"
-const PEACH_MID = "var(--color-motif-blush)"
-const PEACH_LIGHT = "#F1C8B8"
 const IVORY = "#FFF8F2"
-const PAPER = "#FFF8F2"
+// Light modal motif: white / sage-mist surfaces, sage edges, charcoal text, yellow + orange
+// accents from the guests' summer palette. Burgundy stays on buttons only.
+const SAGE = "var(--color-motif-silver)"
+const SAGE_DEEP = "color-mix(in srgb, var(--color-motif-silver) 62%, #1F2618)"
+const SAGE_MIST = (pct: number) => `color-mix(in srgb, var(--color-motif-silver) ${pct}%, white)`
+const CHARCOAL = "var(--color-welcome-text)"
+const YELLOW = "#F2C230"
+const ORANGE = "#E8833A"
+const SUN_GRADIENT = `linear-gradient(90deg, ${YELLOW} 0%, ${ORANGE} 100%)`
+const SUN_LINE = `linear-gradient(to right, transparent, ${YELLOW}, ${ORANGE}, transparent)`
 // Guest names and avatars
-const LEAF = NAVY
+const LEAF = CHARCOAL
 const DEEP_GRADIENT = "linear-gradient(180deg, #84183A 0%, #6A0D28 55%, #540920 100%)" // burgundy satin buttons
-// Round avatar behind the person icon in search results
-const SAGE_GRADIENT = `linear-gradient(160deg, ${PEACH_MID} 0%, ${PEACH} 100%)`
-const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 55%, transparent)"
+// Round sage avatar / icon badges (white icon on top)
+const SAGE_GRADIENT =
+  "linear-gradient(160deg, color-mix(in srgb, var(--color-motif-silver) 88%, white) 0%, var(--color-motif-silver) 45%, color-mix(in srgb, var(--color-motif-silver) 70%, #1F2618) 100%)"
+const HAIRLINE = "color-mix(in srgb, var(--color-motif-silver) 55%, transparent)"
 // Secondary text / unselected options (muted navy, still readable)
 const TEAL_SOFT = "color-mix(in srgb, var(--color-welcome-text) 70%, white)"
-// Navy veil (with blur) behind modals
-const LIGHT_OVERLAY = "color-mix(in srgb, var(--color-welcome-navy) 38%, transparent)"
-const DARK_OVERLAY = "color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)"
+// Light ivory veil (with blur) behind modals; slightly stronger for alerts
+const LIGHT_OVERLAY = "rgb(246 233 223 / 55%)"
+const DARK_OVERLAY = "color-mix(in srgb, #44413C 30%, rgb(246 233 223 / 40%))"
 
 const palette = {
   body: TEAL,
-  heading: NAVY,
-  label: BUTTON,
-  accent: PEACH,
+  heading: CHARCOAL,
+  label: SAGE_DEEP,
+  accent: SAGE_DEEP,
 } as const
 
-// Ivory paper card with a peach glow at the top, peach edge and a soft halo
+// White card with a soft yellow glow at the top, sage-mist base, sage edge and a white halo
 const modalCardStyle = {
-  background: `radial-gradient(90% 38% at 50% 0%, ${PEACH_LIGHT} 0%, transparent 72%), linear-gradient(180deg, ${PAPER} 0%, ${PAPER} 62%, color-mix(in srgb, ${PEACH_LIGHT} 70%, white) 100%)`,
-  border: "1px solid color-mix(in srgb, var(--color-motif-medium) 70%, transparent)",
+  background: `radial-gradient(90% 38% at 50% 0%, color-mix(in srgb, ${YELLOW} 14%, white) 0%, transparent 72%), linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 62%, ${SAGE_MIST(12)} 100%)`,
+  border: `1px solid ${HAIRLINE}`,
   boxShadow:
-    "0 0 0 6px rgb(255 255 255 / 45%), 0 0 0 7px color-mix(in srgb, var(--color-motif-blush) 45%, transparent), 0 30px 60px -24px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)",
+    `0 0 0 6px rgb(255 255 255 / 55%), 0 0 0 7px ${SAGE_MIST(40)}, 0 30px 60px -24px rgb(31 38 24 / 40%)`,
 } as const
 
 const innerSurfaceStyle = {
-  background: `color-mix(in srgb, ${PEACH_LIGHT} 55%, white)`,
+  background: SAGE_MIST(10),
   borderColor: HAIRLINE,
 } as const
 
-const modalInputClass = `w-full rounded-xl border bg-white px-3 py-2 font-goudy-italic ${sectionType.text} transition-all duration-300 outline-none focus:border-[var(--color-motif-medium)] focus:ring-[3px] focus:ring-[color-mix(in_srgb,var(--color-motif-blush)_60%,transparent)] placeholder:text-[0.92em] placeholder:text-[color-mix(in_srgb,var(--color-welcome-text)_50%,white)] sm:px-3.5 sm:py-2.5`
+const modalInputClass = `w-full rounded-xl border bg-white px-3 py-2 font-goudy-italic ${sectionType.text} transition-all duration-300 outline-none focus:border-[#E8833A] focus:ring-[3px] focus:ring-[color-mix(in_srgb,#F2C230_35%,transparent)] placeholder:text-[0.92em] placeholder:text-[color-mix(in_srgb,var(--color-welcome-text)_50%,white)] sm:px-3.5 sm:py-2.5`
 
 const modalInputStyle = {
   borderColor: HAIRLINE,
-  color: NAVY,
+  color: CHARCOAL,
 } as const
 
 // Field labels: small Cinzel capitals in slate navy (icons in peach)
 const modalLabelClass = `${cinzel.className} mb-1.5 flex flex-wrap items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.16em] sm:mb-2 sm:gap-2 sm:text-[0.68rem]`
 
 const dividerLineStyle = {
-  background: "linear-gradient(to right, transparent, var(--color-motif-medium), transparent)",
+  background: `linear-gradient(to right, transparent, ${SAGE}, transparent)`,
 } as const
 
 // Navy button with a peach ring
@@ -105,14 +113,14 @@ const primaryButtonStyle = {
   borderColor: "rgb(255 255 255 / 70%)",
   color: IVORY,
   boxShadow:
-    "0 0 0 4px color-mix(in srgb, var(--color-motif-blush) 55%, transparent), 0 12px 24px -10px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+    `0 0 0 4px color-mix(in srgb, ${YELLOW} 30%, transparent), 0 12px 24px -10px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)`,
 } as const
 
 // Soft peach notice box with navy text
 const noticeStyle = {
-  background: `color-mix(in srgb, ${PEACH_LIGHT} 75%, white)`,
-  borderColor: "color-mix(in srgb, var(--color-motif-medium) 55%, transparent)",
-  color: NAVY,
+  background: `color-mix(in srgb, ${YELLOW} 12%, white)`,
+  borderColor: `color-mix(in srgb, ${YELLOW} 55%, transparent)`,
+  color: CHARCOAL,
 } as const
 
 // "Hello {name}" → string with values, or React nodes when a value is a node
@@ -140,7 +148,7 @@ function HighlightedName({ name, query }: { name: string; query: string }) {
   return (
     <>
       {name.slice(0, index)}
-      <span className="font-semibold" style={{ color: NAVY, background: `linear-gradient(transparent 58%, color-mix(in srgb, ${PEACH_MID} 75%, transparent) 58%)` }}>
+      <span className="font-semibold" style={{ color: CHARCOAL, background: `linear-gradient(transparent 58%, color-mix(in srgb, ${YELLOW} 45%, transparent) 58%)` }}>
         {name.slice(index, index + trimmed.length)}
       </span>
       {name.slice(index + trimmed.length)}
@@ -739,7 +747,7 @@ export function GuestList() {
                 className="pointer-events-none absolute inset-x-6 top-0 h-px"
                 style={{
                   background:
-                    "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+                    SUN_LINE,
                 }}
               />
               <button
@@ -807,10 +815,10 @@ export function GuestList() {
                     autoComplete="off"
                     className="w-full rounded-full border bg-white py-2.5 pl-10 pr-4 font-goudy-italic text-[0.95rem] shadow-sm outline-none transition-all duration-200 placeholder:text-[color-mix(in_srgb,var(--color-welcome-text)_55%,white)] sm:py-3 sm:text-base"
                     style={{
-                      borderColor: searchQuery ? PEACH : HAIRLINE,
+                      borderColor: searchQuery ? ORANGE : HAIRLINE,
                       color: palette.heading,
                       boxShadow: searchQuery
-                        ? "0 0 0 3px color-mix(in srgb, var(--color-motif-blush) 60%, transparent)"
+                        ? `0 0 0 3px color-mix(in srgb, ${YELLOW} 35%, transparent)`
                         : undefined,
                     }}
                   />
@@ -879,7 +887,7 @@ export function GuestList() {
                       type="button"
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => handleSearchSelect(guest)}
-                      className="group flex w-full items-center gap-3 border-b px-5 py-3 text-left last:border-b-0 transition-colors hover:bg-[color-mix(in_srgb,var(--color-motif-medium)_14%,transparent)] sm:px-6 sm:py-3.5"
+                      className="group flex w-full items-center gap-3 border-b px-5 py-3 text-left last:border-b-0 transition-colors hover:bg-[color-mix(in_srgb,var(--color-motif-silver)_14%,transparent)] sm:px-6 sm:py-3.5"
                       style={{
                         borderColor: HAIRLINE,
                       }}
@@ -990,7 +998,7 @@ export function GuestList() {
               className="pointer-events-none absolute inset-x-5 top-0 z-10 h-px sm:inset-x-8"
               style={{
                 background:
-                  "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+                  SUN_LINE,
               }}
             />
 
@@ -1030,7 +1038,7 @@ export function GuestList() {
               >
                 <span
                   className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] pb-1 sm:pb-1.5`}
-                  style={{ fontSize: "var(--title-size)", color: NAVY }}
+                  style={{ fontSize: "var(--title-size)", color: CHARCOAL }}
                 >
                   {copy.invite.title}
                 </span>
@@ -1041,7 +1049,7 @@ export function GuestList() {
                   }`}
                   style={{
                     fontSize: "var(--script-size)",
-                    color: BUTTON,
+                    color: SAGE_DEEP,
                   }}
                 >
                   {selectedGuest?.Name || copy.invite.scriptFallback}
@@ -1081,7 +1089,7 @@ export function GuestList() {
                   <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 py-3 text-center sm:px-6 sm:py-4 md:px-7 md:py-6">
                     <div
                       className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full sm:mb-4 sm:h-14 sm:w-14 md:h-16 md:w-16"
-                      style={{ background: DEEP_GRADIENT }}
+                      style={{ background: SAGE_GRADIENT }}
                     >
                       <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" style={{ color: IVORY }} />
                     </div>
@@ -1187,7 +1195,7 @@ export function GuestList() {
                             formData.RSVP === "Yes"
                               ? {
                                   borderColor: palette.accent,
-                                  backgroundColor: "color-mix(in srgb, var(--color-motif-medium) 18%, white)",
+                                  backgroundColor: SAGE_MIST(16),
                                 }
                               : { borderColor: HAIRLINE, backgroundColor: IVORY }
                           }
@@ -1218,7 +1226,7 @@ export function GuestList() {
                             formData.RSVP === "No"
                               ? {
                                   borderColor: TEAL_SOFT,
-                                  backgroundColor: "color-mix(in srgb, var(--color-motif-medium) 18%, white)",
+                                  backgroundColor: SAGE_MIST(16),
                                 }
                               : { borderColor: HAIRLINE, backgroundColor: IVORY }
                           }
@@ -1287,10 +1295,10 @@ export function GuestList() {
                                     className={`${cinzel.className} inline-flex h-7 min-w-7 items-center justify-center rounded-full border px-1.5 text-[0.62rem] font-semibold transition-all duration-200`}
                                     style={
                                       active
-                                        ? { background: DEEP_GRADIENT, color: IVORY, borderColor: "transparent" }
+                                        ? { background: SAGE_GRADIENT, color: "#FFFFFF", borderColor: "transparent" }
                                         : filled
                                           ? {
-                                              background: "color-mix(in srgb, var(--color-motif-medium) 18%, white)",
+                                              background: SAGE_MIST(16),
                                               color: palette.heading,
                                               borderColor: "color-mix(in srgb, var(--color-welcome-text) 45%, transparent)",
                                             }
@@ -1350,7 +1358,7 @@ export function GuestList() {
                                       style={
                                         picked
                                           ? {
-                                              background: "color-mix(in srgb, var(--color-motif-medium) 26%, white)",
+                                              background: SAGE_MIST(24),
                                               borderColor: palette.accent,
                                               color: palette.heading,
                                             }
@@ -1442,7 +1450,7 @@ export function GuestList() {
                   {/* Sticky footer — Submit is always visible */}
                   <div
                     className="flex-shrink-0 space-y-2 border-t px-4 pb-4 pt-3 sm:px-6 sm:pb-5 md:px-7"
-                    style={{ borderColor: HAIRLINE, background: "color-mix(in srgb, var(--color-motif-medium) 10%, white)" }}
+                    style={{ borderColor: HAIRLINE, background: SAGE_MIST(8) }}
                   >
                     {error && !success && (
                       <div className="rounded-lg border px-2.5 py-1.5" style={noticeStyle}>
@@ -1502,13 +1510,13 @@ export function GuestList() {
                 aria-hidden
                 className="h-[3px] w-full"
                 style={{
-                  background: DEEP_GRADIENT,
+                  background: SUN_GRADIENT,
                 }}
               />
               <div className="px-6 pb-6 pt-6 text-center">
                 <div
                   className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full"
-                  style={{ background: DEEP_GRADIENT }}
+                  style={{ background: SAGE_GRADIENT }}
                 >
                   <Phone className="h-6 w-6" style={{ color: IVORY }} strokeWidth={2} />
                 </div>
@@ -1564,7 +1572,7 @@ export function GuestList() {
                   aria-hidden
                   className="h-[3px] w-full"
                   style={{
-                    background: DEEP_GRADIENT,
+                    background: SUN_GRADIENT,
                   }}
                 />
                 <div className="px-6 pb-6 pt-6 text-center">
@@ -1573,12 +1581,12 @@ export function GuestList() {
                       className="absolute h-14 w-14 animate-ping rounded-full"
                       style={{
                         animationDuration: "2.5s",
-                        backgroundColor: "color-mix(in srgb, var(--color-welcome-text) 22%, transparent)",
+                        backgroundColor: `color-mix(in srgb, ${YELLOW} 35%, transparent)`,
                       }}
                     />
                     <div
                       className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-md"
-                      style={{ background: DEEP_GRADIENT }}
+                      style={{ background: SAGE_GRADIENT }}
                     >
                       <CheckCircle className="h-6 w-6" style={{ color: IVORY }} strokeWidth={2} />
                     </div>
@@ -1672,7 +1680,7 @@ export function GuestList() {
                 className="pointer-events-none absolute inset-x-5 top-0 h-px sm:inset-x-8"
                 style={{
                   background:
-                    "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+                    SUN_LINE,
                 }}
               />
 
@@ -1703,7 +1711,7 @@ export function GuestList() {
                 >
                   <span
                     className={`${theSeasons.className} block uppercase leading-[0.78] tracking-[0.08em] min-[400px]:tracking-[0.11em] sm:tracking-[0.13em] pb-1 sm:pb-1.5`}
-                    style={{ fontSize: "var(--title-size)", color: NAVY }}
+                    style={{ fontSize: "var(--title-size)", color: CHARCOAL }}
                   >
                     {copy.request.title}
                   </span>
@@ -1864,7 +1872,7 @@ export function GuestList() {
                       <div className="absolute inset-0 rounded-full border-2 border-motif-teal/20 animate-ping" />
                       <div className="absolute inset-0 rounded-full border-2 border-motif-teal/30" />
                       {/* Icon container */}
-                      <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center shadow-xl" style={{ background: DEEP_GRADIENT }}>
+                      <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center shadow-xl" style={{ background: SAGE_GRADIENT }}>
                         <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-10 lg:w-10" style={{ color: IVORY }} strokeWidth={2.5} />
                       </div>
                     </div>

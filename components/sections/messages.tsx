@@ -27,13 +27,22 @@ const aboveTheBeyond = localFont({
   variable: "--font-above-beyond",
 })
 
+// Light motif: white / sage-mist surfaces, sage edges, charcoal text, yellow + orange
+// accents from the guests' summer palette. Burgundy is kept for buttons only.
+const SAGE = "var(--color-motif-silver)"
+const SAGE_DEEP = "color-mix(in srgb, var(--color-motif-silver) 62%, #1F2618)"
+const SAGE_MIST = (pct: number) => `color-mix(in srgb, var(--color-motif-silver) ${pct}%, white)`
+const SAGE_LINE = "color-mix(in srgb, var(--color-motif-silver) 55%, transparent)"
+const CHARCOAL = "var(--color-welcome-text)"
+const YELLOW = "#F2C230"
+const ORANGE = "#E8833A"
+
 // Palette lives in globals.css → motif / welcome tokens.
 // Form card: white paper with navy text; dusty-blue labels and button.
-const PAPER = "#FFF8F2"
-const IVORY = "#FFF8F2"
-const NAVY = "var(--color-welcome-navy)"
-const BODY = "var(--color-welcome-text)"
-const ACCENT = "var(--color-welcome-heading)"
+const PAPER = "#FFFFFF"
+const NAVY = CHARCOAL
+const BODY = CHARCOAL
+const ACCENT = SAGE_DEEP
 
 const palette = {
   body: BODY,
@@ -70,7 +79,7 @@ const buttonStyle = {
   borderColor: "rgb(255 255 255 / 70%)",
   color: "#FFFFFF",
   boxShadow:
-    "0 0 0 4px color-mix(in srgb, var(--color-motif-blush) 55%, transparent), 0 12px 24px -10px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+    `0 0 0 4px color-mix(in srgb, ${YELLOW} 30%, transparent), 0 12px 24px -10px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)`,
 } as const
 
 function SilkTextGlow({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -88,12 +97,12 @@ function SilkTextGlow({ children, className = "" }: { children: ReactNode; class
 
 const cardStyle = {
   background:
-    "radial-gradient(90% 40% at 50% 0%, rgb(255 255 255 / 95%) 0%, transparent 70%), linear-gradient(180deg, #FFFFFF 0%, color-mix(in srgb, var(--color-motif-medium) 14%, white) 100%)",
+    "radial-gradient(90% 40% at 50% 0%, rgb(255 255 255 / 95%) 0%, transparent 70%), linear-gradient(180deg, #FFFFFF 0%, color-mix(in srgb, var(--color-motif-silver) 12%, white) 100%)",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "color-mix(in srgb, var(--color-motif-medium) 70%, transparent)",
+  borderColor: SAGE_LINE,
   boxShadow:
-    "0 22px 48px -24px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent), inset 0 1px 0 rgb(255 255 255 / 80%)",
+    "0 22px 48px -24px rgb(31 38 24 / 35%), inset 0 1px 0 rgb(255 255 255 / 80%)",
 } as const
 
 interface Message {
@@ -129,11 +138,13 @@ function OutsideDivider() {
 function CardOrnament() {
   return (
     <div className="mx-auto mb-3 flex items-center justify-center gap-1.5 sm:mb-4" aria-hidden>
-      <span className="h-px w-10 sm:w-14" style={{ background: "linear-gradient(to right, transparent, var(--color-motif-yellow))" }} />
-      <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill="var(--color-motif-medium)">
+      <span className="h-px w-10 sm:w-14" style={{ background: `linear-gradient(to right, transparent, ${SAGE})` }} />
+      <span className="h-1 w-1 rounded-full" style={{ background: YELLOW }} />
+      <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill={ORANGE}>
         <path d={HEART_PATH} />
       </svg>
-      <span className="h-px w-10 sm:w-14" style={{ background: "linear-gradient(to left, transparent, var(--color-motif-yellow))" }} />
+      <span className="h-1 w-1 rounded-full" style={{ background: YELLOW }} />
+      <span className="h-px w-10 sm:w-14" style={{ background: `linear-gradient(to left, transparent, ${SAGE})` }} />
     </div>
   )
 }
@@ -243,11 +254,11 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
 
   const inputBorder = (field: string) =>
     focusedField === field
-      ? palette.accent
-      : "color-mix(in srgb, var(--color-motif-medium) 75%, transparent)"
+      ? ORANGE
+      : SAGE_LINE
 
   const inputClass = (field: string) =>
-    `message-form-input w-full rounded-lg border px-3 py-2 font-goudy-italic ${sectionType.text} transition-all duration-300 focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-welcome-heading)_22%,transparent)] sm:px-4 sm:py-2.5 md:py-3 ${
+    `message-form-input w-full rounded-lg border px-3 py-2 font-goudy-italic ${sectionType.text} transition-all duration-300 focus:ring-2 focus:ring-[color-mix(in_srgb,#F2C230_35%,transparent)] sm:px-4 sm:py-2.5 md:py-3 ${
       focusedField === field ? "shadow-md" : ""
     }`
 
@@ -271,7 +282,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
       >
         <div
           className="pointer-events-none absolute inset-2 rounded-[1.5rem] border sm:inset-2.5"
-          style={{ borderColor: "color-mix(in srgb, var(--color-motif-yellow) 45%, transparent)" }}
+          style={{ borderColor: `color-mix(in srgb, ${YELLOW} 45%, transparent)` }}
           aria-hidden
         />
 
@@ -328,7 +339,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
                 className={inputClass("name")}
                 style={{
                   color: NAVY,
-                  backgroundColor: IVORY,
+                  backgroundColor: SAGE_MIST(5),
                   borderColor: inputBorder("name"),
                 }}
               />
@@ -366,7 +377,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
                 className={`message-form-textarea ${inputClass("message")} min-h-[90px] resize-none placeholder:leading-relaxed sm:min-h-[110px] md:min-h-[130px]`}
                 style={{
                   color: NAVY,
-                  backgroundColor: IVORY,
+                  backgroundColor: SAGE_MIST(5),
                   borderColor: inputBorder("message"),
                 }}
               />

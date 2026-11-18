@@ -1,0 +1,3 @@
+{"v":1,"endedAt":1794932280370,"reason":"other","totalUsd":20.549305,"byAgent":{"main":20.549305},"byTool":{"Bash":15.164765,"(model)":1.692798,"Read":1.395879,"Edit":1.314553,"AskUserQuestion":0.561656,"Write":0.419654},"refusals":0,"budget":null}
+{"v":1,"endedAt":1794932359338,"reason":"other","totalUsd":1.269243,"byAgent":{"main":1.09888,"Explore":0.170364},"byTool":{"Bash":0.867982,"Agent":0.255545,"mcp__ruflo-console__console_run":0.085182,"ToolSearch":0.030267,"mcp__ruflo-console__console_state":0.030267},"refusals":0,"budget":null}
+{"v":1,"endedAt":1794932361774,"reason":"other","totalUsd":9.040923,"byAgent":{"main":9.040923},"byTool":{"Bash":7.630755,"Read":1.117707,"(model)":0.292461},"refusals":0,"budget":null}
