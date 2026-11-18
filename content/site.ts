@@ -302,7 +302,7 @@ const COUPLE_PHOTOS = Array.from(
 const COUPLE_PORTRAITS = {
   groom: "/mobile-background/couple (2).webp", // left photo in the envelope
   bride: "/mobile-background/couple (15).webp", // right photo in the envelope
-  cover: "/mobile-background/couple (6).webp", // photo pulled out of the envelope + home hero cover photo
+  cover: "/Details/couple.JPG", // photo pulled out of the envelope + home hero cover photo
 }
 
 // Sliding photo marquee behind the loader and envelope.

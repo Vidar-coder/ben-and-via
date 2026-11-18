@@ -205,10 +205,50 @@
         "policyHash": "sha256:00b63b2f746eb8b9095bbd5e1dbae4ddd74fd92a6740b72f59f4069fbfda4737"
       },
       "hash": "sha256:294bbc4287fdf3e935bc5cdd9993c85c1fabc8b250ca05be7c42998bb1cf2620"
+    },
+    {
+      "payload": {
+        "receiptId": "sha256:ce5da7bb0ab3f891516309885d8262a0de178aca944856d2ef4527594e2dc515",
+        "previousReceiptHash": "sha256:294bbc4287fdf3e935bc5cdd9993c85c1fabc8b250ca05be7c42998bb1cf2620",
+        "sequence": 5,
+        "issuedAt": 1795007291879,
+        "request": {
+          "identity": {
+            "id": "legacy-cli",
+            "type": "legacy"
+          },
+          "action": {
+            "type": "mcp.tool.call",
+            "resource": "hooks_intelligence_verified-ingest",
+            "tool": "hooks_intelligence_verified-ingest",
+            "server": "ruflo",
+            "network": false,
+            "destructive": false
+          },
+          "context": {
+            "metadata": {
+              "inputDigest": "sha256:b72ed13cb525af2592de7b88e763277fa14592edc468666510c59a8cf02dd505"
+            },
+            "now": 1795007291879
+          },
+          "requestId": "e2caf3ea-5ace-47fe-bf5a-1321f3b904f9"
+        },
+        "decision": {
+          "requestId": "e2caf3ea-5ace-47fe-bf5a-1321f3b904f9",
+          "outcome": "allowed",
+          "enforcedOutcome": "allowed",
+          "mode": "legacy",
+          "reason": "legacy-default-allow",
+          "matchedRules": [],
+          "obligations": []
+        },
+        "policyHash": "sha256:00b63b2f746eb8b9095bbd5e1dbae4ddd74fd92a6740b72f59f4069fbfda4737"
+      },
+      "hash": "sha256:a4e34c00ef99321633e99af4641bd3de6078102a0014ccfcf67601b80dec4543"
     }
   ],
   "migratedAt": 1794916713348,
   "migratedFrom": "pre-ADR-324; capabilities=.swarm/memory.db",
-  "ledgerLength": 5,
-  "ledgerHead": "sha256:294bbc4287fdf3e935bc5cdd9993c85c1fabc8b250ca05be7c42998bb1cf2620"
+  "ledgerLength": 6,
+  "ledgerHead": "sha256:a4e34c00ef99321633e99af4641bd3de6078102a0014ccfcf67601b80dec4543"
 }
