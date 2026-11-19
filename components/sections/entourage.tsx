@@ -776,6 +776,10 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
       if (!category || category === "Other") {
         return
       }
+      // Maid / Matron of Honor are hidden on this invitation
+      if (category === "Maid of Honor" || category === "Matron of Honor") {
+        return
+      }
       if (!grouped[category]) {
         grouped[category] = []
       }
@@ -1300,7 +1304,20 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
                         </div>
                       )}
 
-                      {hasSideHonors && (
+                      {bestMan.length > 0 && maidOfHonor.length === 0 && (
+                        <TwoColumnLayout singleTitle="Best Man" centerContent={true}>
+                          {bestMan.map((member, idx) => (
+                            <div
+                              key={`best-man-${idx}-${member.name}`}
+                              className="col-span-2 flex justify-center min-w-0 overflow-hidden px-0.5 sm:px-1"
+                            >
+                              <NameItem member={member} align="center" />
+                            </div>
+                          ))}
+                        </TwoColumnLayout>
+                      )}
+
+                      {hasSideHonors && maidOfHonor.length > 0 && (
                         <TwoColumnLayout leftTitle="Best Man" rightTitle="Maid of Honor">
                           {(() => {
                             const maxLen = Math.max(bestMan.length, maidOfHonor.length)

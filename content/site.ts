@@ -146,7 +146,7 @@ const RSVP = {
   coordinator: "{groom} / {bride}", // {groom} / {bride} → couple nicknames
   phone: "to be announced",
 }
-const HASHTAGS = ["#BenAndVia"] // official wedding hashtag (Snap & Share, reminders)
+const HASHTAGS = ["#itsalwaysBENVIAafterAll"] // official wedding hashtag (Snap & Share, reminders)
 
 // ── Attire guide (Event Details → Attire Guidelines) ────────────────────────
 // SHOW = which cards to display AND their order, top to bottom. Examples:
@@ -245,7 +245,7 @@ const ATTIRE = {
 
   guests: {
     title: "Wedding Guests",
-    image: "/Details/guest.png",
+    image: "/Details/reviseGuestAttire.png",
     dressCode: "Summer Palette",
     palette: DRESS_CODE_PALETTE,
     note: "Ladies, choose a floor-length dress in green, yellow, or orange from our summer palette.",
