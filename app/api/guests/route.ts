@@ -48,6 +48,8 @@ const VALID_GUEST_STATUSES = new Set<Guest["status"]>([
 ])
 
 function text(value: unknown): string {
+  // Sheets returns numeric cells (e.g. auto IDs 1, 2, 3 or a table "5") as numbers
+  if (typeof value === "number") return Number.isFinite(value) ? String(value) : ""
   return typeof value === "string" ? value.trim() : ""
 }
 
