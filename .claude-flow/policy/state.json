@@ -405,10 +405,50 @@
         "policyHash": "sha256:00b63b2f746eb8b9095bbd5e1dbae4ddd74fd92a6740b72f59f4069fbfda4737"
       },
       "hash": "sha256:80c54dcb95a5cfc5b1a7eb20eca120a6fd8fae150fac76d9ed6f35454d7c8ecf"
+    },
+    {
+      "payload": {
+        "receiptId": "sha256:1b54a2351d0958fb0b97f32ea468d50023c410cfde31e5824d0866ca69d5d6ca",
+        "previousReceiptHash": "sha256:80c54dcb95a5cfc5b1a7eb20eca120a6fd8fae150fac76d9ed6f35454d7c8ecf",
+        "sequence": 10,
+        "issuedAt": 1795354462990,
+        "request": {
+          "identity": {
+            "id": "legacy-cli",
+            "type": "legacy"
+          },
+          "action": {
+            "type": "mcp.tool.call",
+            "resource": "hooks_intelligence_verified-ingest",
+            "tool": "hooks_intelligence_verified-ingest",
+            "server": "ruflo",
+            "network": false,
+            "destructive": false
+          },
+          "context": {
+            "metadata": {
+              "inputDigest": "sha256:b72ed13cb525af2592de7b88e763277fa14592edc468666510c59a8cf02dd505"
+            },
+            "now": 1795354462990
+          },
+          "requestId": "fcc76361-19b5-4c88-9e37-eb72cdd8becf"
+        },
+        "decision": {
+          "requestId": "fcc76361-19b5-4c88-9e37-eb72cdd8becf",
+          "outcome": "allowed",
+          "enforcedOutcome": "allowed",
+          "mode": "legacy",
+          "reason": "legacy-default-allow",
+          "matchedRules": [],
+          "obligations": []
+        },
+        "policyHash": "sha256:00b63b2f746eb8b9095bbd5e1dbae4ddd74fd92a6740b72f59f4069fbfda4737"
+      },
+      "hash": "sha256:f60f8553e4e81a634565db9ec825a17fe8e514c0cbf60c896b5152758bca1969"
     }
   ],
   "migratedAt": 1794916713348,
   "migratedFrom": "pre-ADR-324; capabilities=.swarm/memory.db",
-  "ledgerLength": 10,
-  "ledgerHead": "sha256:80c54dcb95a5cfc5b1a7eb20eca120a6fd8fae150fac76d9ed6f35454d7c8ecf"
+  "ledgerLength": 11,
+  "ledgerHead": "sha256:f60f8553e4e81a634565db9ec825a17fe8e514c0cbf60c896b5152758bca1969"
 }
