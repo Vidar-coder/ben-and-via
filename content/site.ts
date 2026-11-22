@@ -382,7 +382,7 @@ export const siteConfig = {
     backgroundMusic: BRAND.backgroundMusic,
   },
   googleAPI:{
-    messageForm: "https://docs.google.com/forms/d/e/1lIGmsKkD1MFMAbS3pbZVJ5rTvckQObmq3zV1cxGaXj4/formResponse",   //done
+    messageForm: "https://docs.google.com/forms/d/e/1FAIpQLScWR9pv04KGTo-Z9LUxQQBE-86zgVlUSPQqN_ngjTrRLMBl-Q/formResponse",   //done
     message: "https://script.google.com/macros/s/AKfycbzcUGTUWqmxp1hVtiz3RoGufmxj1vNjjo8sKdjjf-Qe3dYSfjZvX9e2Ndd-GYwvTIWS/exec",//done
     guestList: "https://script.google.com/macros/s/AKfycbx23NgTY5JU9xis3Z_O3O-ENBXKSHzaygusNK8ejjF6v_6Bga7MtJWtVXmLmA_g0L7P/exec",  //d  
     guestRequest: "https://script.google.com/macros/s/AKfycbxIhTj0KaRNlUIXg6PKTA4UCvdqc_HGO_B-WQigoJ5RuFcv5zp9oUGsVN3gBSmMk1kH/exec",  //d
